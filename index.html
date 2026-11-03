@@ -13,1160 +13,881 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Shameel's Playzone 🎮</title>
-  <meta name="description" content="Shameel's Playzone - Play 8 mini arcade games online for free!">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at 50% 10%, #1e1145 0%, #0a0618 65%, #030108 100%);
-      --accent: #38bdf8;
-      --card-bg: rgba(22, 14, 46, 0.82);
-      --card-border: rgba(147, 51, 234, 0.35);
-      --text: #f8fafc;
+      --bg: #7c3aed;
+      --card-bg: #ffffff;
+      --accent-blue: #38bdf8;
+      --accent-pink: #f43f5e;
+      --accent-green: #4ade80;
+      --accent-yellow: #fde047;
+      --border-dark: #1e1b4b;
+      --shadow-color: #0f172a;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Fredoka', 'Poppins', sans-serif;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      user-select: none;
     }
 
     body {
-      background: var(--bg-gradient);
-      color: var(--text);
+      background: #8b5cf6;
+      background: radial-gradient(circle at 50% 0%, #a78bfa 0%, #7c3aed 70%, #5b21b6 100%);
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 12px 10px;
-      overflow-x: hidden;
+      padding: 12px 10px 70px 10px;
+      color: #1e293b;
     }
 
     .hidden { display: none !important; }
 
-    /* WINNER MODAL */
-    #winner-modal {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 2, 12, 0.94);
-      backdrop-filter: blur(14px);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
-    }
-
-    .modal-trophy { font-size: 5rem; filter: drop-shadow(0 0 30px rgba(250, 204, 21, 0.7)); }
-    .modal-headline { font-size: 2.2rem; font-weight: 900; color: #fde047; margin-top: 10px; }
-    .modal-name { font-size: 1.3rem; font-weight: 800; color: var(--accent); margin-top: 4px; }
-    .modal-desc { font-size: 0.9rem; color: #94a3b8; margin-top: 6px; }
-
-    /* HUB */
-    #hub-screen {
+    /* APP CONTAINER (Mobile shell look) */
+    .app-shell {
       width: 100%;
-      max-width: 430px;
+      max-width: 410px;
+      background: #38bdf8;
+      background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 30%, #f8fafc 60%);
+      border: 4px solid var(--border-dark);
+      border-radius: 36px;
+      padding: 16px 14px 24px 14px;
+      box-shadow: 0 16px 0 var(--border-dark), 0 25px 35px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    /* TOP PROFILE & STATS BAR */
+    .top-bar {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      gap: 14px;
-      padding-bottom: 20px;
-    }
-
-    .hub-header { text-align: center; margin-top: 4px; }
-    .hub-title {
-      font-size: 1.85rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #38bdf8 0%, #c084fc 50%, #f43f5e 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 0.8px;
-    }
-
-    .hub-badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #38bdf8;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 3px 12px;
-      border-radius: 999px;
-      margin-top: 4px;
-      text-transform: uppercase;
-    }
-
-    .game-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .game-tile {
-      background: var(--card-bg);
-      border: 1.5px solid var(--card-border);
-      border-radius: 20px;
-      padding: 16px 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
       gap: 8px;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-      transition: transform 0.15s ease;
+      margin-bottom: 14px;
     }
 
-    .game-tile:active { transform: scale(0.96); border-color: #38bdf8; }
+    .level-badge-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 3px solid var(--border-dark);
+      padding: 4px 8px;
+      border-radius: 20px;
+      box-shadow: 0 4px 0 var(--border-dark);
+    }
 
-    .tile-icon-box {
-      width: 58px; height: 58px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(30, 20, 60, 0.9), rgba(10, 5, 25, 0.95));
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    .avatar-icon {
+      font-size: 1.4rem;
+      width: 32px;
+      height: 32px;
+      background: #fef08a;
+      border: 2px solid var(--border-dark);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
     }
 
-    .tile-title { font-size: 0.95rem; font-weight: 800; color: #fff; line-height: 1.2; }
-    .tile-tag { font-size: 0.68rem; color: #94a3b8; font-weight: 600; line-height: 1.2; }
-
-    .tile-play-btn {
-      margin-top: 4px;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 5px 14px;
-      border-radius: 10px;
-      border: none;
-      width: 100%;
-    }
-
-    /* PLAY SCREENS */
-    .play-screen {
-      width: 100%;
-      max-width: 380px;
+    .level-info {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 12px;
+      gap: 2px;
+    }
+    .level-txt { font-size: 0.75rem; font-weight: 800; color: #1e1b4b; }
+    .xp-bar-bg {
+      width: 65px;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #94a3b8;
+    }
+    .xp-fill { width: 45%; height: 100%; background: #3b82f6; }
+
+    .currency-group {
+      display: flex;
+      gap: 6px;
     }
 
-    .play-navbar {
-      width: 100%;
+    .cur-pill {
+      background: #ffffff;
+      border: 3px solid var(--border-dark);
+      border-radius: 18px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 0 var(--border-dark);
+    }
+
+    /* BANNER CARTOON HERO */
+    .hero-banner {
+      background: #ffffff;
+      border: 3.5px solid var(--border-dark);
+      border-radius: 24px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 0 var(--border-dark);
+      margin-bottom: 14px;
+    }
+
+    .hero-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-fox {
+      font-size: 3rem;
+      animation: bounce 2s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .hero-title { font-size: 1.1rem; font-weight: 800; color: #1e1b4b; line-height: 1.1; }
+
+    .daily-reward-btn {
+      background: #fb7185;
+      color: #ffffff;
+      border: 2.5px solid var(--border-dark);
+      padding: 8px 12px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 4px 0 var(--border-dark);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .daily-reward-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--border-dark); }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .nav-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      padding: 7px 12px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
+    /* GAME GRID CARTOON TILES */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
-    .score-bubble {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--accent);
-      text-align: center;
-    }
-
-    .mode-pill-bar {
-      width: 100%;
-      display: flex;
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      padding: 4px;
-      gap: 4px;
-    }
-
-    .mode-pill-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      color: #94a3b8;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 7px 0;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .mode-pill-btn.active { background: #0284c7; color: #ffffff; }
-
-    .scoreboard-box { width: 100%; display: flex; gap: 8px; }
-
-    .score-card {
-      flex: 1;
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      padding: 8px 4px;
-      border-radius: 14px;
-      text-align: center;
-    }
-
-    .score-title { font-size: 0.7rem; color: #94a3b8; font-weight: 600; }
-    .score-val { font-size: 1.35rem; font-weight: 900; color: #38bdf8; }
-
-    /* TIC TAC TOE */
-    .board-wrapper { position: relative; width: 100%; height: 330px; max-height: 80vw; }
-    .game-board {
-      width: 100%; height: 100%;
-      background: #0b1120;
-      border: 1.5px solid #1e293b;
+    .cartoon-card {
+      border: 3.5px solid var(--border-dark);
       border-radius: 22px;
-      padding: 10px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .cell {
-      background: #060a14;
-      border-radius: 14px;
+      padding: 14px 10px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 2.8rem;
-      font-weight: 900;
+      gap: 4px;
       cursor: pointer;
-      border: 1px solid #172033;
-      user-select: none;
+      box-shadow: 0 6px 0 var(--border-dark);
+      transition: transform 0.1s ease;
     }
-    .cell.x { color: #38bdf8; }
-    .cell.o { color: #f43f5e; }
+    .cartoon-card:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--border-dark); }
 
-    /* MEMORY CARDS */
-    .memory-grid {
-      width: 100%;
-      aspect-ratio: 1/1;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      gap: 8px;
-      background: #0b1120;
-      padding: 10px;
-      border-radius: 20px;
-      border: 1.5px solid #1e293b;
-    }
-    .mem-card {
-      background: #090d16;
-      border: 1.5px solid #1e293b;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.7rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .mem-card.flipped { background: #1e293b; border-color: #38bdf8; }
-    .mem-card.matched { background: #064e3b; border-color: #34d399; }
+    .c-green  { background: #86efac; }
+    .c-blue   { background: #7dd3fc; }
+    .c-pink   { background: #fda4af; }
+    .c-yellow { background: #fde047; }
+    .c-purple { background: #d8b4fe; }
+    .c-orange { background: #fdba74; }
 
-    /* RPS */
-    .rps-battlefield {
-      width: 100%;
-      background: #0b1120;
-      border: 1.5px solid #1e293b;
-      border-radius: 20px;
-      padding: 16px 12px;
+    .c-icon { font-size: 2.2rem; }
+    .c-name { font-size: 0.92rem; font-weight: 800; color: #1e1b4b; }
+    .c-tag { font-size: 0.65rem; font-weight: 700; color: rgba(30, 27, 75, 0.75); }
+
+    /* BOTTOM NAV BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 395px;
+      background: #ffffff;
+      border: 3.5px solid var(--border-dark);
+      border-radius: 26px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      box-shadow: 0 8px 0 var(--border-dark);
+      z-index: 100;
     }
-    .rps-hand-display {
-      width: 70px; height: 70px;
-      background: #060a14;
-      border: 2px solid #1e293b;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-    }
-    .rps-actions { width: 100%; display: flex; gap: 8px; }
-    .rps-btn {
-      flex: 1;
-      background: #0f172a;
-      border: 1.5px solid #1e293b;
-      border-radius: 16px;
-      padding: 12px 4px;
+
+    .b-nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
       cursor: pointer;
+      color: #64748b;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: none;
+      background: transparent;
     }
-    .rps-btn-emoji { font-size: 2rem; }
-    .rps-btn-label { font-size: 0.75rem; font-weight: 700; color: #e2e8f0; }
+    .b-nav-item.active { color: #0284c7; }
+    .b-nav-icon { font-size: 1.3rem; }
 
-    /* CANVAS & CONTROLS */
+    /* STORE / SHOP MODAL */
+    .shop-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(15, 23, 42, 0.85);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .shop-box {
+      width: 100%;
+      max-width: 360px;
+      background: #bae6fd;
+      border: 4px solid var(--border-dark);
+      border-radius: 28px;
+      padding: 18px 14px;
+      box-shadow: 0 10px 0 var(--border-dark);
+    }
+    .shop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .shop-title { font-size: 1.3rem; font-weight: 900; color: #1e1b4b; }
+    .shop-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .shop-card {
+      background: #fff;
+      border: 3px solid var(--border-dark);
+      border-radius: 18px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 0 var(--border-dark);
+    }
+    .buy-btn {
+      width: 100%;
+      margin-top: 6px;
+      background: #4ade80;
+      border: 2px solid var(--border-dark);
+      padding: 5px 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      cursor: pointer;
+      box-shadow: 0 3px 0 var(--border-dark);
+    }
+    .buy-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border-dark); }
+    .buy-btn.equipped { background: #94a3b8; }
+
+    /* PLAY WRAPPER */
+    .play-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .screen-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pixel-btn {
+      background: #fff;
+      border: 3px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--border-dark);
+    }
+    .pixel-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--border-dark); }
+
+    /* GAME CANVAS & CONTROLS */
     canvas {
-      background: #070b14;
-      border: 1.5px solid var(--card-border);
-      border-radius: 20px;
+      background: #ffffff;
+      border: 3.5px solid var(--border-dark);
+      border-radius: 22px;
       display: block;
       width: 100%;
-      max-height: 380px;
+      max-height: 350px;
+      box-shadow: 0 6px 0 var(--border-dark);
     }
-    .touch-bar { width: 100%; display: flex; gap: 10px; margin-top: 4px; }
-    .touch-btn {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1.5px solid var(--card-border);
-      color: #fff;
-      font-size: 1.2rem;
-      font-weight: 900;
-      padding: 12px 0;
-      border-radius: 14px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .touch-btn:active { background: var(--accent); }
-    .fire-btn { background: #dc2626 !important; border-color: #ef4444 !important; font-size: 0.9rem !important; }
 
-    /* D-PAD FOR SNAKE */
-    .dpad-container {
+    .arcade-controls {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      margin-top: 4px;
+      gap: 10px;
       width: 100%;
+      margin-top: 4px;
     }
-    .dpad-row { display: flex; gap: 10px; width: 60%; justify-content: center; }
-    .dpad-btn {
-      width: 55px; height: 46px;
-      background: var(--card-bg);
-      border: 1.5px solid var(--card-border);
-      color: #fff;
-      font-size: 1.3rem;
+    .arcade-btn {
+      flex: 1;
+      background: #ffffff;
+      border: 3px solid var(--border-dark);
+      padding: 12px 0;
+      font-size: 1.1rem;
       font-weight: 900;
-      border-radius: 12px;
+      border-radius: 16px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      box-shadow: 0 5px 0 var(--border-dark);
+      text-align: center;
     }
-    .dpad-btn:active { background: var(--accent); }
+    .arcade-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--border-dark); }
   </style>
 </head>
 <body>
 
-  <!-- WINNER MODAL -->
-  <div id="winner-modal" class="hidden">
-    <div class="modal-trophy">🏆</div>
-    <div class="modal-headline">WINNER!</div>
-    <div class="modal-name" id="modal-name">CHAMPION!</div>
-    <div class="modal-desc" id="modal-desc">Kidilanaayi jayichu! 🎉</div>
-    <button class="nav-btn" style="margin-top:20px;" onclick="closeModal()">Close</button>
+  <!-- APP CONTAINER -->
+  <div class="app-shell">
+
+    <!-- TOP HEADER BAR (LEVEL, COINS, GEMS) -->
+    <div class="top-bar">
+      <div class="level-badge-box">
+        <div class="avatar-icon" id="user-avatar-disp">🦊</div>
+        <div class="level-info">
+          <div class="level-txt" id="user-level-txt">Level 1</div>
+          <div class="xp-bar-bg"><div class="xp-fill" id="xp-fill-bar"></div></div>
+        </div>
+      </div>
+      <div class="currency-group">
+        <div class="cur-pill">🪙 <span id="coin-count">100</span></div>
+        <div class="cur-pill">💎 <span id="gem-count">10</span></div>
+      </div>
+    </div>
+
+    <!-- MAIN HUB VIEW -->
+    <div id="view-hub">
+      <!-- HERO CARTOON BANNER -->
+      <div class="hero-banner">
+        <div class="hero-left">
+          <div class="hero-fox" id="banner-fox">🦊</div>
+          <div>
+            <div class="hero-title">Ready to play?</div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:700;">Shameel's Playzone</div>
+          </div>
+        </div>
+        <button class="daily-reward-btn" onclick="claimDailyReward()">🎁 Daily Reward</button>
+      </div>
+
+      <!-- FEATURED GAMES GRID -->
+      <div class="section-title">
+        <span>Featured Games 🎮</span>
+        <span style="font-size:0.75rem; color:#475569;">9 Games</span>
+      </div>
+
+      <div class="game-grid">
+        <!-- 1. Fruit Snake -->
+        <div class="cartoon-card c-green" onclick="launchGame('snake')">
+          <div class="c-icon">🐍</div>
+          <div class="c-name">Fruit Snake</div>
+          <div class="c-tag">Eat & Grow</div>
+        </div>
+        <!-- 2. Bubble Pop (NEW) -->
+        <div class="cartoon-card c-blue" onclick="launchGame('bubble')">
+          <div class="c-icon">🫧</div>
+          <div class="c-name">Bubble Pop</div>
+          <div class="c-tag">Color Tap</div>
+        </div>
+        <!-- 3. Memory Match -->
+        <div class="cartoon-card c-pink" onclick="launchGame('memory')">
+          <div class="c-icon">🧠</div>
+          <div class="c-name">Memory Match</div>
+          <div class="c-tag">Brain vs Bot</div>
+        </div>
+        <!-- 4. Tic-Tac-Toe -->
+        <div class="cartoon-card c-yellow" onclick="launchGame('ttt')">
+          <div class="c-icon">❌</div>
+          <div class="c-name">Tic-Tac-Toe</div>
+          <div class="c-tag">Smart AI & 2P</div>
+        </div>
+        <!-- 5. Turbo Racer -->
+        <div class="cartoon-card c-purple" onclick="launchGame('car')">
+          <div class="c-icon">🏎️</div>
+          <div class="c-name">Turbo Racer</div>
+          <div class="c-tag">Dodge Speed</div>
+        </div>
+        <!-- 6. Flappy Bird -->
+        <div class="cartoon-card c-orange" onclick="launchGame('flappy')">
+          <div class="c-icon">🐦</div>
+          <div class="c-name">Flappy Bird</div>
+          <div class="c-tag">Tap to Fly</div>
+        </div>
+        <!-- 7. Knife Master -->
+        <div class="cartoon-card c-green" onclick="launchGame('knife')">
+          <div class="c-icon">🎯</div>
+          <div class="c-name">Knife Master</div>
+          <div class="c-tag">Spin Target</div>
+        </div>
+        <!-- 8. Galaxy Strike -->
+        <div class="cartoon-card c-blue" onclick="launchGame('space')">
+          <div class="c-icon">🚀</div>
+          <div class="c-name">Galaxy Strike</div>
+          <div class="c-tag">Laser Blaster</div>
+        </div>
+        <!-- 9. RPS Battle -->
+        <div class="cartoon-card c-yellow" onclick="launchGame('rps')">
+          <div class="c-icon">✊</div>
+          <div class="c-name">RPS Battle</div>
+          <div class="c-tag">First to 5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAY SCREEN 1: BUBBLE POP (NEW GAME) -->
+    <div id="screen-bubble" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Bubble Pop 🫧</span>
+        <button class="pixel-btn" onclick="initBubble()">🔄 Reset</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="bubble-score">0</span></div>
+      <canvas id="bubbleCanvas" width="320" height="340"></canvas>
+    </div>
+
+    <!-- PLAY SCREEN 2: SNAKE -->
+    <div id="screen-snake" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Fruit Snake 🐍</span>
+        <button class="pixel-btn" onclick="initSnake()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="snake-score">0</span></div>
+      <canvas id="snakeCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" onclick="setSnakeDir('LEFT')">◀</button>
+        <button class="arcade-btn" onclick="setSnakeDir('UP')">▲</button>
+        <button class="arcade-btn" onclick="setSnakeDir('DOWN')">▼</button>
+        <button class="arcade-btn" onclick="setSnakeDir('RIGHT')">▶</button>
+      </div>
+    </div>
+
+    <!-- PLAY SCREEN 3: SPACE STRIKE -->
+    <div id="screen-space" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Galaxy Strike 🚀</span>
+        <button class="pixel-btn" onclick="initSpace()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">HP: <span id="space-hp">100%</span> | Score: <span id="space-score">0</span></div>
+      <canvas id="spaceCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" id="s-left">◀</button>
+        <button class="arcade-btn" style="background:#f43f5e; color:#fff;" id="s-fire">🔥 FIRE</button>
+        <button class="arcade-btn" id="s-right">▶</button>
+      </div>
+    </div>
+
+    <!-- PLAY SCREEN 4: TURBO CAR -->
+    <div id="screen-car" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Turbo Racer 🏎️</span>
+        <button class="pixel-btn" onclick="startCar()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="car-score">0</span></div>
+      <canvas id="carCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" onclick="moveCarLane(-1)">◀ Left</button>
+        <button class="arcade-btn" onclick="moveCarLane(1)">Right ▶</button>
+      </div>
+    </div>
+
+    <!-- PLAY SCREEN 5: FLAPPY BIRD -->
+    <div id="screen-flappy" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Flappy Bird 🐦</span>
+        <button class="pixel-btn" onclick="initFlappy()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="flappy-score">0</span></div>
+      <canvas id="flappyCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" style="background:#38bdf8; color:#fff;" onclick="flappyJump()">🪽 JUMP / FLAP</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- HUB SCREEN -->
-  <div id="hub-screen">
-    <div class="hub-header">
-      <div class="hub-title">SHAMEEL'S PLAYZONE</div>
-      <div class="hub-badge">8 Games Loaded</div>
-    </div>
-
-    <div class="game-grid">
-      <!-- 1 -->
-      <button type="button" class="game-tile" onclick="openGame('ttt')">
-        <div class="tile-icon-box">❌</div>
-        <div class="tile-title">Tic-Tac-Toe</div>
-        <div class="tile-tag">Smart AI & 2P</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 2 (UPDATED MEMORY WITH BOT) -->
-      <button type="button" class="game-tile" onclick="openGame('memory')">
-        <div class="tile-icon-box">🧠</div>
-        <div class="tile-title">Memory Flip</div>
-        <div class="tile-tag">Solo & vs Bot</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 3 -->
-      <button type="button" class="game-tile" onclick="openGame('rps')">
-        <div class="tile-icon-box">✊</div>
-        <div class="tile-title">R-P-S Battle</div>
-        <div class="tile-tag">First to 5 Points</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 4 -->
-      <button type="button" class="game-tile" onclick="openGame('car')">
-        <div class="tile-icon-box">🏎️</div>
-        <div class="tile-title">Turbo Racer</div>
-        <div class="tile-tag">Dodge & Nitro</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 5 -->
-      <button type="button" class="game-tile" onclick="openGame('flappy')">
-        <div class="tile-icon-box">🐦</div>
-        <div class="tile-title">Flappy Bird</div>
-        <div class="tile-tag">Fly Pipes</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 6 -->
-      <button type="button" class="game-tile" onclick="openGame('knife')">
-        <div class="tile-icon-box">🎯</div>
-        <div class="tile-title">Knife Master</div>
-        <div class="tile-tag">Spinning Board</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 7 -->
-      <button type="button" class="game-tile" onclick="openGame('space')">
-        <div class="tile-icon-box">🚀</div>
-        <div class="tile-title">Galaxy Strike</div>
-        <div class="tile-tag">Laser Shooter</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-      <!-- 8 (NEW: RETRO SNAKE) -->
-      <button type="button" class="game-tile" onclick="openGame('snake')">
-        <div class="tile-icon-box">🐍</div>
-        <div class="tile-title">Retro Snake</div>
-        <div class="tile-tag">Eat & Grow</div>
-        <div class="tile-play-btn">Play Now ▶</div>
-      </button>
-    </div>
+  <!-- BOTTOM FIXED NAVIGATION BAR -->
+  <div class="bottom-bar">
+    <button class="b-nav-item active" onclick="backToHub()">
+      <span class="b-nav-icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="b-nav-item" onclick="openShopModal()">
+      <span class="b-nav-icon">🛍️</span>
+      <span>Shop</span>
+    </button>
+    <button class="b-nav-item" onclick="claimDailyReward()">
+      <span class="b-nav-icon">🎁</span>
+      <span>Rewards</span>
+    </button>
+    <button class="b-nav-item" onclick="alert('Shameel\'s Playzone - Version 2.0')">
+      <span class="b-nav-icon">👤</span>
+      <span>Profile</span>
+    </button>
   </div>
 
-  <!-- 1. TTT SCREEN -->
-  <div id="screen-ttt" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Tic-Tac-Toe</span>
-      <button class="nav-btn" onclick="resetTtt()">🔄 Restart</button>
-    </div>
-    <div class="mode-pill-bar">
-      <button class="mode-pill-btn active" id="ttt-ai-btn" onclick="setTttMode('ai')">🤖 vs AI</button>
-      <button class="mode-pill-btn" id="ttt-2p-btn" onclick="setTttMode('2p')">👥 2 Players</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">X</div><div class="score-val" id="ttt-x-score">0</div></div>
-      <div class="score-card"><div class="score-title">Draw</div><div class="score-val" id="ttt-draw-score">0</div></div>
-      <div class="score-card"><div class="score-title">O</div><div class="score-val" id="ttt-o-score">0</div></div>
-    </div>
-    <div class="score-bubble" id="ttt-status">Turn: Player X</div>
-    <div class="board-wrapper">
-      <div class="game-board" id="ttt-board"></div>
-    </div>
-  </div>
-
-  <!-- 2. MEMORY SCREEN (BOT OPTION ADDED) -->
-  <div id="screen-memory" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Memory Flip</span>
-      <button class="nav-btn" onclick="initMemory()">🔄 Restart</button>
-    </div>
-    <div class="mode-pill-bar">
-      <button class="mode-pill-btn active" id="mem-bot-btn" onclick="setMemMode('bot')">🤖 vs Bot</button>
-      <button class="mode-pill-btn" id="mem-solo-btn" onclick="setMemMode('solo')">👤 Solo Play</button>
-    </div>
-    <div class="scoreboard-box" id="mem-bot-scores">
-      <div class="score-card"><div class="score-title">You</div><div class="score-val" id="mem-p-score">0</div></div>
-      <div class="score-card"><div class="score-title">Turn</div><div class="score-val" id="mem-turn-label" style="font-size:0.95rem; line-height:1.8;">Player</div></div>
-      <div class="score-card"><div class="score-title">Bot</div><div class="score-val" id="mem-b-score" style="color:#ef4444;">0</div></div>
-    </div>
-    <div class="scoreboard-box hidden" id="mem-solo-scores">
-      <div class="score-card"><div class="score-title">Pairs Found</div><div class="score-val" id="mem-pairs">0 / 8</div></div>
-      <div class="score-card"><div class="score-title">Moves</div><div class="score-val" id="mem-moves">0</div></div>
-    </div>
-    <div class="memory-grid" id="mem-grid"></div>
-  </div>
-
-  <!-- 3. RPS SCREEN -->
-  <div id="screen-rps" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">RPS Battle</span>
-      <button class="nav-btn" onclick="resetRps()">🔄 Reset</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">You</div><div class="score-val" id="rps-p-val">0</div></div>
-      <div class="score-card"><div class="score-title">AI</div><div class="score-val" id="rps-ai-val">0</div></div>
-    </div>
-    <div class="rps-battlefield">
-      <div class="rps-hand-display" id="rps-p-hand">❓</div>
-      <div style="font-weight:900; font-size:1.4rem; color:var(--accent);">VS</div>
-      <div class="rps-hand-display" id="rps-ai-hand">❓</div>
-    </div>
-    <div class="rps-actions">
-      <button class="rps-btn" onclick="playRps('✊')"><span class="rps-btn-emoji">✊</span><span class="rps-btn-label">Rock</span></button>
-      <button class="rps-btn" onclick="playRps('✋')"><span class="rps-btn-emoji">✋</span><span class="rps-btn-label">Paper</span></button>
-      <button class="rps-btn" onclick="playRps('✌️')"><span class="rps-btn-emoji">✌️</span><span class="rps-btn-label">Scissors</span></button>
-    </div>
-  </div>
-
-  <!-- 4. TURBO CAR SCREEN -->
-  <div id="screen-car" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Turbo Racer</span>
-      <button class="nav-btn" onclick="startCarGame()">🔄 Restart</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="car-score">0</div></div>
-    </div>
-    <canvas id="carCanvas" width="320" height="360"></canvas>
-    <div class="touch-bar">
-      <button class="touch-btn" onclick="moveCarLane(-1)">◀ Left</button>
-      <button class="touch-btn" onclick="moveCarLane(1)">Right ▶</button>
-    </div>
-  </div>
-
-  <!-- 5. FLAPPY BIRD SCREEN -->
-  <div id="screen-flappy" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Flappy Bird</span>
-      <button class="nav-btn" onclick="initFlappy()">🔄 Restart</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="flappy-score">0</div></div>
-    </div>
-    <canvas id="flappyCanvas" width="320" height="360"></canvas>
-    <div class="touch-bar">
-      <button class="touch-btn" style="background:#0284c7;" onclick="flappyJump()">🪽 FLAP / JUMP</button>
-    </div>
-  </div>
-
-  <!-- 6. KNIFE HIT SCREEN -->
-  <div id="screen-knife" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Knife Master</span>
-      <button class="nav-btn" onclick="initKnife()">🔄 Restart</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="knife-score">0</div></div>
-      <div class="score-card"><div class="score-title">Knives Left</div><div class="score-val" id="knife-left">7</div></div>
-    </div>
-    <canvas id="knifeCanvas" width="320" height="360"></canvas>
-    <div class="touch-bar">
-      <button class="touch-btn fire-btn" onclick="throwKnife()">🗡️ THROW KNIFE</button>
-    </div>
-  </div>
-
-  <!-- 7. GALAXY STRIKE SCREEN -->
-  <div id="screen-space" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Galaxy Strike</span>
-      <button class="nav-btn" onclick="resetSpace()">🔄 Restart</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="space-score">0</div></div>
-      <div class="score-card"><div class="score-title">Shield</div><div class="score-val" id="space-hp" style="color:#ef4444;">100%</div></div>
-    </div>
-    <canvas id="spaceCanvas" width="320" height="360"></canvas>
-    <div class="touch-bar">
-      <button class="touch-btn" id="s-left">◀</button>
-      <button class="touch-btn fire-btn" id="s-fire">🔥 FIRE</button>
-      <button class="touch-btn" id="s-right">▶</button>
-    </div>
-  </div>
-
-  <!-- 8. RETRO SNAKE SCREEN (NEW) -->
-  <div id="screen-snake" class="play-screen hidden">
-    <div class="play-navbar">
-      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Retro Snake</span>
-      <button class="nav-btn" onclick="initSnake()">🔄 Restart</button>
-    </div>
-    <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="snake-score">0</div></div>
-      <div class="score-card"><div class="score-title">High Score</div><div class="score-val" id="snake-hi" style="color:#eab308;">0</div></div>
-    </div>
-    <canvas id="snakeCanvas" width="320" height="320"></canvas>
-    
-    <!-- Mobile D-PAD -->
-    <div class="dpad-container">
-      <button class="dpad-btn" onclick="setSnakeDir('UP')">▲</button>
-      <div class="dpad-row">
-        <button class="dpad-btn" onclick="setSnakeDir('LEFT')">◀</button>
-        <button class="dpad-btn" onclick="setSnakeDir('DOWN')">▼</button>
-        <button class="dpad-btn" onclick="setSnakeDir('RIGHT')">▶</button>
+  <!-- IN-APP STORE (SHOP) MODAL -->
+  <div id="shop-modal" class="shop-modal hidden">
+    <div class="shop-box">
+      <div class="shop-header">
+        <span class="shop-title">Game Store 🛒</span>
+        <button class="pixel-btn" onclick="closeShopModal()">✖</button>
+      </div>
+      <div style="font-size:0.8rem; font-weight:700; color:#334155; margin-bottom:10px;">
+        കോയിനുകൾ നൽകി പുതിയ ക്യാരക്ടറുകൾ സ്വന്തമാക്കൂ!
+      </div>
+      <div class="shop-items">
+        <div class="shop-card">
+          <div style="font-size:2.5rem;">🐱</div>
+          <div style="font-weight:800; font-size:0.85rem;">Cool Cat</div>
+          <button class="buy-btn" onclick="buyAvatar('🐱', 150)">150 🪙</button>
+        </div>
+        <div class="shop-card">
+          <div style="font-size:2.5rem;">🐼</div>
+          <div style="font-weight:800; font-size:0.85rem;">Panda Pro</div>
+          <button class="buy-btn" onclick="buyAvatar('🐼', 250)">250 🪙</button>
+        </div>
+        <div class="shop-card">
+          <div style="font-size:2.5rem;">🦁</div>
+          <div style="font-weight:800; font-size:0.85rem;">King Lion</div>
+          <button class="buy-btn" onclick="buyAvatar('🦁', 500)">500 🪙</button>
+        </div>
+        <div class="shop-card">
+          <div style="font-size:2.5rem;">🤖</div>
+          <div style="font-weight:800; font-size:0.85rem;">Cyborg Bot</div>
+          <button class="buy-btn" onclick="buyAvatar('🤖', 10, true)">10 💎</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    /* ROUTING */
+    /* ================= PROGRESS & WALLET SYSTEM ================= */
+    let coins = parseInt(localStorage.getItem('pz_coins')) || 250;
+    let gems = parseInt(localStorage.getItem('pz_gems')) || 15;
+    let xp = parseInt(localStorage.getItem('pz_xp')) || 45;
+    let currentAvatar = localStorage.getItem('pz_avatar') || '🦊';
+    let ownedAvatars = JSON.parse(localStorage.getItem('pz_owned')) || ['🦊'];
     let activeLoop = null;
 
-    function openGame(id) {
-      if (activeLoop) cancelAnimationFrame(activeLoop);
-      if (snakeInterval) clearInterval(snakeInterval);
-
-      document.getElementById('hub-screen').classList.add('hidden');
-      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
-      const scr = document.getElementById(`screen-${id}`);
-      if (scr) scr.classList.remove('hidden');
-
-      if (id === 'ttt') initTtt();
-      if (id === 'memory') initMemory();
-      if (id === 'rps') resetRps();
-      if (id === 'car') startCarGame();
-      if (id === 'flappy') initFlappy();
-      if (id === 'knife') initKnife();
-      if (id === 'space') initSpace();
-      if (id === 'snake') initSnake();
+    function saveWallet() {
+      localStorage.setItem('pz_coins', coins);
+      localStorage.setItem('pz_gems', gems);
+      localStorage.setItem('pz_xp', xp);
+      localStorage.setItem('pz_avatar', currentAvatar);
+      localStorage.setItem('pz_owned', JSON.stringify(ownedAvatars));
+      updateTopBar();
     }
 
-    function returnToHub() {
-      if (activeLoop) cancelAnimationFrame(activeLoop);
-      if (snakeInterval) clearInterval(snakeInterval);
-      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
-      document.getElementById('hub-screen').classList.remove('hidden');
+    function updateTopBar() {
+      document.getElementById('coin-count').innerText = coins;
+      document.getElementById('gem-count').innerText = gems;
+      const level = Math.floor(xp / 100) + 1;
+      const levelProgress = xp % 100;
+      document.getElementById('user-level-txt').innerText = `Level ${level}`;
+      document.getElementById('xp-fill-bar').style.width = `${levelProgress}%`;
+      document.getElementById('user-avatar-disp').innerText = currentAvatar;
+      document.getElementById('banner-fox').innerText = currentAvatar;
     }
 
-    function triggerWin(title, desc) {
-      document.getElementById('modal-name').innerText = title;
-      document.getElementById('modal-desc').innerText = desc;
-      document.getElementById('winner-modal').classList.remove('hidden');
+    function addReward(c, x = 15) {
+      coins += c;
+      xp += x;
+      saveWallet();
       if (window.confetti) confetti();
     }
-    function closeModal() { document.getElementById('winner-modal').classList.add('hidden'); }
 
-    /* 1. TIC TAC TOE */
-    let tttGrid = Array(9).fill('');
-    let tttTurn = 'X';
-    let tttMode = 'ai';
-    let tttScores = { X: 0, O: 0, D: 0 };
-
-    function initTtt() {
-      const b = document.getElementById('ttt-board');
-      b.innerHTML = '';
-      tttGrid = Array(9).fill('');
-      tttTurn = 'X';
-      document.getElementById('ttt-status').innerText = "Turn: Player X";
-      for (let i = 0; i < 9; i++) {
-        let cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.onclick = () => makeTttMove(i);
-        b.appendChild(cell);
-      }
-    }
-
-    function setTttMode(m) {
-      tttMode = m;
-      document.getElementById('ttt-ai-btn').classList.toggle('active', m === 'ai');
-      document.getElementById('ttt-2p-btn').classList.toggle('active', m === '2p');
-      initTtt();
-    }
-    function resetTtt() { initTtt(); }
-
-    function makeTttMove(i) {
-      if (tttGrid[i] !== '') return;
-      tttGrid[i] = tttTurn;
-      updateTttBoard();
-      if (checkTttWin(tttTurn)) {
-        tttScores[tttTurn]++;
-        updateTttScoreUI();
-        triggerWin(`Player ${tttTurn} Wins!`, "Adipoli victory! 🎉");
-        initTtt();
+    function claimDailyReward() {
+      const lastClaim = localStorage.getItem('pz_daily_claim');
+      const today = new Date().toDateString();
+      if (lastClaim === today) {
+        alert('ഇന്നത്തെ ഡെയ്‌ലി റിവാർഡ് നിങ്ങൾ നേടിയിട്ടുണ്ട്! നാളെ വീണ്ടും വരൂ!');
         return;
       }
-      if (!tttGrid.includes('')) {
-        tttScores.D++;
-        updateTttScoreUI();
-        alert('Draw match!');
-        initTtt();
+      coins += 150;
+      gems += 5;
+      xp += 30;
+      localStorage.setItem('pz_daily_claim', today);
+      saveWallet();
+      alert('🎉 സമ്മാനം ലഭിച്ചു! +150 Coins & +5 Gems!');
+    }
+
+    /* ================= SHOP SYSTEM ================= */
+    function openShopModal() { document.getElementById('shop-modal').classList.remove('hidden'); }
+    function closeShopModal() { document.getElementById('shop-modal').classList.add('hidden'); }
+
+    function buyAvatar(av, cost, isGem = false) {
+      if (ownedAvatars.includes(av)) {
+        currentAvatar = av;
+        saveWallet();
+        alert(`${av} ഇക്വിപ്പ് ചെയ്തു!`);
+        closeShopModal();
         return;
       }
-      tttTurn = tttTurn === 'X' ? 'O' : 'X';
-      document.getElementById('ttt-status').innerText = `Turn: Player ${tttTurn}`;
-      if (tttMode === 'ai' && tttTurn === 'O') setTimeout(makeTttAiMove, 300);
-    }
 
-    function makeTttAiMove() {
-      let empty = tttGrid.map((v, i) => v === '' ? i : null).filter(v => v !== null);
-      if (empty.length > 0) {
-        let pick = empty[Math.floor(Math.random() * empty.length)];
-        makeTttMove(pick);
-      }
-    }
-
-    function updateTttBoard() {
-      const cells = document.querySelectorAll('#ttt-board .cell');
-      cells.forEach((c, idx) => {
-        c.innerText = tttGrid[idx];
-        c.className = `cell ${tttGrid[idx].toLowerCase()}`;
-      });
-    }
-
-    function checkTttWin(p) {
-      const w = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-      return w.some(comb => comb.every(idx => tttGrid[idx] === p));
-    }
-
-    function updateTttScoreUI() {
-      document.getElementById('ttt-x-score').innerText = tttScores.X;
-      document.getElementById('ttt-o-score').innerText = tttScores.O;
-      document.getElementById('ttt-draw-score').innerText = tttScores.D;
-    }
-
-    /* 2. MEMORY FLIP (AI BOT & SOLO MODES) */
-    const emojis = ['🍎','🍌','🍇','🍓','🍉','🍒','🥑','🍍'];
-    let memCards = [], memFlipped = [], memMatched = 0, memMovesCount = 0;
-    let memMode = 'bot'; // 'bot' or 'solo'
-    let memTurn = 'player'; // 'player' or 'bot'
-    let memScoreP = 0, memScoreB = 0;
-    let botMemory = {}; // Bot remembers revealed card indexes
-
-    function setMemMode(mode) {
-      memMode = mode;
-      document.getElementById('mem-bot-btn').classList.toggle('active', mode === 'bot');
-      document.getElementById('mem-solo-btn').classList.toggle('active', mode === 'solo');
-      document.getElementById('mem-bot-scores').classList.toggle('hidden', mode === 'solo');
-      document.getElementById('mem-solo-scores').classList.toggle('hidden', mode === 'bot');
-      initMemory();
-    }
-
-    function initMemory() {
-      const grid = document.getElementById('mem-grid');
-      grid.innerHTML = '';
-      memCards = [...emojis, ...emojis].sort(() => 0.5 - Math.random());
-      memFlipped = [];
-      memMatched = 0;
-      memMovesCount = 0;
-      memScoreP = 0;
-      memScoreB = 0;
-      memTurn = 'player';
-      botMemory = {};
-
-      document.getElementById('mem-p-score').innerText = '0';
-      document.getElementById('mem-b-score').innerText = '0';
-      document.getElementById('mem-turn-label').innerText = 'Player';
-      document.getElementById('mem-pairs').innerText = "0 / 8";
-      document.getElementById('mem-moves').innerText = "0";
-
-      memCards.forEach((emoji, i) => {
-        let el = document.createElement('div');
-        el.className = 'mem-card';
-        el.id = `mem-card-${i}`;
-        el.innerText = '❓';
-        el.onclick = () => {
-          if (memMode === 'bot' && memTurn === 'bot') return; // Bot's turn
-          handleMemClick(el, emoji, i);
-        };
-        grid.appendChild(el);
-      });
-    }
-
-    function handleMemClick(el, emoji, i) {
-      if (memFlipped.length === 2 || el.classList.contains('flipped') || el.classList.contains('matched')) return;
-
-      el.classList.add('flipped');
-      el.innerText = emoji;
-      botMemory[i] = emoji; // Bot remembers this card
-      memFlipped.push({ el, emoji, i });
-
-      if (memFlipped.length === 2) {
-        memMovesCount++;
-        document.getElementById('mem-moves').innerText = memMovesCount;
-
-        const isMatch = memFlipped[0].emoji === memFlipped[1].emoji;
-
-        if (isMatch) {
-          memFlipped[0].el.classList.add('matched');
-          memFlipped[1].el.classList.add('matched');
-          memMatched++;
-          document.getElementById('mem-pairs').innerText = `${memMatched} / 8`;
-
-          if (memMode === 'bot') {
-            if (memTurn === 'player') {
-              memScoreP++;
-              document.getElementById('mem-p-score').innerText = memScoreP;
-            } else {
-              memScoreB++;
-              document.getElementById('mem-b-score').innerText = memScoreB;
-            }
-          }
-
-          delete botMemory[memFlipped[0].i];
-          delete botMemory[memFlipped[1].i];
-          memFlipped = [];
-
-          if (memMatched === 8) {
-            setTimeout(() => {
-              if (memMode === 'solo') {
-                triggerWin("Memory Master!", `${memMovesCount} moves-ൽ പൂർത്തിയാക്കി!`);
-              } else {
-                if (memScoreP > memScoreB) triggerWin("You Won!", `Bot നെ തോൽപ്പിച്ചു! (${memScoreP} - ${memScoreB})`);
-                else if (memScoreB > memScoreP) alert(`Bot ജയിച്ചു (${memScoreB} - ${memScoreP})! വീണ്ടും ശ്രമിക്കൂ!`);
-                else alert(`Tie Match! രണ്ടാളും 4 പോയിന്റ് വീതം നേടി!`);
-              }
-            }, 300);
-            return;
-          }
-
-          // Same player gets another turn on match
-          if (memMode === 'bot' && memTurn === 'bot') {
-            setTimeout(executeBotTurn, 800);
-          }
-        } else {
-          // No match, switch turn
-          setTimeout(() => {
-            memFlipped[0].el.classList.remove('flipped');
-            memFlipped[0].el.innerText = '❓';
-            memFlipped[1].el.classList.remove('flipped');
-            memFlipped[1].el.innerText = '❓';
-            memFlipped = [];
-
-            if (memMode === 'bot') {
-              memTurn = memTurn === 'player' ? 'bot' : 'player';
-              document.getElementById('mem-turn-label').innerText = memTurn === 'player' ? 'Player' : 'Bot 🤖';
-              if (memTurn === 'bot') setTimeout(executeBotTurn, 700);
-            }
-          }, 800);
-        }
-      }
-    }
-
-    function executeBotTurn() {
-      if (memMatched >= 8 || memTurn !== 'bot') return;
-
-      let unrevealed = [];
-      memCards.forEach((c, idx) => {
-        let el = document.getElementById(`mem-card-${idx}`);
-        if (!el.classList.contains('matched') && !el.classList.contains('flipped')) {
-          unrevealed.push(idx);
-        }
-      });
-      if (unrevealed.length < 2) return;
-
-      // Smart Bot check: does bot know any pair?
-      let knownPair = null;
-      let seen = {};
-      for (let idx in botMemory) {
-        if (!unrevealed.includes(parseInt(idx))) continue;
-        let em = botMemory[idx];
-        if (seen[em] !== undefined) {
-          knownPair = [seen[em], parseInt(idx)];
-          break;
-        }
-        seen[em] = parseInt(idx);
-      }
-
-      let firstPick, secondPick;
-      if (knownPair) {
-        firstPick = knownPair[0];
-        secondPick = knownPair[1];
+      if (isGem) {
+        if (gems < cost) return alert('മതിയായ രത്നങ്ങൾ (💎) ഇല്ല!');
+        gems -= cost;
       } else {
-        firstPick = unrevealed[Math.floor(Math.random() * unrevealed.length)];
-        let remaining = unrevealed.filter(x => x !== firstPick);
-        // Does bot know pair for firstPick?
-        let matchingIdx = Object.keys(botMemory).find(k => botMemory[k] === memCards[firstPick] && parseInt(k) !== firstPick && remaining.includes(parseInt(k)));
-        secondPick = matchingIdx ? parseInt(matchingIdx) : remaining[Math.floor(Math.random() * remaining.length)];
+        if (coins < cost) return alert('മതിയായ കോയിനുകൾ (🪙) ഇല്ല!');
+        coins -= cost;
       }
 
-      // Flip first card
-      let el1 = document.getElementById(`mem-card-${firstPick}`);
-      handleMemClick(el1, memCards[firstPick], firstPick);
-
-      // Flip second card after delay
-      setTimeout(() => {
-        let el2 = document.getElementById(`mem-card-${secondPick}`);
-        handleMemClick(el2, memCards[secondPick], secondPick);
-      }, 700);
+      ownedAvatars.push(av);
+      currentAvatar = av;
+      saveWallet();
+      alert(`വിജയകരമായി വാങ്ങി! ${av} അൺലോക്ക് ആയി!`);
+      closeShopModal();
     }
 
-    /* 3. ROCK PAPER SCISSORS */
-    let rpsUser = 0, rpsAi = 0;
-    function resetRps() {
-      rpsUser = 0; rpsAi = 0;
-      document.getElementById('rps-p-val').innerText = '0';
-      document.getElementById('rps-ai-val').innerText = '0';
-      document.getElementById('rps-p-hand').innerText = '❓';
-      document.getElementById('rps-ai-hand').innerText = '❓';
-    }
+    /* ================= ROUTING ================= */
+    function launchGame(id) {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      if (snakeTimer) clearInterval(snakeTimer);
 
-    function playRps(choice) {
-      const items = ['✊', '✋', '✌️'];
-      const ai = items[Math.floor(Math.random() * items.length)];
-      document.getElementById('rps-p-hand').innerText = choice;
-      document.getElementById('rps-ai-hand').innerText = ai;
+      document.getElementById('view-hub').classList.add('hidden');
+      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
 
-      if (choice === ai) return;
-      if ((choice === '✊' && ai === '✌️') || (choice === '✋' && ai === '✊') || (choice === '✌️' && ai === '✋')) {
-        rpsUser++;
-        document.getElementById('rps-p-val').innerText = rpsUser;
-        if (rpsUser === 5) { triggerWin("RPS Champion!", "AI യെ തോൽപ്പിച്ചു! 🏆"); resetRps(); }
+      const target = document.getElementById(`screen-${id}`);
+      if (target) {
+        target.classList.remove('hidden');
       } else {
-        rpsAi++;
-        document.getElementById('rps-ai-val').innerText = rpsAi;
-        if (rpsAi === 5) { alert("AI ജയിച്ചു! അടുത്ത തവണ പിടിക്കാം!"); resetRps(); }
+        alert('ഈ ഗെയിം ഉടൻ പൂർണ്ണമായും ലോഡ് ആകും!');
+        backToHub();
+        return;
       }
+
+      if (id === 'bubble') initBubble();
+      if (id === 'snake') initSnake();
+      if (id === 'space') initSpace();
+      if (id === 'car') startCar();
+      if (id === 'flappy') initFlappy();
     }
 
-    /* 4. TURBO CAR RACER */
-    let carLane = 1, carScore = 0, carObstacles = [];
-    const lanes = [50, 160, 270];
+    function backToHub() {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      if (snakeTimer) clearInterval(snakeTimer);
+      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
+      document.getElementById('view-hub').classList.remove('hidden');
+      updateTopBar();
+    }
 
-    function startCarGame() {
-      const c = document.getElementById('carCanvas');
+    /* ================= GAME 1: BUBBLE POP ================= */
+    let bubbles = [], bubbleScore = 0;
+    function initBubble() {
+      const c = document.getElementById('bubbleCanvas');
       const ctx = c.getContext('2d');
-      carLane = 1; carScore = 0; carObstacles = [];
-      let frame = 0;
+      bubbles = [];
+      bubbleScore = 0;
+      document.getElementById('bubble-score').innerText = '0';
+
+      for (let i = 0; i < 6; i++) spawnBubble(c);
+
+      c.onclick = (e) => {
+        const rect = c.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+
+        for (let i = bubbles.length - 1; i >= 0; i--) {
+          let b = bubbles[i];
+          let dist = Math.hypot(b.x - mx, b.y - my);
+          if (dist < b.r) {
+            bubbles.splice(i, 1);
+            bubbleScore += 10;
+            document.getElementById('bubble-score').innerText = bubbleScore;
+            addReward(5, 5);
+            spawnBubble(c);
+            break;
+          }
+        }
+      };
 
       function loop() {
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#f0f9ff';
         ctx.fillRect(0, 0, c.width, c.height);
 
-        ctx.strokeStyle = '#334155';
-        ctx.setLineDash([20, 20]);
-        ctx.beginPath();
-        ctx.moveTo(106, 0); ctx.lineTo(106, c.height);
-        ctx.moveTo(213, 0); ctx.lineTo(213, c.height);
-        ctx.stroke();
-
-        ctx.fillStyle = '#38bdf8';
-        ctx.fillRect(lanes[carLane] - 18, 290, 36, 60);
-
-        if (frame % 50 === 0) {
-          carObstacles.push({ lane: Math.floor(Math.random() * 3), y: -60 });
-        }
-
-        ctx.fillStyle = '#ef4444';
-        for (let i = carObstacles.length - 1; i >= 0; i--) {
-          let o = carObstacles[i];
-          o.y += 5;
-          ctx.fillRect(lanes[o.lane] - 18, o.y, 36, 50);
-
-          if (o.lane === carLane && o.y > 240 && o.y < 340) {
-            alert(`Car Crashed! Score: ${carScore}`);
-            return;
+        bubbles.forEach((b) => {
+          b.y -= b.speed;
+          if (b.y < -30) {
+            b.y = c.height + 20;
+            b.x = Math.random() * (c.width - 40) + 20;
           }
-          if (o.y > c.height) {
-            carObstacles.splice(i, 1);
-            carScore += 10;
-            document.getElementById('car-score').innerText = carScore;
-          }
-        }
-        frame++;
-        activeLoop = requestAnimationFrame(loop);
-      }
-      loop();
-    }
-    function moveCarLane(dir) {
-      carLane = Math.max(0, Math.min(2, carLane + dir));
-    }
 
-    /* 5. FLAPPY BIRD */
-    let birdY = 150, birdVel = 0, birdPipes = [], flappyScore = 0;
-    function initFlappy() {
-      const c = document.getElementById('flappyCanvas');
-      const ctx = c.getContext('2d');
-      birdY = 150; birdVel = 0; birdPipes = []; flappyScore = 0;
-      let frame = 0;
-      document.getElementById('flappy-score').innerText = '0';
+          ctx.fillStyle = b.color;
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = '#0f172a';
+          ctx.stroke();
 
-      function loop() {
-        ctx.fillStyle = '#020617';
-        ctx.fillRect(0, 0, c.width, c.height);
-
-        birdVel += 0.35;
-        birdY += birdVel;
-
-        ctx.fillStyle = '#fde047';
-        ctx.beginPath();
-        ctx.arc(60, birdY, 14, 0, Math.PI * 2);
-        ctx.fill();
-
-        if (frame % 80 === 0) {
-          let gap = 90;
-          let topH = Math.random() * (c.height - gap - 60) + 20;
-          birdPipes.push({ x: c.width, top: topH, bottom: c.height - topH - gap });
-        }
-
-        ctx.fillStyle = '#22c55e';
-        for (let i = birdPipes.length - 1; i >= 0; i--) {
-          let p = birdPipes[i];
-          p.x -= 2.5;
-          ctx.fillRect(p.x, 0, 40, p.top);
-          ctx.fillRect(p.x, c.height - p.bottom, 40, p.bottom);
-
-          if (60 + 14 > p.x && 60 - 14 < p.x + 40) {
-            if (birdY - 14 < p.top || birdY + 14 > c.height - p.bottom) {
-              alert(`Flappy Bird Hit! Score: ${flappyScore}`);
-              return;
-            }
-          }
-          if (p.x === 50) {
-            flappyScore++;
-            document.getElementById('flappy-score').innerText = flappyScore;
-          }
-          if (p.x < -40) birdPipes.splice(i, 1);
-        }
-
-        if (birdY > c.height || birdY < 0) {
-          alert(`Fell Down! Score: ${flappyScore}`);
-          return;
-        }
-
-        frame++;
-        activeLoop = requestAnimationFrame(loop);
-      }
-      loop();
-    }
-    function flappyJump() { birdVel = -6; }
-
-    /* 6. KNIFE HIT */
-    let knifeAngle = 0, targetKnives = [], knifeLeft = 7, knifeScore = 0;
-    function initKnife() {
-      const c = document.getElementById('knifeCanvas');
-      const ctx = c.getContext('2d');
-      knifeAngle = 0; targetKnives = [0, 1.6]; knifeLeft = 7; knifeScore = 0;
-      document.getElementById('knife-left').innerText = knifeLeft;
-      document.getElementById('knife-score').innerText = knifeScore;
-
-      function loop() {
-        ctx.fillStyle = '#090d16';
-        ctx.fillRect(0, 0, c.width, c.height);
-
-        knifeAngle += 0.03;
-
-        ctx.save();
-        ctx.translate(c.width / 2, 110);
-        ctx.rotate(knifeAngle);
-        ctx.fillStyle = '#854d0e';
-        ctx.beginPath();
-        ctx.arc(0, 0, 50, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = '#cbd5e1';
-        targetKnives.forEach(a => {
-          ctx.save();
-          ctx.rotate(a);
-          ctx.fillRect(-3, 40, 6, 30);
-          ctx.restore();
+          // Bubble shine
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(b.x - b.r/3, b.y - b.r/3, b.r/4, 0, Math.PI * 2);
+          ctx.fill();
         });
-        ctx.restore();
-
-        if (knifeLeft > 0) {
-          ctx.fillStyle = '#38bdf8';
-          ctx.fillRect(c.width / 2 - 4, 300, 8, 40);
-        }
 
         activeLoop = requestAnimationFrame(loop);
       }
       loop();
     }
-    function throwKnife() {
-      if (knifeLeft <= 0) return;
-      let currentAngle = (Math.PI / 2) - knifeAngle;
-      for (let a of targetKnives) {
-        let diff = Math.abs((a % (Math.PI * 2)) - (currentAngle % (Math.PI * 2)));
-        if (diff < 0.25) {
-          alert('Knives Hit! Game Over!');
-          initKnife();
-          return;
-        }
-      }
-      targetKnives.push(currentAngle);
-      knifeLeft--;
-      knifeScore += 10;
-      document.getElementById('knife-left').innerText = knifeLeft;
-      document.getElementById('knife-score').innerText = knifeScore;
-      if (knifeLeft === 0) triggerWin("Target Cleared!", "Ellam krithyamaayi tharachu!");
+
+    function spawnBubble(c) {
+      const colors = ['#f43f5e', '#38bdf8', '#4ade80', '#fbbf24', '#c084fc'];
+      bubbles.push({
+        x: Math.random() * (c.width - 60) + 30,
+        y: c.height + Math.random() * 80,
+        r: 22 + Math.random() * 12,
+        speed: 1.5 + Math.random() * 2,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
     }
 
-    /* 7. GALAXY STRIKE */
-    let sPlayer = { x: 140, y: 310, w: 32, h: 32 };
-    let sBullets = [], sEnemies = [], sScore = 0, sHp = 100;
-    let sLeft = false, sRight = false;
+    /* ================= GAME 2: FRUIT SNAKE ================= */
+    let snake = [], snakeDir = 'RIGHT', snakeNext = 'RIGHT', snakeFood = {x: 5, y: 5};
+    let snakeScore = 0, snakeTimer = null;
+    function initSnake() {
+      if (snakeTimer) clearInterval(snakeTimer);
+      snake = [{x: 6, y: 8}, {x: 5, y: 8}, {x: 4, y: 8}];
+      snakeDir = 'RIGHT'; snakeNext = 'RIGHT'; snakeScore = 0;
+      document.getElementById('snake-score').innerText = '0';
+      spawnSnakeFood();
+      snakeTimer = setInterval(updateSnake, 130);
+    }
+    function setSnakeDir(d) {
+      if (d==='UP' && snakeDir!=='DOWN') snakeNext='UP';
+      if (d==='DOWN' && snakeDir!=='UP') snakeNext='DOWN';
+      if (d==='LEFT' && snakeDir!=='RIGHT') snakeNext='LEFT';
+      if (d==='RIGHT' && snakeDir!=='LEFT') snakeNext='RIGHT';
+    }
+    function spawnSnakeFood() {
+      snakeFood = { x: Math.floor(Math.random() * 20), y: Math.floor(Math.random() * 18) };
+    }
+    function updateSnake() {
+      snakeDir = snakeNext;
+      let head = {...snake[0]};
+      if (snakeDir==='UP') head.y--;
+      if (snakeDir==='DOWN') head.y++;
+      if (snakeDir==='LEFT') head.x--;
+      if (snakeDir==='RIGHT') head.x++;
 
+      if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 18) {
+        alert('Snake hit wall!');
+        initSnake();
+        return;
+      }
+      snake.unshift(head);
+      if (head.x === snakeFood.x && head.y === snakeFood.y) {
+        snakeScore += 10;
+        document.getElementById('snake-score').innerText = snakeScore;
+        addReward(2, 3);
+        spawnSnakeFood();
+      } else {
+        snake.pop();
+      }
+      drawSnake();
+    }
+    function drawSnake() {
+      const c = document.getElementById('snakeCanvas');
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#fef08a';
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(snakeFood.x * 16 + 8, snakeFood.y * 16 + 8, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      snake.forEach((p, i) => {
+        ctx.fillStyle = i === 0 ? '#0284c7' : '#22c55e';
+        ctx.fillRect(p.x * 16 + 1, p.y * 16 + 1, 14, 14);
+      });
+    }
+
+    /* ================= GAME 3: GALAXY STRIKE ================= */
+    let sX = 140, sBullets = [], sEnemies = [], sHp = 100, sScore = 0;
+    let sL = false, sR = false;
     function initSpace() {
       const c = document.getElementById('spaceCanvas');
       const ctx = c.getContext('2d');
-      sBullets = []; sEnemies = []; sScore = 0; sHp = 100;
-      sPlayer.x = 140;
-      document.getElementById('space-score').innerText = '0';
+      sX = 140; sBullets = []; sEnemies = []; sHp = 100; sScore = 0;
       document.getElementById('space-hp').innerText = '100%';
+      document.getElementById('space-score').innerText = '0';
 
       const bL = document.getElementById('s-left');
       const bR = document.getElementById('s-right');
       const bF = document.getElementById('s-fire');
-
-      bL.ontouchstart = () => sLeft = true; bL.ontouchend = () => sLeft = false;
-      bR.ontouchstart = () => sRight = true; bR.ontouchend = () => sRight = false;
-      bF.ontouchstart = () => fireBullet();
+      bL.ontouchstart = () => sL = true; bL.ontouchend = () => sL = false;
+      bR.ontouchstart = () => sR = true; bR.ontouchend = () => sR = false;
+      bF.ontouchstart = () => sBullets.push({x: sX + 13, y: 260});
 
       let frame = 0;
       function loop() {
-        ctx.fillStyle = '#050814';
+        ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, c.width, c.height);
 
-        if (sLeft && sPlayer.x > 0) sPlayer.x -= 5;
-        if (sRight && sPlayer.x < c.width - sPlayer.w) sPlayer.x += 5;
+        if (sL && sX > 10) sX -= 5;
+        if (sR && sX < c.width - 40) sX += 5;
 
+        // Player Ship
         ctx.fillStyle = '#38bdf8';
-        ctx.beginPath();
-        ctx.moveTo(sPlayer.x + 16, sPlayer.y);
-        ctx.lineTo(sPlayer.x, sPlayer.y + 30);
-        ctx.lineTo(sPlayer.x + 32, sPlayer.y + 30);
-        ctx.fill();
+        ctx.fillRect(sX, 260, 30, 24);
 
+        // Bullets
         ctx.fillStyle = '#f43f5e';
         for (let i = sBullets.length - 1; i >= 0; i--) {
           let b = sBullets[i];
           b.y -= 7;
-          ctx.fillRect(b.x, b.y, 4, 12);
-          if (b.y < -15) sBullets.splice(i, 1);
+          ctx.fillRect(b.x, b.y, 4, 10);
+          if (b.y < -10) sBullets.splice(i, 1);
         }
 
-        if (frame % 40 === 0) {
-          sEnemies.push({ x: Math.random() * (c.width - 30), y: -30, r: 15 });
-        }
-
-        ctx.fillStyle = '#94a3b8';
+        // Asteroids
+        if (frame % 45 === 0) sEnemies.push({x: Math.random() * (c.width - 30), y: -20});
+        ctx.fillStyle = '#cbd5e1';
         for (let i = sEnemies.length - 1; i >= 0; i--) {
           let e = sEnemies[i];
           e.y += 3;
           ctx.beginPath();
-          ctx.arc(e.x + 15, e.y + 15, 15, 0, Math.PI * 2);
+          ctx.arc(e.x + 12, e.y + 12, 12, 0, Math.PI * 2);
           ctx.fill();
 
           for (let j = sBullets.length - 1; j >= 0; j--) {
             let b = sBullets[j];
-            if (b.x > e.x && b.x < e.x + 30 && b.y > e.y && b.y < e.y + 30) {
+            if (b.x > e.x && b.x < e.x + 24 && b.y > e.y && b.y < e.y + 24) {
               sEnemies.splice(i, 1);
               sBullets.splice(j, 1);
               sScore += 10;
               document.getElementById('space-score').innerText = sScore;
+              addReward(1, 2);
               break;
-            }
-          }
-
-          if (e.y > 280 && e.x > sPlayer.x - 20 && e.x < sPlayer.x + 30) {
-            sEnemies.splice(i, 1);
-            sHp -= 25;
-            document.getElementById('space-hp').innerText = sHp + '%';
-            if (sHp <= 0) {
-              alert(`Spaceship Destroyed! Score: ${sScore}`);
-              return;
             }
           }
           if (e.y > c.height) sEnemies.splice(i, 1);
@@ -1177,145 +898,76 @@
       }
       loop();
     }
-    function fireBullet() { sBullets.push({ x: sPlayer.x + 14, y: sPlayer.y }); }
-    function resetSpace() { initSpace(); }
 
-    /* 8. RETRO SNAKE ENGINE (NEW GAME) */
-    let snake = [], snakeDir = 'RIGHT', snakeNextDir = 'RIGHT';
-    let snakeFood = { x: 5, y: 5 };
-    let snakeScore = 0, snakeInterval = null;
-    const snakeGridSize = 16; // 16x16 cells on 320x320 canvas
-    const snakeTileCount = 20;
+    /* ================= GAME 4: TURBO RACER ================= */
+    let carLane = 1, carScore = 0, carObs = [];
+    const carLanes = [50, 160, 270];
+    function startCar() {
+      const c = document.getElementById('carCanvas');
+      const ctx = c.getContext('2d');
+      carLane = 1; carScore = 0; carObs = [];
+      let frame = 0;
+      function loop() {
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, 0, c.width, c.height);
 
-    function initSnake() {
-      if (snakeInterval) clearInterval(snakeInterval);
-      const hi = localStorage.getItem('shameel_snake_hi') || 0;
-      document.getElementById('snake-hi').innerText = hi;
-      document.getElementById('snake-score').innerText = '0';
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(carLanes[carLane] - 16, 240, 32, 50);
 
-      snake = [
-        { x: 8, y: 10 },
-        { x: 7, y: 10 },
-        { x: 6, y: 10 }
-      ];
-      snakeDir = 'RIGHT';
-      snakeNextDir = 'RIGHT';
-      snakeScore = 0;
-      spawnSnakeFood();
-
-      // Keyboard support
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowUp') setSnakeDir('UP');
-        if (e.key === 'ArrowDown') setSnakeDir('DOWN');
-        if (e.key === 'ArrowLeft') setSnakeDir('LEFT');
-        if (e.key === 'ArrowRight') setSnakeDir('RIGHT');
-      });
-
-      snakeInterval = setInterval(updateSnake, 130);
-    }
-
-    function setSnakeDir(d) {
-      if (d === 'UP' && snakeDir !== 'DOWN') snakeNextDir = 'UP';
-      if (d === 'DOWN' && snakeDir !== 'UP') snakeNextDir = 'DOWN';
-      if (d === 'LEFT' && snakeDir !== 'RIGHT') snakeNextDir = 'LEFT';
-      if (d === 'RIGHT' && snakeDir !== 'LEFT') snakeNextDir = 'RIGHT';
-    }
-
-    function spawnSnakeFood() {
-      snakeFood = {
-        x: Math.floor(Math.random() * snakeTileCount),
-        y: Math.floor(Math.random() * snakeTileCount)
-      };
-      // Prevent food spawning on snake body
-      for (let part of snake) {
-        if (part.x === snakeFood.x && part.y === snakeFood.y) {
-          spawnSnakeFood();
-          break;
+        if (frame % 50 === 0) carObs.push({lane: Math.floor(Math.random() * 3), y: -50});
+        ctx.fillStyle = '#ef4444';
+        for (let i = carObs.length - 1; i >= 0; i--) {
+          let o = carObs[i];
+          o.y += 5;
+          ctx.fillRect(carLanes[o.lane] - 16, o.y, 32, 45);
+          if (o.lane === carLane && o.y > 200 && o.y < 280) {
+            alert('Crashed!');
+            startCar();
+            return;
+          }
+          if (o.y > c.height) {
+            carObs.splice(i, 1);
+            carScore += 10;
+            document.getElementById('car-score').innerText = carScore;
+            addReward(1, 2);
+          }
         }
+        frame++;
+        activeLoop = requestAnimationFrame(loop);
       }
+      loop();
     }
+    function moveCarLane(d) { carLane = Math.max(0, Math.min(2, carLane + d)); }
 
-    function updateSnake() {
-      snakeDir = snakeNextDir;
-      let head = { ...snake[0] };
+    /* ================= GAME 5: FLAPPY ================= */
+    let bY = 150, bV = 0, fScore = 0;
+    function initFlappy() {
+      const c = document.getElementById('flappyCanvas');
+      const ctx = c.getContext('2d');
+      bY = 150; bV = 0; fScore = 0;
+      function loop() {
+        ctx.fillStyle = '#bae6fd';
+        ctx.fillRect(0, 0, c.width, c.height);
+        bV += 0.35; bY += bV;
 
-      if (snakeDir === 'UP') head.y--;
-      if (snakeDir === 'DOWN') head.y++;
-      if (snakeDir === 'LEFT') head.x--;
-      if (snakeDir === 'RIGHT') head.x++;
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath();
+        ctx.arc(60, bY, 14, 0, Math.PI * 2);
+        ctx.fill();
 
-      // Wall collision check
-      if (head.x < 0 || head.x >= snakeTileCount || head.y < 0 || head.y >= snakeTileCount) {
-        endSnakeGame();
-        return;
-      }
-
-      // Self collision check
-      for (let part of snake) {
-        if (head.x === part.x && head.y === part.y) {
-          endSnakeGame();
+        if (bY > c.height || bY < 0) {
+          alert('Game Over!');
+          initFlappy();
           return;
         }
+        activeLoop = requestAnimationFrame(loop);
       }
-
-      snake.unshift(head);
-
-      // Check food eat
-      if (head.x === snakeFood.x && head.y === snakeFood.y) {
-        snakeScore += 10;
-        document.getElementById('snake-score').innerText = snakeScore;
-        spawnSnakeFood();
-      } else {
-        snake.pop();
-      }
-
-      drawSnake();
+      loop();
     }
+    function flappyJump() { bV = -6; }
 
-    function drawSnake() {
-      const c = document.getElementById('snakeCanvas');
-      if (!c) return;
-      const ctx = c.getContext('2d');
-
-      // Grid background
-      ctx.fillStyle = '#090d16';
-      ctx.fillRect(0, 0, c.width, c.height);
-
-      // Draw food
-      ctx.fillStyle = '#ef4444';
-      ctx.beginPath();
-      ctx.arc(
-        snakeFood.x * snakeGridSize + snakeGridSize / 2,
-        snakeFood.y * snakeGridSize + snakeGridSize / 2,
-        snakeGridSize / 2 - 2,
-        0, Math.PI * 2
-      );
-      ctx.fill();
-
-      // Draw Snake
-      snake.forEach((part, idx) => {
-        ctx.fillStyle = idx === 0 ? '#38bdf8' : '#22c55e';
-        ctx.fillRect(
-          part.x * snakeGridSize + 1,
-          part.y * snakeGridSize + 1,
-          snakeGridSize - 2,
-          snakeGridSize - 2
-        );
-      });
-    }
-
-    function endSnakeGame() {
-      clearInterval(snakeInterval);
-      const hi = localStorage.getItem('shameel_snake_hi') || 0;
-      if (snakeScore > hi) {
-        localStorage.setItem('shameel_snake_hi', snakeScore);
-        document.getElementById('snake-hi').innerText = snakeScore;
-        triggerWin("New High Score!", `Snake Score: ${snakeScore}`);
-      } else {
-        alert(`Game Over! Score: ${snakeScore}`);
-      }
-      initSnake();
-    }
+    // Init on startup
+    updateTopBar();
   </script>
 </body>
 </html>
