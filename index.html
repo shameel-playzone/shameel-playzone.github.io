@@ -13,7 +13,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Shameel's Playzone 🎮</title>
-  <meta name="description" content="Shameel's Playzone - Play Tic-Tac-Toe, Flappy Bird, Turbo Car Racer, Knife Hit and more online mini games for free!">
+  <meta name="description" content="Shameel's Playzone - Play 7 mini arcade games online for free!">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -48,7 +48,7 @@
 
     .hidden { display: none !important; }
 
-    /* 5-SECOND WINNER MODAL */
+    /* WINNER MODAL */
     #winner-modal {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -61,23 +61,11 @@
       justify-content: center;
       text-align: center;
       padding: 24px;
-      animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes modalPop {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     .modal-trophy {
       font-size: 5rem;
       filter: drop-shadow(0 0 30px rgba(250, 204, 21, 0.7));
-      animation: floatTrophy 1s alternate infinite ease-in-out;
-    }
-
-    @keyframes floatTrophy {
-      from { transform: translateY(0); }
-      to { transform: translateY(-14px); }
     }
 
     .modal-headline {
@@ -96,24 +84,7 @@
 
     .modal-desc { font-size: 0.9rem; color: #94a3b8; margin-top: 6px; }
 
-    .modal-timer-bar {
-      width: 150px; height: 6px;
-      background: #1e293b; border-radius: 9999px;
-      margin-top: 20px; overflow: hidden;
-    }
-
-    .modal-timer-fill {
-      width: 100%; height: 100%;
-      background: var(--accent);
-      animation: timerBar 5s linear forwards;
-    }
-
-    @keyframes timerBar {
-      from { width: 100%; }
-      to { width: 0%; }
-    }
-
-    /* MODERN 2-COLUMN HUB */
+    /* HUB */
     #hub-screen {
       width: 100%;
       max-width: 430px;
@@ -121,16 +92,10 @@
       flex-direction: column;
       align-items: center;
       gap: 14px;
-      animation: fadeIn 0.25s ease;
       padding-bottom: 20px;
     }
 
-    .hub-header {
-      text-align: center;
-      margin-top: 4px;
-      position: relative;
-    }
-
+    .hub-header { text-align: center; margin-top: 4px; }
     .hub-title {
       font-size: 1.85rem;
       font-weight: 900;
@@ -138,7 +103,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: 0.8px;
-      text-shadow: 0 0 25px rgba(192, 132, 252, 0.3);
     }
 
     .hub-badge {
@@ -152,7 +116,6 @@
       border-radius: 999px;
       margin-top: 4px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .game-grid {
@@ -173,32 +136,14 @@
       text-align: center;
       gap: 8px;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-      outline: none;
+      transition: transform 0.15s ease;
     }
 
-    .game-tile::before {
-      content: '';
-      position: absolute;
-      top: -30px; right: -30px;
-      width: 70px; height: 70px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .game-tile:active {
-      transform: scale(0.96);
-      border-color: #38bdf8;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-    }
+    .game-tile:active { transform: scale(0.96); border-color: #38bdf8; }
 
     .tile-icon-box {
-      width: 58px;
-      height: 58px;
+      width: 58px; height: 58px;
       border-radius: 16px;
       background: linear-gradient(135deg, rgba(30, 20, 60, 0.9), rgba(10, 5, 25, 0.95));
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -206,41 +151,24 @@
       align-items: center;
       justify-content: center;
       font-size: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
-    .tile-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    .tile-tag {
-      font-size: 0.68rem;
-      color: #94a3b8;
-      font-weight: 600;
-      line-height: 1.2;
-    }
+    .tile-title { font-size: 0.95rem; font-weight: 800; color: #fff; line-height: 1.2; }
+    .tile-tag { font-size: 0.68rem; color: #94a3b8; font-weight: 600; line-height: 1.2; }
 
     .tile-play-btn {
       margin-top: 4px;
       background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #ffffff;
+      color: #fff;
       font-size: 0.72rem;
       font-weight: 800;
       padding: 5px 14px;
       border-radius: 10px;
       border: none;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
     }
 
-    /* COMMON PLAY WRAPPERS */
+    /* PLAY WRAPPERS */
     .play-screen {
       width: 100%;
       max-width: 380px;
@@ -248,7 +176,6 @@
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      animation: fadeIn 0.25s ease-out;
     }
 
     .play-navbar {
@@ -277,6 +204,7 @@
       font-size: 0.82rem;
       font-weight: 800;
       color: var(--accent);
+      text-align: center;
     }
 
     .mode-pill-bar {
@@ -301,16 +229,9 @@
       cursor: pointer;
     }
 
-    .mode-pill-btn.active {
-      background: #0284c7;
-      color: #ffffff;
-    }
+    .mode-pill-btn.active { background: #0284c7; color: #ffffff; }
 
-    .scoreboard-box {
-      width: 100%;
-      display: flex;
-      gap: 8px;
-    }
+    .scoreboard-box { width: 100%; display: flex; gap: 8px; }
 
     .score-card {
       flex: 1;
@@ -325,16 +246,9 @@
     .score-val { font-size: 1.35rem; font-weight: 900; color: #38bdf8; }
 
     /* TIC TAC TOE */
-    .board-wrapper {
-      position: relative;
-      width: 100%;
-      height: 330px;
-      max-height: 80vw;
-    }
-
+    .board-wrapper { position: relative; width: 100%; height: 330px; max-height: 80vw; }
     .game-board {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       background: #0b1120;
       border: 1.5px solid #1e293b;
       border-radius: 22px;
@@ -344,7 +258,6 @@
       grid-template-rows: repeat(3, 1fr);
       gap: 8px;
     }
-
     .cell {
       background: #060a14;
       border-radius: 14px;
@@ -357,24 +270,8 @@
       border: 1px solid #172033;
       user-select: none;
     }
-
-    .cell.x { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.7); }
-    .cell.o { color: #f43f5e; text-shadow: 0 0 12px rgba(244, 63, 94, 0.7); }
-    .cell.win-cell { background: #0c2340; border-color: #38bdf8; }
-
-    .strike-svg {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 20;
-    }
-
-    .strike-line {
-      stroke: #38bdf8; stroke-width: 8; stroke-linecap: round;
-      filter: drop-shadow(0 0 10px #38bdf8);
-      stroke-dasharray: 400; stroke-dashoffset: 400;
-      animation: drawStrike 0.4s ease-out forwards;
-    }
-    @keyframes drawStrike { to { stroke-dashoffset: 0; } }
+    .cell.x { color: #38bdf8; }
+    .cell.o { color: #f43f5e; }
 
     /* MEMORY CARDS */
     .memory-grid {
@@ -389,7 +286,6 @@
       border-radius: 20px;
       border: 1.5px solid #1e293b;
     }
-
     .mem-card {
       background: #090d16;
       border: 1.5px solid #1e293b;
@@ -415,7 +311,6 @@
       justify-content: space-around;
       align-items: center;
     }
-
     .rps-hand-display {
       width: 70px; height: 70px;
       background: #060a14;
@@ -426,7 +321,6 @@
       justify-content: center;
       font-size: 2.2rem;
     }
-
     .rps-actions { width: 100%; display: flex; gap: 8px; }
     .rps-btn {
       flex: 1;
@@ -440,111 +334,107 @@
       gap: 4px;
       cursor: pointer;
     }
-    .rps-btn:active { transform: scale(0.95); border-color: #38bdf8; }
     .rps-btn-emoji { font-size: 2rem; }
     .rps-btn-label { font-size: 0.75rem; font-weight: 700; color: #e2e8f0; }
 
-    /* CANVAS GAMES */
+    /* CANVAS & TOUCH CONTROLS */
     canvas {
       background: #070b14;
       border: 1.5px solid var(--card-border);
       border-radius: 20px;
       display: block;
       width: 100%;
-      max-height: 420px;
+      max-height: 400px;
     }
-
-    .car-touch-bar { width: 100%; display: flex; gap: 10px; }
+    .touch-bar { width: 100%; display: flex; gap: 10px; margin-top: 4px; }
     .touch-btn {
       flex: 1;
       background: var(--card-bg);
       border: 1.5px solid var(--card-border);
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 900;
       padding: 12px 0;
       border-radius: 14px;
       cursor: pointer;
+      user-select: none;
     }
     .touch-btn:active { background: var(--accent); }
-    .nitro-btn { background: #dc2626 !important; border-color: #ef4444 !important; font-size: 0.9rem !important; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    .fire-btn { background: #dc2626 !important; border-color: #ef4444 !important; font-size: 0.9rem !important; }
   </style>
 </head>
 <body>
 
-  <!-- 5-SECOND WINNER MODAL -->
+  <!-- WINNER MODAL -->
   <div id="winner-modal" class="hidden">
     <div class="modal-trophy">🏆</div>
     <div class="modal-headline">WINNER!</div>
     <div class="modal-name" id="modal-name">CHAMPION!</div>
     <div class="modal-desc" id="modal-desc">Kidilanaayi jayichu! 🎉</div>
-    <div class="modal-timer-bar"><div class="modal-timer-fill"></div></div>
+    <button class="nav-btn" style="margin-top:20px;" onclick="closeModal()">Close</button>
   </div>
 
-  <!-- MODERN 2-COLUMN HUB -->
+  <!-- HUB SCREEN -->
   <div id="hub-screen">
     <div class="hub-header">
       <div class="hub-title">SHAMEEL'S PLAYZONE</div>
-      <div class="hub-badge">Select a Game to Play</div>
+      <div class="hub-badge">7 Games Loaded</div>
     </div>
 
     <div class="game-grid">
-      <!-- 1. Tic Tac Toe 3D -->
-      <button type="button" class="game-tile" onclick="openGameScreen('ttt')">
+      <!-- 1 -->
+      <button type="button" class="game-tile" onclick="openGame('ttt')">
         <div class="tile-icon-box">❌</div>
         <div class="tile-title">Tic-Tac-Toe</div>
         <div class="tile-tag">Smart AI & 2P</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-
-      <!-- 2. Memory Card Flip -->
-      <button type="button" class="game-tile" onclick="openGameScreen('memory')">
+      <!-- 2 -->
+      <button type="button" class="game-tile" onclick="openGame('memory')">
         <div class="tile-icon-box">🧠</div>
         <div class="tile-title">Memory Flip</div>
         <div class="tile-tag">Brain Match 4x4</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-
-      <!-- 3. Rock Paper Scissors -->
-      <button type="button" class="game-tile" onclick="openGameScreen('rps')">
+      <!-- 3 -->
+      <button type="button" class="game-tile" onclick="openGame('rps')">
         <div class="tile-icon-box">✊</div>
         <div class="tile-title">R-P-S Battle</div>
         <div class="tile-tag">First to 5 Points</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-
-      <!-- 4. Turbo Car Racer -->
-      <button type="button" class="game-tile" onclick="openGameScreen('car')">
+      <!-- 4 -->
+      <button type="button" class="game-tile" onclick="openGame('car')">
         <div class="tile-icon-box">🏎️</div>
         <div class="tile-title">Turbo Racer</div>
         <div class="tile-tag">Dodge & Nitro</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-
-      <!-- 5. Flappy Bird -->
-      <button type="button" class="game-tile" onclick="openGameScreen('flappy')">
+      <!-- 5 -->
+      <button type="button" class="game-tile" onclick="openGame('flappy')">
         <div class="tile-icon-box">🐦</div>
         <div class="tile-title">Flappy Bird</div>
-        <div class="tile-tag">Fly Through Pipes</div>
+        <div class="tile-tag">Fly Pipes</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-
-      <!-- 6. Knife Hit -->
-      <button type="button" class="game-tile" onclick="openGameScreen('knife')">
+      <!-- 6 -->
+      <button type="button" class="game-tile" onclick="openGame('knife')">
         <div class="tile-icon-box">🎯</div>
         <div class="tile-title">Knife Master</div>
-        <div class="tile-tag">Spinning Target</div>
+        <div class="tile-tag">Spinning Board</div>
+        <div class="tile-play-btn">Play Now ▶</div>
+      </button>
+      <!-- 7 (NEW) -->
+      <button type="button" class="game-tile" onclick="openGame('space')">
+        <div class="tile-icon-box">🚀</div>
+        <div class="tile-title">Galaxy Strike</div>
+        <div class="tile-tag">Laser Shooter</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
     </div>
   </div>
 
-  <!-- 1. TIC TAC TOE SCREEN -->
+  <!-- 1. TTT SCREEN -->
   <div id="screen-ttt" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
@@ -552,22 +442,17 @@
       <button class="nav-btn" onclick="resetTtt()">🔄 Restart</button>
     </div>
     <div class="mode-pill-bar">
-      <button class="mode-pill-btn active" id="ttt-btn-ai" onclick="setTttMode('ai')">🤖 Smart AI</button>
-      <button class="mode-pill-btn" id="ttt-btn-2p" onclick="setTttMode('2p')">👥 2 Players</button>
+      <button class="mode-pill-btn active" id="ttt-ai-btn" onclick="setTttMode('ai')">🤖 vs AI</button>
+      <button class="mode-pill-btn" id="ttt-2p-btn" onclick="setTttMode('2p')">👥 2 Players</button>
     </div>
     <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title" id="ttt-p1-title">You (X)</div><div class="score-val" id="ttt-p1-val">0</div></div>
-      <div class="score-card"><div class="score-title">Draw</div><div class="score-val" id="ttt-draw-val">0</div></div>
-      <div class="score-card"><div class="score-title" id="ttt-p2-title">AI (O)</div><div class="score-val" id="ttt-p2-val">0</div></div>
+      <div class="score-card"><div class="score-title">X</div><div class="score-val" id="ttt-x-score">0</div></div>
+      <div class="score-card"><div class="score-title">Draw</div><div class="score-val" id="ttt-draw-score">0</div></div>
+      <div class="score-card"><div class="score-title">O</div><div class="score-val" id="ttt-o-score">0</div></div>
     </div>
-    <div class="score-bubble" id="ttt-status">Ningalude oozham (X)</div>
+    <div class="score-bubble" id="ttt-status">Turn: Player X</div>
     <div class="board-wrapper">
-      <div class="game-board" id="ttt-board">
-        <div class="cell" onclick="handleTttMove(0)"></div><div class="cell" onclick="handleTttMove(1)"></div><div class="cell" onclick="handleTttMove(2)"></div>
-        <div class="cell" onclick="handleTttMove(3)"></div><div class="cell" onclick="handleTttMove(4)"></div><div class="cell" onclick="handleTttMove(5)"></div>
-        <div class="cell" onclick="handleTttMove(6)"></div><div class="cell" onclick="handleTttMove(7)"></div><div class="cell" onclick="handleTttMove(8)"></div>
-      </div>
-      <svg class="strike-svg" id="strike-svg"></svg>
+      <div class="game-board" id="ttt-board"></div>
     </div>
   </div>
 
@@ -576,62 +461,52 @@
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
       <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Memory Flip</span>
-      <button class="nav-btn" onclick="initMemoryGame()">🔄 Restart</button>
-    </div>
-    <div class="mode-pill-bar">
-      <button class="mode-pill-btn active" id="mem-btn-ai" onclick="setMemMode('ai')">🤖 vs AI</button>
-      <button class="mode-pill-btn" id="mem-btn-2p" onclick="setMemMode('2p')">👥 2 Players</button>
+      <button class="nav-btn" onclick="initMemory()">🔄 Restart</button>
     </div>
     <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title" id="mem-p1-title">You</div><div class="score-val" id="mem-p1-val">0</div></div>
-      <div class="score-card"><div class="score-title">Moves</div><div class="score-val" id="mem-moves-val" style="color:#94a3b8;">0</div></div>
-      <div class="score-card"><div class="score-title" id="mem-p2-title">AI</div><div class="score-val" id="mem-p2-val" style="color:#f43f5e;">0</div></div>
+      <div class="score-card"><div class="score-title">Pairs Found</div><div class="score-val" id="mem-pairs">0 / 8</div></div>
+      <div class="score-card"><div class="score-title">Moves</div><div class="score-val" id="mem-moves">0</div></div>
     </div>
-    <div class="score-bubble" id="mem-status">Cards marichu nokkoo! 🧠</div>
     <div class="memory-grid" id="mem-grid"></div>
   </div>
 
-  <!-- 3. ROCK PAPER SCISSORS SCREEN -->
+  <!-- 3. RPS SCREEN -->
   <div id="screen-rps" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">First to 5 Wins</span>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">RPS Battle</span>
       <button class="nav-btn" onclick="resetRps()">🔄 Reset</button>
     </div>
-    <div class="mode-pill-bar">
-      <button class="mode-pill-btn active" id="rps-btn-ai" onclick="setRpsMode('ai')">🤖 vs AI</button>
-      <button class="mode-pill-btn" id="rps-btn-2p" onclick="setRpsMode('2p')">👥 2 Players</button>
-    </div>
     <div class="scoreboard-box">
-      <div class="score-card"><div class="score-title" id="rps-p1-title">You</div><div class="score-val" id="rps-p1-val">0 / 5</div></div>
-      <div class="score-card"><div class="score-title">Draw</div><div class="score-val" id="rps-draw-val">0</div></div>
-      <div class="score-card"><div class="score-title" id="rps-p2-title">AI</div><div class="score-val" id="rps-p2-val" style="color:#f43f5e;">0 / 5</div></div>
+      <div class="score-card"><div class="score-title">You</div><div class="score-val" id="rps-p-val">0</div></div>
+      <div class="score-card"><div class="score-title">AI</div><div class="score-val" id="rps-ai-val">0</div></div>
     </div>
-    <div class="score-bubble" id="rps-status">Aadyam 5 points nedunnavar jayikkum! 🏆</div>
     <div class="rps-battlefield">
-      <div style="text-align:center;"><div class="rps-hand-display" id="rps-p1-hand">❓</div><div style="font-size:0.75rem;margin-top:4px;" id="rps-p1-label">You</div></div>
-      <div style="font-weight:900; font-size:1.3rem; color:#38bdf8;">VS</div>
-      <div style="text-align:center;"><div class="rps-hand-display" id="rps-p2-hand">❓</div><div style="font-size:0.75rem;margin-top:4px;" id="rps-p2-label">AI</div></div>
+      <div class="rps-hand-display" id="rps-p-hand">❓</div>
+      <div style="font-weight:900; font-size:1.4rem; color:var(--accent);">VS</div>
+      <div class="rps-hand-display" id="rps-ai-hand">❓</div>
     </div>
     <div class="rps-actions">
-      <button class="rps-btn" onclick="playRpsChoice('rock')"><span class="rps-btn-emoji">✊</span><span class="rps-btn-label">Rock</span></button>
-      <button class="rps-btn" onclick="playRpsChoice('paper')"><span class="rps-btn-emoji">✋</span><span class="rps-btn-label">Paper</span></button>
-      <button class="rps-btn" onclick="playRpsChoice('scissors')"><span class="rps-btn-emoji">✌️</span><span class="rps-btn-label">Scissors</span></button>
+      <button class="rps-btn" onclick="playRps('✊')"><span class="rps-btn-emoji">✊</span><span class="rps-btn-label">Rock</span></button>
+      <button class="rps-btn" onclick="playRps('✋')"><span class="rps-btn-emoji">✋</span><span class="rps-btn-label">Paper</span></button>
+      <button class="rps-btn" onclick="playRps('✌️')"><span class="rps-btn-emoji">✌️</span><span class="rps-btn-label">Scissors</span></button>
     </div>
   </div>
 
-  <!-- 4. TURBO CAR RACER SCREEN -->
+  <!-- 4. TURBO CAR SCREEN -->
   <div id="screen-car" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <div class="score-bubble">Score: <span id="car-score">0</span></div>
-      <button class="nav-btn" onclick="initCarGame()">🔄 Retry</button>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Turbo Racer</span>
+      <button class="nav-btn" onclick="startCarGame()">🔄 Restart</button>
     </div>
-    <canvas id="car-canvas" width="340" height="400"></canvas>
-    <div class="car-touch-bar">
-      <button class="touch-btn" onclick="moveCarLane(-1)">⬅️</button>
-      <button class="touch-btn nitro-btn" onclick="triggerNitro()">🔥 NITRO</button>
-      <button class="touch-btn" onclick="moveCarLane(1)">➡️</button>
+    <div class="scoreboard-box">
+      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="car-score">0</div></div>
+    </div>
+    <canvas id="carCanvas" width="320" height="360"></canvas>
+    <div class="touch-bar">
+      <button class="touch-btn" onclick="moveCarLane(-1)">◀ Left</button>
+      <button class="touch-btn" onclick="moveCarLane(1)">Right ▶</button>
     </div>
   </div>
 
@@ -639,543 +514,523 @@
   <div id="screen-flappy" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <div class="score-bubble">Score: <span id="flappy-score">0</span></div>
-      <button class="nav-btn" onclick="initFlappyGame()">🔄 Retry</button>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Flappy Bird</span>
+      <button class="nav-btn" onclick="initFlappy()">🔄 Restart</button>
     </div>
-    <canvas id="flappy-canvas" width="340" height="400" onclick="flapBird()"></canvas>
-    <div style="font-size:0.75rem; color:#94a3b8; font-weight:600;">സ്ക്രീനിൽ ടാപ്പ് ചെയ്ത് പക്ഷിയെ പറത്തൂ! 🐦👆</div>
+    <div class="scoreboard-box">
+      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="flappy-score">0</div></div>
+    </div>
+    <canvas id="flappyCanvas" width="320" height="360"></canvas>
+    <div class="touch-bar">
+      <button class="touch-btn" style="background:#0284c7;" onclick="flappyJump()">🪽 FLAP / JUMP</button>
+    </div>
   </div>
 
   <!-- 6. KNIFE HIT SCREEN -->
   <div id="screen-knife" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
-      <div class="score-bubble">Stage <span id="knife-stage">1</span> | Knives: <span id="knife-count">5</span></div>
-      <button class="nav-btn" onclick="initKnifeGame()">🔄 Retry</button>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Knife Master</span>
+      <button class="nav-btn" onclick="initKnife()">🔄 Restart</button>
     </div>
-    <canvas id="knife-canvas" width="340" height="400" onclick="throwKnife()"></canvas>
-    <div style="font-size:0.75rem; color:#94a3b8; font-weight:600;">കത്തി എറിയാൻ സ്ക്രീനിൽ തൊടുക! 🗡️</div>
+    <div class="scoreboard-box">
+      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="knife-score">0</div></div>
+      <div class="score-card"><div class="score-title">Knives Left</div><div class="score-val" id="knife-left">7</div></div>
+    </div>
+    <canvas id="knifeCanvas" width="320" height="360"></canvas>
+    <div class="touch-bar">
+      <button class="touch-btn fire-btn" onclick="throwKnife()">🗡️ THROW KNIFE</button>
+    </div>
+  </div>
+
+  <!-- 7. GALAXY STRIKE SCREEN (NEW) -->
+  <div id="screen-space" class="play-screen hidden">
+    <div class="play-navbar">
+      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Galaxy Strike</span>
+      <button class="nav-btn" onclick="resetSpace()">🔄 Restart</button>
+    </div>
+    <div class="scoreboard-box">
+      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="space-score">0</div></div>
+      <div class="score-card"><div class="score-title">Shield</div><div class="score-val" id="space-hp" style="color:#ef4444;">100%</div></div>
+    </div>
+    <canvas id="spaceCanvas" width="320" height="360"></canvas>
+    <div class="touch-bar">
+      <button class="touch-btn" id="s-left">◀</button>
+      <button class="touch-btn fire-btn" id="s-fire">🔥 FIRE</button>
+      <button class="touch-btn" id="s-right">▶</button>
+    </div>
   </div>
 
   <script>
-    /* WINNER MODAL */
-    let winModalTimer = null;
-    function showWinnerModal(name, desc = "Kidilanaayi jayichu! 🎉") {
-      const modal = document.getElementById('winner-modal');
-      document.getElementById('modal-name').textContent = name;
-      document.getElementById('modal-desc').textContent = desc;
-      modal.classList.remove('hidden');
+    /* ROUTING */
+    let activeLoop = null;
 
-      if (typeof confetti === 'function') confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+    function openGame(id) {
+      document.getElementById('hub-screen').classList.add('hidden');
+      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
+      const scr = document.getElementById(`screen-${id}`);
+      if (scr) scr.classList.remove('hidden');
 
-      const bar = document.querySelector('.modal-timer-fill');
-      bar.style.animation = 'none'; void bar.offsetWidth;
-      bar.style.animation = 'timerBar 5s linear forwards';
-
-      clearTimeout(winModalTimer);
-      winModalTimer = setTimeout(() => { modal.classList.add('hidden'); }, 5000);
-    }
-
-    /* NAVIGATION LOGIC */
-    const allScreens = ['hub-screen', 'screen-ttt', 'screen-memory', 'screen-rps', 'screen-car', 'screen-flappy', 'screen-knife'];
-
-    function openGameScreen(id) {
-      allScreens.forEach(s => document.getElementById(s).classList.add('hidden'));
-
-      if (id === 'ttt') {
-        document.getElementById('screen-ttt').classList.remove('hidden');
-        resetTtt();
-      } else if (id === 'memory') {
-        document.getElementById('screen-memory').classList.remove('hidden');
-        initMemoryGame();
-      } else if (id === 'rps') {
-        document.getElementById('screen-rps').classList.remove('hidden');
-        resetRps();
-      } else if (id === 'car') {
-        document.getElementById('screen-car').classList.remove('hidden');
-        initCarGame();
-      } else if (id === 'flappy') {
-        document.getElementById('screen-flappy').classList.remove('hidden');
-        initFlappyGame();
-      } else if (id === 'knife') {
-        document.getElementById('screen-knife').classList.remove('hidden');
-        initKnifeGame();
-      }
+      if (id === 'ttt') initTtt();
+      if (id === 'memory') initMemory();
+      if (id === 'rps') resetRps();
+      if (id === 'car') startCarGame();
+      if (id === 'flappy') initFlappy();
+      if (id === 'knife') initKnife();
+      if (id === 'space') initSpace();
     }
 
     function returnToHub() {
-      cancelAnimationFrame(carAnimId);
-      cancelAnimationFrame(flappyAnimId);
-      cancelAnimationFrame(knifeAnimId);
-      allScreens.forEach(s => document.getElementById(s).classList.add('hidden'));
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
       document.getElementById('hub-screen').classList.remove('hidden');
     }
 
+    function triggerWin(title, desc) {
+      document.getElementById('modal-name').innerText = title;
+      document.getElementById('modal-desc').innerText = desc;
+      document.getElementById('winner-modal').classList.remove('hidden');
+      if (window.confetti) confetti();
+    }
+    function closeModal() { document.getElementById('winner-modal').classList.add('hidden'); }
+
     /* 1. TIC TAC TOE */
+    let tttGrid = Array(9).fill('');
+    let tttTurn = 'X';
     let tttMode = 'ai';
-    let tttBoard = ["","","","","","","","",""];
-    let tttTurn = "X";
-    let tttPlayable = true;
-    let tttScores = { p1: 0, draw: 0, p2: 0 };
-    const tttWins = [
-      { c: [0,1,2], t: 'r', i: 0 }, { c: [3,4,5], t: 'r', i: 1 }, { c: [6,7,8], t: 'r', i: 2 },
-      { c: [0,3,6], t: 'c', i: 0 }, { c: [1,4,7], t: 'c', i: 1 }, { c: [2,5,8], t: 'c', i: 2 },
-      { c: [0,4,8], t: 'd', i: 0 }, { c: [2,4,6], t: 'd', i: 1 }
-    ];
+    let tttScores = { X: 0, O: 0, D: 0 };
+
+    function initTtt() {
+      const b = document.getElementById('ttt-board');
+      b.innerHTML = '';
+      tttGrid = Array(9).fill('');
+      tttTurn = 'X';
+      document.getElementById('ttt-status').innerText = "Turn: Player X";
+      for (let i = 0; i < 9; i++) {
+        let cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.onclick = () => makeTttMove(i);
+        b.appendChild(cell);
+      }
+    }
 
     function setTttMode(m) {
       tttMode = m;
-      document.getElementById('ttt-btn-ai').classList.toggle('active', m === 'ai');
-      document.getElementById('ttt-btn-2p').classList.toggle('active', m === '2p');
-      document.getElementById('ttt-p1-title').textContent = (m === 'ai') ? 'You (X)' : 'Player (X)';
-      document.getElementById('ttt-p2-title').textContent = (m === 'ai') ? 'AI (O)' : 'Player (O)';
-      resetTtt();
+      document.getElementById('ttt-ai-btn').classList.toggle('active', m === 'ai');
+      document.getElementById('ttt-2p-btn').classList.toggle('active', m === '2p');
+      initTtt();
     }
 
-    function handleTttMove(idx) {
-      if (tttBoard[idx] !== "" || !tttPlayable) return;
-      playTttStep(idx, tttTurn);
+    function resetTtt() { initTtt(); }
 
-      const win = checkTttWin(tttBoard, tttTurn);
-      if (win) { finishTtt(tttTurn, win); return; }
-      if (tttBoard.every(c => c !== "")) { finishTtt("draw"); return; }
-
-      if (tttMode === 'ai') {
-        tttTurn = "O"; tttPlayable = false;
-        document.getElementById('ttt-status').textContent = "AI chinthikkunnu... 🤖";
-        setTimeout(() => {
-          const aiIdx = getTttAIMove();
-          playTttStep(aiIdx, "O");
-          const aiWin = checkTttWin(tttBoard, "O");
-          if (aiWin) finishTtt("O", aiWin);
-          else if (tttBoard.every(c => c !== "")) finishTtt("draw");
-          else { tttTurn = "X"; tttPlayable = true; document.getElementById('ttt-status').textContent = "Ningalude oozham (X)"; }
-        }, 350);
-      } else {
-        tttTurn = (tttTurn === "X") ? "O" : "X";
-        document.getElementById('ttt-status').textContent = `Player ${tttTurn}-nte oozham`;
+    function makeTttMove(i) {
+      if (tttGrid[i] !== '') return;
+      tttGrid[i] = tttTurn;
+      updateTttBoard();
+      if (checkTttWin(tttTurn)) {
+        tttScores[tttTurn]++;
+        updateTttScoreUI();
+        triggerWin(`Player ${tttTurn} Wins!`, "Adipoli victory! 🎉");
+        initTtt();
+        return;
+      }
+      if (!tttGrid.includes('')) {
+        tttScores.D++;
+        updateTttScoreUI();
+        alert('Draw match!');
+        initTtt();
+        return;
+      }
+      tttTurn = tttTurn === 'X' ? 'O' : 'X';
+      document.getElementById('ttt-status').innerText = `Turn: Player ${tttTurn}`;
+      if (tttMode === 'ai' && tttTurn === 'O') {
+        setTimeout(makeTttAiMove, 300);
       }
     }
 
-    function playTttStep(i, p) {
-      tttBoard[i] = p;
-      const el = document.getElementsByClassName('cell')[i];
-      el.textContent = p; el.classList.add(p.toLowerCase());
-    }
-
-    function checkTttWin(b, p) { return tttWins.find(item => item.c.every(i => b[i] === p)); }
-
-    function drawStrike(wInfo, p) {
-      const svg = document.getElementById('strike-svg'); svg.innerHTML = '';
-      const w = svg.clientWidth || 330, h = svg.clientHeight || 330;
-      let x1, y1, x2, y2;
-      if (wInfo.t === 'r') { const y = (wInfo.i === 0) ? h*0.19 : (wInfo.i === 1) ? h*0.5 : h*0.81; x1 = w*0.08; y1 = y; x2 = w*0.92; y2 = y; }
-      else if (wInfo.t === 'c') { const x = (wInfo.i === 0) ? w*0.19 : (wInfo.i === 1) ? w*0.5 : w*0.81; x1 = x; y1 = h*0.08; x2 = x; y2 = h*0.92; }
-      else if (wInfo.t === 'd') { if (wInfo.i === 0) { x1 = w*0.1; y1 = h*0.1; x2 = w*0.9; y2 = h*0.9; } else { x1 = w*0.9; y1 = h*0.1; x2 = w*0.1; y2 = h*0.9; } }
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      line.setAttribute('class', 'strike-line');
-      line.style.stroke = (p === 'X') ? '#38bdf8' : '#f43f5e';
-      svg.appendChild(line);
-    }
-
-    function finishTtt(winner, winInfo) {
-      tttPlayable = false;
-      if (winner === 'draw') {
-        document.getElementById('ttt-status').textContent = "Samanilayil! 🤝";
-        tttScores.draw++;
-      } else {
-        winInfo.c.forEach(i => document.getElementsByClassName('cell')[i].classList.add('win-cell'));
-        drawStrike(winInfo, winner);
-        if (winner === 'X') { tttScores.p1++; showWinnerModal(tttMode === 'ai' ? "YOU WON!" : "PLAYER X WON!"); }
-        else { tttScores.p2++; showWinnerModal(tttMode === 'ai' ? "AI WON!" : "PLAYER O WON!"); }
+    function makeTttAiMove() {
+      let empty = tttGrid.map((v, i) => v === '' ? i : null).filter(v => v !== null);
+      if (empty.length > 0) {
+        let pick = empty[Math.floor(Math.random() * empty.length)];
+        makeTttMove(pick);
       }
-      document.getElementById('ttt-p1-val').textContent = tttScores.p1;
-      document.getElementById('ttt-draw-val').textContent = tttScores.draw;
-      document.getElementById('ttt-p2-val').textContent = tttScores.p2;
-      setTimeout(resetTtt, 5000);
     }
 
-    function resetTtt() {
-      tttBoard = ["","","","","","","","",""]; tttTurn = "X"; tttPlayable = true;
-      document.getElementById('strike-svg').innerHTML = '';
-      Array.from(document.getElementsByClassName('cell')).forEach(c => { c.textContent = ''; c.className = 'cell'; });
-      document.getElementById('ttt-status').textContent = (tttMode === 'ai') ? "Ningalude oozham (X)" : "Player X-nte oozham";
-    }
-
-    function getTttAIMove() {
-      const empty = tttBoard.map((v, i) => v === "" ? i : null).filter(v => v !== null);
-      for (let i of empty) {
-        tttBoard[i] = "O"; if (checkTttWin(tttBoard, "O")) { tttBoard[i] = ""; return i; } tttBoard[i] = "";
-      }
-      for (let i of empty) {
-        tttBoard[i] = "X"; if (checkTttWin(tttBoard, "X")) { tttBoard[i] = ""; return i; } tttBoard[i] = "";
-      }
-      return empty[Math.floor(Math.random() * empty.length)];
-    }
-
-    /* 2. MEMORY CARD GAME */
-    const memIcons = ['🚀','⚽','💎','🎮','🔥','👑','🍕','🤖'];
-    let memCards = [], memFlipped = [], memScores = { p1: 0, p2: 0 }, memTurn = 1, memMode = 'ai', memLock = false, aiMem = {};
-
-    function setMemMode(m) {
-      memMode = m;
-      document.getElementById('mem-btn-ai').classList.toggle('active', m === 'ai');
-      document.getElementById('mem-btn-2p').classList.toggle('active', m === '2p');
-      document.getElementById('mem-p1-title').textContent = (m === 'ai') ? 'You' : 'Player 1';
-      document.getElementById('mem-p2-title').textContent = (m === 'ai') ? 'AI' : 'Player 2';
-      initMemoryGame();
-    }
-
-    function initMemoryGame() {
-      const grid = document.getElementById('mem-grid'); grid.innerHTML = '';
-      memCards = [...memIcons, ...memIcons].sort(() => 0.5 - Math.random());
-      memFlipped = []; memScores = { p1: 0, p2: 0 }; memTurn = 1; memLock = false; aiMem = {};
-      document.getElementById('mem-p1-val').textContent = '0';
-      document.getElementById('mem-p2-val').textContent = '0';
-      document.getElementById('mem-moves-val').textContent = '0';
-      document.getElementById('mem-status').textContent = 'Cards marichu nokkoo! 🧠';
-
-      memCards.forEach((icon, idx) => {
-        const card = document.createElement('div');
-        card.className = 'mem-card'; card.dataset.index = idx; card.dataset.icon = icon; card.textContent = '❓';
-        card.onclick = () => { if (memMode === 'ai' && memTurn === 2) return; flipCard(card); };
-        grid.appendChild(card);
+    function updateTttBoard() {
+      const cells = document.querySelectorAll('#ttt-board .cell');
+      cells.forEach((c, idx) => {
+        c.innerText = tttGrid[idx];
+        c.className = `cell ${tttGrid[idx].toLowerCase()}`;
       });
     }
 
-    function flipCard(card) {
-      if (memLock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-      card.classList.add('flipped'); card.textContent = card.dataset.icon;
-      memFlipped.push(card); aiMem[card.dataset.index] = card.dataset.icon;
-
-      if (memFlipped.length === 2) {
-        const [c1, c2] = memFlipped;
-        if (c1.dataset.icon === c2.dataset.icon) {
-          c1.classList.add('matched'); c2.classList.add('matched');
-          if (memTurn === 1) memScores.p1++; else memScores.p2++;
-          document.getElementById('mem-p1-val').textContent = memScores.p1;
-          document.getElementById('mem-p2-val').textContent = memScores.p2;
-          memFlipped = [];
-          if (memScores.p1 + memScores.p2 === 8) {
-            const w = (memScores.p1 > memScores.p2) ? (memMode === 'ai' ? "YOU WON!" : "PLAYER 1 WON!") : (memMode === 'ai' ? "AI WON!" : "PLAYER 2 WON!");
-            showWinnerModal(w);
-            setTimeout(initMemoryGame, 5000);
-          } else if (memMode === 'ai' && memTurn === 2) {
-            setTimeout(runMemAI, 700);
-          }
-        } else {
-          memLock = true;
-          setTimeout(() => {
-            c1.classList.remove('flipped'); c2.classList.remove('flipped');
-            c1.textContent = '❓'; c2.textContent = '❓';
-            memFlipped = []; memLock = false;
-            memTurn = (memTurn === 1) ? 2 : 1;
-            document.getElementById('mem-status').textContent = (memMode === 'ai') ? (memTurn === 1 ? "Ningalude oozham! 🧠" : "AI chinthikkunnu... 🤖") : `Player ${memTurn}-nte oozham! 🧠`;
-            if (memMode === 'ai' && memTurn === 2) setTimeout(runMemAI, 700);
-          }, 850);
-        }
-      }
+    function checkTttWin(p) {
+      const w = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      return w.some(comb => comb.every(idx => tttGrid[idx] === p));
     }
 
-    function runMemAI() {
-      const un = Array.from(document.querySelectorAll('.mem-card:not(.matched)'));
-      if (un.length < 2) return;
-      flipCard(un[0]);
-      setTimeout(() => flipCard(un[1]), 500);
+    function updateTttScoreUI() {
+      document.getElementById('ttt-x-score').innerText = tttScores.X;
+      document.getElementById('ttt-o-score').innerText = tttScores.O;
+      document.getElementById('ttt-draw-score').innerText = tttScores.D;
+    }
+
+    /* 2. MEMORY FLIP */
+    const emojis = ['🍎','🍌','🍇','🍓','🍉','🍒','🥑','🍍'];
+    let memCards = [], memFlipped = [], memMatched = 0, memMovesCount = 0;
+
+    function initMemory() {
+      const grid = document.getElementById('mem-grid');
+      grid.innerHTML = '';
+      memCards = [...emojis, ...emojis].sort(() => 0.5 - Math.random());
+      memFlipped = [];
+      memMatched = 0;
+      memMovesCount = 0;
+      document.getElementById('mem-pairs').innerText = "0 / 8";
+      document.getElementById('mem-moves').innerText = "0";
+
+      memCards.forEach((emoji, i) => {
+        let el = document.createElement('div');
+        el.className = 'mem-card';
+        el.innerText = '❓';
+        el.onclick = () => flipMemCard(el, emoji, i);
+        grid.appendChild(el);
+      });
+    }
+
+    function flipMemCard(el, emoji, i) {
+      if (memFlipped.length === 2 || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+      el.classList.add('flipped');
+      el.innerText = emoji;
+      memFlipped.push({ el, emoji, i });
+
+      if (memFlipped.length === 2) {
+        memMovesCount++;
+        document.getElementById('mem-moves').innerText = memMovesCount;
+        if (memFlipped[0].emoji === memFlipped[1].emoji) {
+          memFlipped[0].el.classList.add('matched');
+          memFlipped[1].el.classList.add('matched');
+          memMatched++;
+          document.getElementById('mem-pairs').innerText = `${memMatched} / 8`;
+          memFlipped = [];
+          if (memMatched === 8) triggerWin("Memory Master!", `${memMovesCount} moves-il തീർത്തു!`);
+        } else {
+          setTimeout(() => {
+            memFlipped[0].el.classList.remove('flipped');
+            memFlipped[0].el.innerText = '❓';
+            memFlipped[1].el.classList.remove('flipped');
+            memFlipped[1].el.innerText = '❓';
+            memFlipped = [];
+          }, 700);
+        }
+      }
     }
 
     /* 3. ROCK PAPER SCISSORS */
-    const rpsEmojis = { rock: '✊', paper: '✋', scissors: '✌️' };
-    let rpsMode = 'ai', rpsScores = { p1: 0, draw: 0, p2: 0 }, rpsP1Choice = null;
-
-    function setRpsMode(m) {
-      rpsMode = m;
-      document.getElementById('rps-btn-ai').classList.toggle('active', m === 'ai');
-      document.getElementById('rps-btn-2p').classList.toggle('active', m === '2p');
-      document.getElementById('rps-p1-title').textContent = (m === 'ai') ? 'You' : 'Player 1';
-      document.getElementById('rps-p2-title').textContent = (m === 'ai') ? 'AI' : 'Player 2';
-      resetRps();
-    }
-
-    function playRpsChoice(c) {
-      if (rpsMode === 'ai') {
-        const ai = ['rock', 'paper', 'scissors'][Math.floor(Math.random() * 3)];
-        evalRps(c, ai);
-      } else {
-        if (!rpsP1Choice) {
-          rpsP1Choice = c;
-          document.getElementById('rps-p1-hand').textContent = '🔒';
-          document.getElementById('rps-status').textContent = "Player 1 ready! Player 2 aayudham theranjedukkoo 👇";
-        } else {
-          evalRps(rpsP1Choice, c); rpsP1Choice = null;
-        }
-      }
-    }
-
-    function evalRps(c1, c2) {
-      document.getElementById('rps-p1-hand').textContent = rpsEmojis[c1];
-      document.getElementById('rps-p2-hand').textContent = rpsEmojis[c2];
-
-      if (c1 === c2) { rpsScores.draw++; document.getElementById('rps-status').textContent = "Round Samanila! 🤝"; }
-      else if ((c1==='rock'&&c2==='scissors')||(c1==='paper'&&c2==='rock')||(c1==='scissors'&&c2==='paper')) {
-        rpsScores.p1++; document.getElementById('rps-status').textContent = "Round 1 nedi! 🎯";
-      } else {
-        rpsScores.p2++; document.getElementById('rps-status').textContent = "Round 2 nedi! 🎯";
-      }
-
-      document.getElementById('rps-p1-val').textContent = `${rpsScores.p1} / 5`;
-      document.getElementById('rps-draw-val').textContent = rpsScores.draw;
-      document.getElementById('rps-p2-val').textContent = `${rpsScores.p2} / 5`;
-
-      if (rpsScores.p1 >= 5 || rpsScores.p2 >= 5) {
-        const w = (rpsScores.p1 >= 5) ? (rpsMode === 'ai' ? "YOU WON!" : "PLAYER 1 WON!") : (rpsMode === 'ai' ? "AI WON!" : "PLAYER 2 WON!");
-        showWinnerModal(w, "5 Points nedi match jayichu! 🏆");
-        setTimeout(resetRps, 5000);
-      }
-    }
-
+    let rpsUser = 0, rpsAi = 0;
     function resetRps() {
-      rpsScores = { p1: 0, draw: 0, p2: 0 }; rpsP1Choice = null;
-      document.getElementById('rps-p1-val').textContent = '0 / 5';
-      document.getElementById('rps-draw-val').textContent = '0';
-      document.getElementById('rps-p2-val').textContent = '0 / 5';
-      document.getElementById('rps-p1-hand').textContent = '❓';
-      document.getElementById('rps-p2-hand').textContent = '❓';
-      document.getElementById('rps-status').textContent = 'Aadyam 5 points nedunnavar jayikkum! 🏆';
+      rpsUser = 0; rpsAi = 0;
+      document.getElementById('rps-p-val').innerText = '0';
+      document.getElementById('rps-ai-val').innerText = '0';
+      document.getElementById('rps-p-hand').innerText = '❓';
+      document.getElementById('rps-ai-hand').innerText = '❓';
+    }
+
+    function playRps(choice) {
+      const items = ['✊', '✋', '✌️'];
+      const ai = items[Math.floor(Math.random() * items.length)];
+      document.getElementById('rps-p-hand').innerText = choice;
+      document.getElementById('rps-ai-hand').innerText = ai;
+
+      if (choice === ai) return;
+      if ((choice === '✊' && ai === '✌️') || (choice === '✋' && ai === '✊') || (choice === '✌️' && ai === '✋')) {
+        rpsUser++;
+        document.getElementById('rps-p-val').innerText = rpsUser;
+        if (rpsUser === 5) { triggerWin("RPS Champion!", "AI യെ തോൽപ്പിച്ചു! 🏆"); resetRps(); }
+      } else {
+        rpsAi++;
+        document.getElementById('rps-ai-val').innerText = rpsAi;
+        if (rpsAi === 5) { alert("AI ജയിച്ചു! അടുത്ത തവണ പിടിക്കാം!"); resetRps(); }
+      }
     }
 
     /* 4. TURBO CAR RACER */
-    const carCanvas = document.getElementById('car-canvas');
-    const carCtx = carCanvas.getContext('2d');
-    let carAnimId = null, carLane = 1, lanesX = [55, 170, 285], carScore = 0, carSpeed = 4.5, carEnemies = [], carCoins = [], roadY = 0, isCarOver = false;
+    let carLane = 1, carScore = 0, carObstacles = [];
+    const lanes = [50, 160, 270];
 
-    function initCarGame() {
-      cancelAnimationFrame(carAnimId);
-      carLane = 1; carScore = 0; carSpeed = 4.5; carEnemies = []; carCoins = []; isCarOver = false;
-      document.getElementById('car-score').textContent = '0';
-      loopCar();
-    }
+    function startCarGame() {
+      const c = document.getElementById('carCanvas');
+      const ctx = c.getContext('2d');
+      carLane = 1; carScore = 0; carObstacles = [];
+      let frame = 0;
 
-    function moveCarLane(d) { if (!isCarOver) carLane = Math.max(0, Math.min(2, carLane + d)); }
-    function triggerNitro() { if (!isCarOver) { carSpeed = 8.5; setTimeout(() => carSpeed = 4.5, 1400); } }
+      function loop() {
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, c.width, c.height);
 
-    function loopCar() {
-      carCtx.clearRect(0, 0, carCanvas.width, carCanvas.height);
-      carCtx.fillStyle = '#111827'; carCtx.fillRect(0, 0, carCanvas.width, carCanvas.height);
-      carCtx.strokeStyle = 'rgba(255,255,255,0.2)'; carCtx.setLineDash([20, 15]); carCtx.lineDashOffset = -roadY;
-      roadY = (roadY + carSpeed) % 35;
-      carCtx.beginPath(); carCtx.moveTo(113, 0); carCtx.lineTo(113, carCanvas.height); carCtx.moveTo(226, 0); carCtx.lineTo(226, carCanvas.height); carCtx.stroke();
+        // Road stripes
+        ctx.strokeStyle = '#334155';
+        ctx.setLineDash([20, 20]);
+        ctx.beginPath();
+        ctx.moveTo(106, 0); ctx.lineTo(106, c.height);
+        ctx.moveTo(213, 0); ctx.lineTo(213, c.height);
+        ctx.stroke();
 
-      if (Math.random() < 0.022) carEnemies.push({ x: lanesX[Math.floor(Math.random()*3)], y: -50 });
-      if (Math.random() < 0.018) carCoins.push({ x: lanesX[Math.floor(Math.random()*3)], y: -30 });
+        // Player car
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(lanes[carLane] - 18, 290, 36, 60);
 
-      for (let i = carCoins.length - 1; i >= 0; i--) {
-        const c = carCoins[i]; c.y += carSpeed;
-        carCtx.fillStyle = '#facc15'; carCtx.beginPath(); carCtx.arc(c.x, c.y, 10, 0, Math.PI*2); carCtx.fill();
-        if (Math.abs(c.x - lanesX[carLane]) < 25 && Math.abs(c.y - 340) < 30) {
-          carScore += 5; document.getElementById('car-score').textContent = carScore; carCoins.splice(i, 1);
-        } else if (c.y > carCanvas.height + 20) carCoins.splice(i, 1);
-      }
-
-      for (let i = carEnemies.length - 1; i >= 0; i--) {
-        const e = carEnemies[i]; e.y += carSpeed * 0.85;
-        carCtx.fillStyle = '#ef4444'; carCtx.fillRect(e.x - 18, e.y, 36, 52);
-        if (Math.abs(e.x - lanesX[carLane]) < 28 && Math.abs(e.y - 340) < 45) {
-          isCarOver = true; showWinnerModal("CAR CRASHED!", `Score: ${carScore} nedi!`); break;
+        // Obstacles
+        if (frame % 50 === 0) {
+          carObstacles.push({ lane: Math.floor(Math.random() * 3), y: -60 });
         }
-        if (e.y > carCanvas.height + 60) { carEnemies.splice(i, 1); carScore++; document.getElementById('car-score').textContent = carScore; }
-      }
 
-      carCtx.fillStyle = '#38bdf8'; carCtx.fillRect(lanesX[carLane] - 18, 340, 36, 52);
-      if (!isCarOver) carAnimId = requestAnimationFrame(loopCar);
+        ctx.fillStyle = '#ef4444';
+        for (let i = carObstacles.length - 1; i >= 0; i--) {
+          let o = carObstacles[i];
+          o.y += 5;
+          ctx.fillRect(lanes[o.lane] - 18, o.y, 36, 50);
+
+          if (o.lane === carLane && o.y > 240 && o.y < 340) {
+            alert(`Car Crashed! Score: ${carScore}`);
+            return;
+          }
+          if (o.y > c.height) {
+            carObstacles.splice(i, 1);
+            carScore += 10;
+            document.getElementById('car-score').innerText = carScore;
+          }
+        }
+        frame++;
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function moveCarLane(dir) {
+      carLane = Math.max(0, Math.min(2, carLane + dir));
     }
 
     /* 5. FLAPPY BIRD */
-    const flappyCanvas = document.getElementById('flappy-canvas');
-    const flappyCtx = flappyCanvas.getContext('2d');
-    let flappyAnimId = null, birdY = 180, birdVel = 0, pipes = [], flScore = 0, isFlappyOver = false, wingAngle = 0;
+    let birdY = 150, birdVel = 0, birdPipes = [], flappyScore = 0;
+    function initFlappy() {
+      const c = document.getElementById('flappyCanvas');
+      const ctx = c.getContext('2d');
+      birdY = 150; birdVel = 0; birdPipes = []; flappyScore = 0;
+      let frame = 0;
+      document.getElementById('flappy-score').innerText = '0';
 
-    function initFlappyGame() {
-      cancelAnimationFrame(flappyAnimId);
-      birdY = 180; birdVel = 0; pipes = []; flScore = 0; isFlappyOver = false;
-      document.getElementById('flappy-score').textContent = '0';
-      loopFlappy();
-    }
+      function loop() {
+        ctx.fillStyle = '#020617';
+        ctx.fillRect(0, 0, c.width, c.height);
 
-    function flapBird() {
-      if (isFlappyOver) { initFlappyGame(); return; }
-      birdVel = -5.5;
-    }
+        birdVel += 0.35;
+        birdY += birdVel;
 
-    function drawRealFlappyBird(x, y, vel) {
-      flappyCtx.save();
-      flappyCtx.translate(x, y);
+        // Draw bird
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath();
+        ctx.arc(60, birdY, 14, 0, Math.PI * 2);
+        ctx.fill();
 
-      let tilt = Math.max(-0.5, Math.min(0.7, vel * 0.1));
-      flappyCtx.rotate(tilt);
-
-      flappyCtx.fillStyle = '#facc15';
-      flappyCtx.beginPath();
-      flappyCtx.ellipse(0, 0, 16, 13, 0, 0, Math.PI * 2);
-      flappyCtx.fill();
-      flappyCtx.strokeStyle = '#ca8a04';
-      flappyCtx.lineWidth = 1.5;
-      flappyCtx.stroke();
-
-      wingAngle += 0.2;
-      let wingOffset = Math.sin(wingAngle) * 3;
-      flappyCtx.fillStyle = '#ffffff';
-      flappyCtx.beginPath();
-      flappyCtx.ellipse(-6, 2 + wingOffset, 8, 5, -0.3, 0, Math.PI * 2);
-      flappyCtx.fill();
-      flappyCtx.stroke();
-
-      flappyCtx.fillStyle = '#ffffff';
-      flappyCtx.beginPath();
-      flappyCtx.arc(7, -5, 5.5, 0, Math.PI * 2);
-      flappyCtx.fill();
-      flappyCtx.stroke();
-
-      flappyCtx.fillStyle = '#000000';
-      flappyCtx.beginPath();
-      flappyCtx.arc(9, -5, 2.5, 0, Math.PI * 2);
-      flappyCtx.fill();
-
-      flappyCtx.fillStyle = '#f97316';
-      flappyCtx.beginPath();
-      flappyCtx.moveTo(11, -1);
-      flappyCtx.lineTo(21, 3);
-      flappyCtx.lineTo(11, 7);
-      flappyCtx.closePath();
-      flappyCtx.fill();
-      flappyCtx.stroke();
-
-      flappyCtx.fillStyle = '#fb7185';
-      flappyCtx.beginPath();
-      flappyCtx.arc(3, 4, 3, 0, Math.PI * 2);
-      flappyCtx.fill();
-
-      flappyCtx.restore();
-    }
-
-    function loopFlappy() {
-      flappyCtx.clearRect(0, 0, flappyCanvas.width, flappyCanvas.height);
-
-      birdVel += 0.26;
-      birdY += birdVel;
-
-      if (pipes.length === 0 || pipes[pipes.length - 1].x < flappyCanvas.width - 150) {
-        const topH = Math.floor(Math.random() * 150) + 40;
-        pipes.push({ x: flappyCanvas.width, top: topH, passed: false });
-      }
-
-      flappyCtx.fillStyle = '#22c55e';
-      for (let i = pipes.length - 1; i >= 0; i--) {
-        const p = pipes[i]; p.x -= 2.2;
-        flappyCtx.fillRect(p.x, 0, 48, p.top);
-        flappyCtx.strokeRect(p.x, 0, 48, p.top);
-
-        const bottomY = p.top + 120;
-        flappyCtx.fillRect(p.x, bottomY, 48, flappyCanvas.height - bottomY);
-        flappyCtx.strokeRect(p.x, bottomY, 48, flappyCanvas.height - bottomY);
-
-        if (!p.passed && p.x + 48 < 60) {
-          p.passed = true; flScore++;
-          document.getElementById('flappy-score').textContent = flScore;
+        // Pipes
+        if (frame % 80 === 0) {
+          let gap = 90;
+          let topH = Math.random() * (c.height - gap - 60) + 20;
+          birdPipes.push({ x: c.width, top: topH, bottom: c.height - topH - gap });
         }
 
-        if (60 + 14 > p.x && 60 - 14 < p.x + 48) {
-          if (birdY - 12 < p.top || birdY + 12 > bottomY) isFlappyOver = true;
-        }
-        if (p.x < -60) pipes.splice(i, 1);
-      }
+        ctx.fillStyle = '#22c55e';
+        for (let i = birdPipes.length - 1; i >= 0; i--) {
+          let p = birdPipes[i];
+          p.x -= 2.5;
+          ctx.fillRect(p.x, 0, 40, p.top);
+          ctx.fillRect(p.x, c.height - p.bottom, 40, p.bottom);
 
-      if (birdY < 0 || birdY > flappyCanvas.height) isFlappyOver = true;
-
-      drawRealFlappyBird(60, birdY, birdVel);
-
-      if (!isFlappyOver) {
-        flappyAnimId = requestAnimationFrame(loopFlappy);
-      } else {
-        showWinnerModal("FLAPPY OVER!", `Score: ${flScore} nedi!`);
-        flappyCtx.fillStyle = 'rgba(0,0,0,0.7)';
-        flappyCtx.fillRect(0, 0, flappyCanvas.width, flappyCanvas.height);
-        flappyCtx.fillStyle = '#ef4444'; flappyCtx.font = '900 24px Poppins'; flappyCtx.textAlign = 'center';
-        flappyCtx.fillText('GAME OVER', flappyCanvas.width/2, 190);
-        flappyCtx.fillStyle = '#fff'; flappyCtx.font = '600 14px Poppins';
-        flappyCtx.fillText('Tap to Fly Again 🐦', flappyCanvas.width/2, 220);
-      }
-    }
-
-    /* 6. KNIFE HIT */
-    const knifeCanvas = document.getElementById('knife-canvas');
-    const knifeCtx = knifeCanvas.getContext('2d');
-    let knifeAnimId = null, tAngle = 0, kKnives = [], kLeft = 6, kStage = 1, kThrow = null, isKnifeOver = false;
-
-    function initKnifeGame() {
-      cancelAnimationFrame(knifeAnimId);
-      tAngle = 0; kKnives = []; kLeft = 5 + kStage; kThrow = null; isKnifeOver = false;
-      document.getElementById('knife-stage').textContent = kStage;
-      document.getElementById('knife-count').textContent = kLeft;
-      loopKnife();
-    }
-
-    function throwKnife() {
-      if (isKnifeOver || kThrow || kLeft <= 0) { if (isKnifeOver) { kStage = 1; initKnifeGame(); } return; }
-      kThrow = { y: 340 }; kLeft--;
-      document.getElementById('knife-count').textContent = kLeft;
-    }
-
-    function loopKnife() {
-      knifeCtx.clearRect(0, 0, knifeCanvas.width, knifeCanvas.height);
-      const cx = knifeCanvas.width / 2, cy = 120, r = 52;
-      tAngle += 0.035 + (kStage * 0.005);
-
-      knifeCtx.save();
-      knifeCtx.translate(cx, cy);
-      knifeCtx.rotate(tAngle);
-      knifeCtx.fillStyle = '#92400e';
-      knifeCtx.beginPath(); knifeCtx.arc(0, 0, r, 0, Math.PI*2); knifeCtx.fill();
-      knifeCtx.strokeStyle = '#b45309'; knifeCtx.lineWidth = 4; knifeCtx.stroke();
-
-      for (let a of kKnives) {
-        knifeCtx.save(); knifeCtx.rotate(a);
-        knifeCtx.fillStyle = '#94a3b8'; knifeCtx.fillRect(-3, r, 6, 36);
-        knifeCtx.restore();
-      }
-      knifeCtx.restore();
-
-      if (kThrow) {
-        kThrow.y -= 18;
-        knifeCtx.fillStyle = '#f8fafc'; knifeCtx.fillRect(cx - 3, kThrow.y, 6, 40);
-
-        if (kThrow.y <= cy + r) {
-          const hitA = Math.atan2(kThrow.y - cy, 0) - tAngle;
-          let clash = false;
-          for (let a of kKnives) {
-            let diff = Math.abs((a - hitA) % (Math.PI*2));
-            if (diff > Math.PI) diff = Math.PI*2 - diff;
-            if (diff < 0.22) { clash = true; break; }
-          }
-
-          if (clash) {
-            isKnifeOver = true; showWinnerModal("KNIFE DEFLECTED!", `Stage ${kStage}-il veenu!`);
-          } else {
-            kKnives.push(hitA); kThrow = null;
-            if (kLeft === 0) {
-              kStage++; showWinnerModal("STAGE CLEARED!", `Stage ${kStage-1} jayichu! 🎯`);
-              setTimeout(initKnifeGame, 1200); return;
+          // Collision
+          if (60 + 14 > p.x && 60 - 14 < p.x + 40) {
+            if (birdY - 14 < p.top || birdY + 14 > c.height - p.bottom) {
+              alert(`Flappy Bird Hit! Score: ${flappyScore}`);
+              return;
             }
           }
+          if (p.x === 50) {
+            flappyScore++;
+            document.getElementById('flappy-score').innerText = flappyScore;
+          }
+          if (p.x < -40) birdPipes.splice(i, 1);
         }
-      } else if (kLeft > 0 && !isKnifeOver) {
-        knifeCtx.fillStyle = '#f8fafc'; knifeCtx.fillRect(cx - 3, 330, 6, 40);
-      }
 
-      if (!isKnifeOver) knifeAnimId = requestAnimationFrame(loopKnife);
+        if (birdY > c.height || birdY < 0) {
+          alert(`Fell Down! Score: ${flappyScore}`);
+          return;
+        }
+
+        frame++;
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
     }
+    function flappyJump() { birdVel = -6; }
+
+    /* 6. KNIFE HIT */
+    let knifeAngle = 0, knives = [], targetKnives = [], knifeLeft = 7, knifeScore = 0;
+    function initKnife() {
+      const c = document.getElementById('knifeCanvas');
+      const ctx = c.getContext('2d');
+      knifeAngle = 0; targetKnives = [0, 1.6]; knifeLeft = 7; knifeScore = 0;
+      document.getElementById('knife-left').innerText = knifeLeft;
+      document.getElementById('knife-score').innerText = knifeScore;
+
+      function loop() {
+        ctx.fillStyle = '#090d16';
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        knifeAngle += 0.03;
+
+        // Wood target
+        ctx.save();
+        ctx.translate(c.width / 2, 110);
+        ctx.rotate(knifeAngle);
+        ctx.fillStyle = '#854d0e';
+        ctx.beginPath();
+        ctx.arc(0, 0, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Stuck knives
+        ctx.fillStyle = '#cbd5e1';
+        targetKnives.forEach(a => {
+          ctx.save();
+          ctx.rotate(a);
+          ctx.fillRect(-3, 40, 6, 30);
+          ctx.restore();
+        });
+        ctx.restore();
+
+        // Active knife at bottom
+        if (knifeLeft > 0) {
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillRect(c.width / 2 - 4, 300, 8, 40);
+        }
+
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function throwKnife() {
+      if (knifeLeft <= 0) return;
+      let currentAngle = (Math.PI / 2) - knifeAngle;
+      // Check knife hit
+      for (let a of targetKnives) {
+        let diff = Math.abs((a % (Math.PI * 2)) - (currentAngle % (Math.PI * 2)));
+        if (diff < 0.25) {
+          alert('Knives Hit! Game Over!');
+          initKnife();
+          return;
+        }
+      }
+      targetKnives.push(currentAngle);
+      knifeLeft--;
+      knifeScore += 10;
+      document.getElementById('knife-left').innerText = knifeLeft;
+      document.getElementById('knife-score').innerText = knifeScore;
+      if (knifeLeft === 0) triggerWin("Target Cleared!", "Ellam krithyamaayi tharachu!");
+    }
+
+    /* 7. GALAXY STRIKE (NEW SHOOTER) */
+    let sPlayer = { x: 140, y: 310, w: 32, h: 32 };
+    let sBullets = [], sEnemies = [], sScore = 0, sHp = 100;
+    let sLeft = false, sRight = false;
+
+    function initSpace() {
+      const c = document.getElementById('spaceCanvas');
+      const ctx = c.getContext('2d');
+      sBullets = []; sEnemies = []; sScore = 0; sHp = 100;
+      sPlayer.x = 140;
+      document.getElementById('space-score').innerText = '0';
+      document.getElementById('space-hp').innerText = '100%';
+
+      // Touch handlers
+      const bL = document.getElementById('s-left');
+      const bR = document.getElementById('s-right');
+      const bF = document.getElementById('s-fire');
+
+      bL.ontouchstart = () => sLeft = true; bL.ontouchend = () => sLeft = false;
+      bR.ontouchstart = () => sRight = true; bR.ontouchend = () => sRight = false;
+      bF.ontouchstart = () => fireBullet();
+
+      let frame = 0;
+      function loop() {
+        ctx.fillStyle = '#050814';
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        if (sLeft && sPlayer.x > 0) sPlayer.x -= 5;
+        if (sRight && sPlayer.x < c.width - sPlayer.w) sPlayer.x += 5;
+
+        // Player ship
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.moveTo(sPlayer.x + 16, sPlayer.y);
+        ctx.lineTo(sPlayer.x, sPlayer.y + 30);
+        ctx.lineTo(sPlayer.x + 32, sPlayer.y + 30);
+        ctx.fill();
+
+        // Bullets
+        ctx.fillStyle = '#f43f5e';
+        for (let i = sBullets.length - 1; i >= 0; i--) {
+          let b = sBullets[i];
+          b.y -= 7;
+          ctx.fillRect(b.x, b.y, 4, 12);
+          if (b.y < -15) sBullets.splice(i, 1);
+        }
+
+        // Asteroids
+        if (frame % 40 === 0) {
+          sEnemies.push({ x: Math.random() * (c.width - 30), y: -30, r: 15 });
+        }
+
+        ctx.fillStyle = '#94a3b8';
+        for (let i = sEnemies.length - 1; i >= 0; i--) {
+          let e = sEnemies[i];
+          e.y += 3;
+          ctx.beginPath();
+          ctx.arc(e.x + 15, e.y + 15, 15, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Bullet Collision
+          for (let j = sBullets.length - 1; j >= 0; j--) {
+            let b = sBullets[j];
+            if (b.x > e.x && b.x < e.x + 30 && b.y > e.y && b.y < e.y + 30) {
+              sEnemies.splice(i, 1);
+              sBullets.splice(j, 1);
+              sScore += 10;
+              document.getElementById('space-score').innerText = sScore;
+              break;
+            }
+          }
+
+          // Player Collision
+          if (e.y > 280 && e.x > sPlayer.x - 20 && e.x < sPlayer.x + 30) {
+            sEnemies.splice(i, 1);
+            sHp -= 25;
+            document.getElementById('space-hp').innerText = sHp + '%';
+            if (sHp <= 0) {
+              alert(`Spaceship Destroyed! Score: ${sScore}`);
+              return;
+            }
+          }
+          if (e.y > c.height) sEnemies.splice(i, 1);
+        }
+
+        frame++;
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function fireBullet() {
+      sBullets.push({ x: sPlayer.x + 14, y: sPlayer.y });
+    }
+    function resetSpace() { initSpace(); }
   </script>
 </body>
 </html>
