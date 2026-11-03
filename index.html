@@ -13,7 +13,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Shameel's Playzone 🎮</title>
-  <meta name="description" content="Shameel's Playzone - Play 7 mini arcade games online for free!">
+  <meta name="description" content="Shameel's Playzone - Play 8 mini arcade games online for free!">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -63,25 +63,9 @@
       padding: 24px;
     }
 
-    .modal-trophy {
-      font-size: 5rem;
-      filter: drop-shadow(0 0 30px rgba(250, 204, 21, 0.7));
-    }
-
-    .modal-headline {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #fde047;
-      margin-top: 10px;
-    }
-
-    .modal-name {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--accent);
-      margin-top: 4px;
-    }
-
+    .modal-trophy { font-size: 5rem; filter: drop-shadow(0 0 30px rgba(250, 204, 21, 0.7)); }
+    .modal-headline { font-size: 2.2rem; font-weight: 900; color: #fde047; margin-top: 10px; }
+    .modal-name { font-size: 1.3rem; font-weight: 800; color: var(--accent); margin-top: 4px; }
     .modal-desc { font-size: 0.9rem; color: #94a3b8; margin-top: 6px; }
 
     /* HUB */
@@ -168,7 +152,7 @@
       width: 100%;
     }
 
-    /* PLAY WRAPPERS */
+    /* PLAY SCREENS */
     .play-screen {
       width: 100%;
       max-width: 380px;
@@ -337,14 +321,14 @@
     .rps-btn-emoji { font-size: 2rem; }
     .rps-btn-label { font-size: 0.75rem; font-weight: 700; color: #e2e8f0; }
 
-    /* CANVAS & TOUCH CONTROLS */
+    /* CANVAS & CONTROLS */
     canvas {
       background: #070b14;
       border: 1.5px solid var(--card-border);
       border-radius: 20px;
       display: block;
       width: 100%;
-      max-height: 400px;
+      max-height: 380px;
     }
     .touch-bar { width: 100%; display: flex; gap: 10px; margin-top: 4px; }
     .touch-btn {
@@ -361,6 +345,31 @@
     }
     .touch-btn:active { background: var(--accent); }
     .fire-btn { background: #dc2626 !important; border-color: #ef4444 !important; font-size: 0.9rem !important; }
+
+    /* D-PAD FOR SNAKE */
+    .dpad-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      width: 100%;
+    }
+    .dpad-row { display: flex; gap: 10px; width: 60%; justify-content: center; }
+    .dpad-btn {
+      width: 55px; height: 46px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 900;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dpad-btn:active { background: var(--accent); }
   </style>
 </head>
 <body>
@@ -378,7 +387,7 @@
   <div id="hub-screen">
     <div class="hub-header">
       <div class="hub-title">SHAMEEL'S PLAYZONE</div>
-      <div class="hub-badge">7 Games Loaded</div>
+      <div class="hub-badge">8 Games Loaded</div>
     </div>
 
     <div class="game-grid">
@@ -389,11 +398,11 @@
         <div class="tile-tag">Smart AI & 2P</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-      <!-- 2 -->
+      <!-- 2 (UPDATED MEMORY WITH BOT) -->
       <button type="button" class="game-tile" onclick="openGame('memory')">
         <div class="tile-icon-box">🧠</div>
         <div class="tile-title">Memory Flip</div>
-        <div class="tile-tag">Brain Match 4x4</div>
+        <div class="tile-tag">Solo & vs Bot</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
       <!-- 3 -->
@@ -424,11 +433,18 @@
         <div class="tile-tag">Spinning Board</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
-      <!-- 7 (NEW) -->
+      <!-- 7 -->
       <button type="button" class="game-tile" onclick="openGame('space')">
         <div class="tile-icon-box">🚀</div>
         <div class="tile-title">Galaxy Strike</div>
         <div class="tile-tag">Laser Shooter</div>
+        <div class="tile-play-btn">Play Now ▶</div>
+      </button>
+      <!-- 8 (NEW: RETRO SNAKE) -->
+      <button type="button" class="game-tile" onclick="openGame('snake')">
+        <div class="tile-icon-box">🐍</div>
+        <div class="tile-title">Retro Snake</div>
+        <div class="tile-tag">Eat & Grow</div>
         <div class="tile-play-btn">Play Now ▶</div>
       </button>
     </div>
@@ -456,14 +472,23 @@
     </div>
   </div>
 
-  <!-- 2. MEMORY SCREEN -->
+  <!-- 2. MEMORY SCREEN (BOT OPTION ADDED) -->
   <div id="screen-memory" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
       <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Memory Flip</span>
       <button class="nav-btn" onclick="initMemory()">🔄 Restart</button>
     </div>
-    <div class="scoreboard-box">
+    <div class="mode-pill-bar">
+      <button class="mode-pill-btn active" id="mem-bot-btn" onclick="setMemMode('bot')">🤖 vs Bot</button>
+      <button class="mode-pill-btn" id="mem-solo-btn" onclick="setMemMode('solo')">👤 Solo Play</button>
+    </div>
+    <div class="scoreboard-box" id="mem-bot-scores">
+      <div class="score-card"><div class="score-title">You</div><div class="score-val" id="mem-p-score">0</div></div>
+      <div class="score-card"><div class="score-title">Turn</div><div class="score-val" id="mem-turn-label" style="font-size:0.95rem; line-height:1.8;">Player</div></div>
+      <div class="score-card"><div class="score-title">Bot</div><div class="score-val" id="mem-b-score" style="color:#ef4444;">0</div></div>
+    </div>
+    <div class="scoreboard-box hidden" id="mem-solo-scores">
       <div class="score-card"><div class="score-title">Pairs Found</div><div class="score-val" id="mem-pairs">0 / 8</div></div>
       <div class="score-card"><div class="score-title">Moves</div><div class="score-val" id="mem-moves">0</div></div>
     </div>
@@ -543,7 +568,7 @@
     </div>
   </div>
 
-  <!-- 7. GALAXY STRIKE SCREEN (NEW) -->
+  <!-- 7. GALAXY STRIKE SCREEN -->
   <div id="screen-space" class="play-screen hidden">
     <div class="play-navbar">
       <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
@@ -562,11 +587,38 @@
     </div>
   </div>
 
+  <!-- 8. RETRO SNAKE SCREEN (NEW) -->
+  <div id="screen-snake" class="play-screen hidden">
+    <div class="play-navbar">
+      <button class="nav-btn" onclick="returnToHub()">🏠 Home</button>
+      <span style="font-size:0.85rem; color:#38bdf8; font-weight:700;">Retro Snake</span>
+      <button class="nav-btn" onclick="initSnake()">🔄 Restart</button>
+    </div>
+    <div class="scoreboard-box">
+      <div class="score-card"><div class="score-title">Score</div><div class="score-val" id="snake-score">0</div></div>
+      <div class="score-card"><div class="score-title">High Score</div><div class="score-val" id="snake-hi" style="color:#eab308;">0</div></div>
+    </div>
+    <canvas id="snakeCanvas" width="320" height="320"></canvas>
+    
+    <!-- Mobile D-PAD -->
+    <div class="dpad-container">
+      <button class="dpad-btn" onclick="setSnakeDir('UP')">▲</button>
+      <div class="dpad-row">
+        <button class="dpad-btn" onclick="setSnakeDir('LEFT')">◀</button>
+        <button class="dpad-btn" onclick="setSnakeDir('DOWN')">▼</button>
+        <button class="dpad-btn" onclick="setSnakeDir('RIGHT')">▶</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     /* ROUTING */
     let activeLoop = null;
 
     function openGame(id) {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      if (snakeInterval) clearInterval(snakeInterval);
+
       document.getElementById('hub-screen').classList.add('hidden');
       document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
       const scr = document.getElementById(`screen-${id}`);
@@ -579,10 +631,12 @@
       if (id === 'flappy') initFlappy();
       if (id === 'knife') initKnife();
       if (id === 'space') initSpace();
+      if (id === 'snake') initSnake();
     }
 
     function returnToHub() {
       if (activeLoop) cancelAnimationFrame(activeLoop);
+      if (snakeInterval) clearInterval(snakeInterval);
       document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
       document.getElementById('hub-screen').classList.remove('hidden');
     }
@@ -621,7 +675,6 @@
       document.getElementById('ttt-2p-btn').classList.toggle('active', m === '2p');
       initTtt();
     }
-
     function resetTtt() { initTtt(); }
 
     function makeTttMove(i) {
@@ -644,9 +697,7 @@
       }
       tttTurn = tttTurn === 'X' ? 'O' : 'X';
       document.getElementById('ttt-status').innerText = `Turn: Player ${tttTurn}`;
-      if (tttMode === 'ai' && tttTurn === 'O') {
-        setTimeout(makeTttAiMove, 300);
-      }
+      if (tttMode === 'ai' && tttTurn === 'O') setTimeout(makeTttAiMove, 300);
     }
 
     function makeTttAiMove() {
@@ -676,9 +727,22 @@
       document.getElementById('ttt-draw-score').innerText = tttScores.D;
     }
 
-    /* 2. MEMORY FLIP */
+    /* 2. MEMORY FLIP (AI BOT & SOLO MODES) */
     const emojis = ['🍎','🍌','🍇','🍓','🍉','🍒','🥑','🍍'];
     let memCards = [], memFlipped = [], memMatched = 0, memMovesCount = 0;
+    let memMode = 'bot'; // 'bot' or 'solo'
+    let memTurn = 'player'; // 'player' or 'bot'
+    let memScoreP = 0, memScoreB = 0;
+    let botMemory = {}; // Bot remembers revealed card indexes
+
+    function setMemMode(mode) {
+      memMode = mode;
+      document.getElementById('mem-bot-btn').classList.toggle('active', mode === 'bot');
+      document.getElementById('mem-solo-btn').classList.toggle('active', mode === 'solo');
+      document.getElementById('mem-bot-scores').classList.toggle('hidden', mode === 'solo');
+      document.getElementById('mem-solo-scores').classList.toggle('hidden', mode === 'bot');
+      initMemory();
+    }
 
     function initMemory() {
       const grid = document.getElementById('mem-grid');
@@ -687,44 +751,146 @@
       memFlipped = [];
       memMatched = 0;
       memMovesCount = 0;
+      memScoreP = 0;
+      memScoreB = 0;
+      memTurn = 'player';
+      botMemory = {};
+
+      document.getElementById('mem-p-score').innerText = '0';
+      document.getElementById('mem-b-score').innerText = '0';
+      document.getElementById('mem-turn-label').innerText = 'Player';
       document.getElementById('mem-pairs').innerText = "0 / 8";
       document.getElementById('mem-moves').innerText = "0";
 
       memCards.forEach((emoji, i) => {
         let el = document.createElement('div');
         el.className = 'mem-card';
+        el.id = `mem-card-${i}`;
         el.innerText = '❓';
-        el.onclick = () => flipMemCard(el, emoji, i);
+        el.onclick = () => {
+          if (memMode === 'bot' && memTurn === 'bot') return; // Bot's turn
+          handleMemClick(el, emoji, i);
+        };
         grid.appendChild(el);
       });
     }
 
-    function flipMemCard(el, emoji, i) {
+    function handleMemClick(el, emoji, i) {
       if (memFlipped.length === 2 || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+
       el.classList.add('flipped');
       el.innerText = emoji;
+      botMemory[i] = emoji; // Bot remembers this card
       memFlipped.push({ el, emoji, i });
 
       if (memFlipped.length === 2) {
         memMovesCount++;
         document.getElementById('mem-moves').innerText = memMovesCount;
-        if (memFlipped[0].emoji === memFlipped[1].emoji) {
+
+        const isMatch = memFlipped[0].emoji === memFlipped[1].emoji;
+
+        if (isMatch) {
           memFlipped[0].el.classList.add('matched');
           memFlipped[1].el.classList.add('matched');
           memMatched++;
           document.getElementById('mem-pairs').innerText = `${memMatched} / 8`;
+
+          if (memMode === 'bot') {
+            if (memTurn === 'player') {
+              memScoreP++;
+              document.getElementById('mem-p-score').innerText = memScoreP;
+            } else {
+              memScoreB++;
+              document.getElementById('mem-b-score').innerText = memScoreB;
+            }
+          }
+
+          delete botMemory[memFlipped[0].i];
+          delete botMemory[memFlipped[1].i];
           memFlipped = [];
-          if (memMatched === 8) triggerWin("Memory Master!", `${memMovesCount} moves-il തീർത്തു!`);
+
+          if (memMatched === 8) {
+            setTimeout(() => {
+              if (memMode === 'solo') {
+                triggerWin("Memory Master!", `${memMovesCount} moves-ൽ പൂർത്തിയാക്കി!`);
+              } else {
+                if (memScoreP > memScoreB) triggerWin("You Won!", `Bot നെ തോൽപ്പിച്ചു! (${memScoreP} - ${memScoreB})`);
+                else if (memScoreB > memScoreP) alert(`Bot ജയിച്ചു (${memScoreB} - ${memScoreP})! വീണ്ടും ശ്രമിക്കൂ!`);
+                else alert(`Tie Match! രണ്ടാളും 4 പോയിന്റ് വീതം നേടി!`);
+              }
+            }, 300);
+            return;
+          }
+
+          // Same player gets another turn on match
+          if (memMode === 'bot' && memTurn === 'bot') {
+            setTimeout(executeBotTurn, 800);
+          }
         } else {
+          // No match, switch turn
           setTimeout(() => {
             memFlipped[0].el.classList.remove('flipped');
             memFlipped[0].el.innerText = '❓';
             memFlipped[1].el.classList.remove('flipped');
             memFlipped[1].el.innerText = '❓';
             memFlipped = [];
-          }, 700);
+
+            if (memMode === 'bot') {
+              memTurn = memTurn === 'player' ? 'bot' : 'player';
+              document.getElementById('mem-turn-label').innerText = memTurn === 'player' ? 'Player' : 'Bot 🤖';
+              if (memTurn === 'bot') setTimeout(executeBotTurn, 700);
+            }
+          }, 800);
         }
       }
+    }
+
+    function executeBotTurn() {
+      if (memMatched >= 8 || memTurn !== 'bot') return;
+
+      let unrevealed = [];
+      memCards.forEach((c, idx) => {
+        let el = document.getElementById(`mem-card-${idx}`);
+        if (!el.classList.contains('matched') && !el.classList.contains('flipped')) {
+          unrevealed.push(idx);
+        }
+      });
+      if (unrevealed.length < 2) return;
+
+      // Smart Bot check: does bot know any pair?
+      let knownPair = null;
+      let seen = {};
+      for (let idx in botMemory) {
+        if (!unrevealed.includes(parseInt(idx))) continue;
+        let em = botMemory[idx];
+        if (seen[em] !== undefined) {
+          knownPair = [seen[em], parseInt(idx)];
+          break;
+        }
+        seen[em] = parseInt(idx);
+      }
+
+      let firstPick, secondPick;
+      if (knownPair) {
+        firstPick = knownPair[0];
+        secondPick = knownPair[1];
+      } else {
+        firstPick = unrevealed[Math.floor(Math.random() * unrevealed.length)];
+        let remaining = unrevealed.filter(x => x !== firstPick);
+        // Does bot know pair for firstPick?
+        let matchingIdx = Object.keys(botMemory).find(k => botMemory[k] === memCards[firstPick] && parseInt(k) !== firstPick && remaining.includes(parseInt(k)));
+        secondPick = matchingIdx ? parseInt(matchingIdx) : remaining[Math.floor(Math.random() * remaining.length)];
+      }
+
+      // Flip first card
+      let el1 = document.getElementById(`mem-card-${firstPick}`);
+      handleMemClick(el1, memCards[firstPick], firstPick);
+
+      // Flip second card after delay
+      setTimeout(() => {
+        let el2 = document.getElementById(`mem-card-${secondPick}`);
+        handleMemClick(el2, memCards[secondPick], secondPick);
+      }, 700);
     }
 
     /* 3. ROCK PAPER SCISSORS */
@@ -769,7 +935,6 @@
         ctx.fillStyle = '#0f172a';
         ctx.fillRect(0, 0, c.width, c.height);
 
-        // Road stripes
         ctx.strokeStyle = '#334155';
         ctx.setLineDash([20, 20]);
         ctx.beginPath();
@@ -777,11 +942,9 @@
         ctx.moveTo(213, 0); ctx.lineTo(213, c.height);
         ctx.stroke();
 
-        // Player car
         ctx.fillStyle = '#38bdf8';
         ctx.fillRect(lanes[carLane] - 18, 290, 36, 60);
 
-        // Obstacles
         if (frame % 50 === 0) {
           carObstacles.push({ lane: Math.floor(Math.random() * 3), y: -60 });
         }
@@ -827,13 +990,11 @@
         birdVel += 0.35;
         birdY += birdVel;
 
-        // Draw bird
         ctx.fillStyle = '#fde047';
         ctx.beginPath();
         ctx.arc(60, birdY, 14, 0, Math.PI * 2);
         ctx.fill();
 
-        // Pipes
         if (frame % 80 === 0) {
           let gap = 90;
           let topH = Math.random() * (c.height - gap - 60) + 20;
@@ -847,7 +1008,6 @@
           ctx.fillRect(p.x, 0, 40, p.top);
           ctx.fillRect(p.x, c.height - p.bottom, 40, p.bottom);
 
-          // Collision
           if (60 + 14 > p.x && 60 - 14 < p.x + 40) {
             if (birdY - 14 < p.top || birdY + 14 > c.height - p.bottom) {
               alert(`Flappy Bird Hit! Score: ${flappyScore}`);
@@ -874,7 +1034,7 @@
     function flappyJump() { birdVel = -6; }
 
     /* 6. KNIFE HIT */
-    let knifeAngle = 0, knives = [], targetKnives = [], knifeLeft = 7, knifeScore = 0;
+    let knifeAngle = 0, targetKnives = [], knifeLeft = 7, knifeScore = 0;
     function initKnife() {
       const c = document.getElementById('knifeCanvas');
       const ctx = c.getContext('2d');
@@ -888,7 +1048,6 @@
 
         knifeAngle += 0.03;
 
-        // Wood target
         ctx.save();
         ctx.translate(c.width / 2, 110);
         ctx.rotate(knifeAngle);
@@ -897,7 +1056,6 @@
         ctx.arc(0, 0, 50, 0, Math.PI * 2);
         ctx.fill();
 
-        // Stuck knives
         ctx.fillStyle = '#cbd5e1';
         targetKnives.forEach(a => {
           ctx.save();
@@ -907,7 +1065,6 @@
         });
         ctx.restore();
 
-        // Active knife at bottom
         if (knifeLeft > 0) {
           ctx.fillStyle = '#38bdf8';
           ctx.fillRect(c.width / 2 - 4, 300, 8, 40);
@@ -920,7 +1077,6 @@
     function throwKnife() {
       if (knifeLeft <= 0) return;
       let currentAngle = (Math.PI / 2) - knifeAngle;
-      // Check knife hit
       for (let a of targetKnives) {
         let diff = Math.abs((a % (Math.PI * 2)) - (currentAngle % (Math.PI * 2)));
         if (diff < 0.25) {
@@ -937,7 +1093,7 @@
       if (knifeLeft === 0) triggerWin("Target Cleared!", "Ellam krithyamaayi tharachu!");
     }
 
-    /* 7. GALAXY STRIKE (NEW SHOOTER) */
+    /* 7. GALAXY STRIKE */
     let sPlayer = { x: 140, y: 310, w: 32, h: 32 };
     let sBullets = [], sEnemies = [], sScore = 0, sHp = 100;
     let sLeft = false, sRight = false;
@@ -950,7 +1106,6 @@
       document.getElementById('space-score').innerText = '0';
       document.getElementById('space-hp').innerText = '100%';
 
-      // Touch handlers
       const bL = document.getElementById('s-left');
       const bR = document.getElementById('s-right');
       const bF = document.getElementById('s-fire');
@@ -967,7 +1122,6 @@
         if (sLeft && sPlayer.x > 0) sPlayer.x -= 5;
         if (sRight && sPlayer.x < c.width - sPlayer.w) sPlayer.x += 5;
 
-        // Player ship
         ctx.fillStyle = '#38bdf8';
         ctx.beginPath();
         ctx.moveTo(sPlayer.x + 16, sPlayer.y);
@@ -975,7 +1129,6 @@
         ctx.lineTo(sPlayer.x + 32, sPlayer.y + 30);
         ctx.fill();
 
-        // Bullets
         ctx.fillStyle = '#f43f5e';
         for (let i = sBullets.length - 1; i >= 0; i--) {
           let b = sBullets[i];
@@ -984,7 +1137,6 @@
           if (b.y < -15) sBullets.splice(i, 1);
         }
 
-        // Asteroids
         if (frame % 40 === 0) {
           sEnemies.push({ x: Math.random() * (c.width - 30), y: -30, r: 15 });
         }
@@ -997,7 +1149,6 @@
           ctx.arc(e.x + 15, e.y + 15, 15, 0, Math.PI * 2);
           ctx.fill();
 
-          // Bullet Collision
           for (let j = sBullets.length - 1; j >= 0; j--) {
             let b = sBullets[j];
             if (b.x > e.x && b.x < e.x + 30 && b.y > e.y && b.y < e.y + 30) {
@@ -1009,7 +1160,6 @@
             }
           }
 
-          // Player Collision
           if (e.y > 280 && e.x > sPlayer.x - 20 && e.x < sPlayer.x + 30) {
             sEnemies.splice(i, 1);
             sHp -= 25;
@@ -1027,10 +1177,145 @@
       }
       loop();
     }
-    function fireBullet() {
-      sBullets.push({ x: sPlayer.x + 14, y: sPlayer.y });
-    }
+    function fireBullet() { sBullets.push({ x: sPlayer.x + 14, y: sPlayer.y }); }
     function resetSpace() { initSpace(); }
+
+    /* 8. RETRO SNAKE ENGINE (NEW GAME) */
+    let snake = [], snakeDir = 'RIGHT', snakeNextDir = 'RIGHT';
+    let snakeFood = { x: 5, y: 5 };
+    let snakeScore = 0, snakeInterval = null;
+    const snakeGridSize = 16; // 16x16 cells on 320x320 canvas
+    const snakeTileCount = 20;
+
+    function initSnake() {
+      if (snakeInterval) clearInterval(snakeInterval);
+      const hi = localStorage.getItem('shameel_snake_hi') || 0;
+      document.getElementById('snake-hi').innerText = hi;
+      document.getElementById('snake-score').innerText = '0';
+
+      snake = [
+        { x: 8, y: 10 },
+        { x: 7, y: 10 },
+        { x: 6, y: 10 }
+      ];
+      snakeDir = 'RIGHT';
+      snakeNextDir = 'RIGHT';
+      snakeScore = 0;
+      spawnSnakeFood();
+
+      // Keyboard support
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp') setSnakeDir('UP');
+        if (e.key === 'ArrowDown') setSnakeDir('DOWN');
+        if (e.key === 'ArrowLeft') setSnakeDir('LEFT');
+        if (e.key === 'ArrowRight') setSnakeDir('RIGHT');
+      });
+
+      snakeInterval = setInterval(updateSnake, 130);
+    }
+
+    function setSnakeDir(d) {
+      if (d === 'UP' && snakeDir !== 'DOWN') snakeNextDir = 'UP';
+      if (d === 'DOWN' && snakeDir !== 'UP') snakeNextDir = 'DOWN';
+      if (d === 'LEFT' && snakeDir !== 'RIGHT') snakeNextDir = 'LEFT';
+      if (d === 'RIGHT' && snakeDir !== 'LEFT') snakeNextDir = 'RIGHT';
+    }
+
+    function spawnSnakeFood() {
+      snakeFood = {
+        x: Math.floor(Math.random() * snakeTileCount),
+        y: Math.floor(Math.random() * snakeTileCount)
+      };
+      // Prevent food spawning on snake body
+      for (let part of snake) {
+        if (part.x === snakeFood.x && part.y === snakeFood.y) {
+          spawnSnakeFood();
+          break;
+        }
+      }
+    }
+
+    function updateSnake() {
+      snakeDir = snakeNextDir;
+      let head = { ...snake[0] };
+
+      if (snakeDir === 'UP') head.y--;
+      if (snakeDir === 'DOWN') head.y++;
+      if (snakeDir === 'LEFT') head.x--;
+      if (snakeDir === 'RIGHT') head.x++;
+
+      // Wall collision check
+      if (head.x < 0 || head.x >= snakeTileCount || head.y < 0 || head.y >= snakeTileCount) {
+        endSnakeGame();
+        return;
+      }
+
+      // Self collision check
+      for (let part of snake) {
+        if (head.x === part.x && head.y === part.y) {
+          endSnakeGame();
+          return;
+        }
+      }
+
+      snake.unshift(head);
+
+      // Check food eat
+      if (head.x === snakeFood.x && head.y === snakeFood.y) {
+        snakeScore += 10;
+        document.getElementById('snake-score').innerText = snakeScore;
+        spawnSnakeFood();
+      } else {
+        snake.pop();
+      }
+
+      drawSnake();
+    }
+
+    function drawSnake() {
+      const c = document.getElementById('snakeCanvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+
+      // Grid background
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // Draw food
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(
+        snakeFood.x * snakeGridSize + snakeGridSize / 2,
+        snakeFood.y * snakeGridSize + snakeGridSize / 2,
+        snakeGridSize / 2 - 2,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+
+      // Draw Snake
+      snake.forEach((part, idx) => {
+        ctx.fillStyle = idx === 0 ? '#38bdf8' : '#22c55e';
+        ctx.fillRect(
+          part.x * snakeGridSize + 1,
+          part.y * snakeGridSize + 1,
+          snakeGridSize - 2,
+          snakeGridSize - 2
+        );
+      });
+    }
+
+    function endSnakeGame() {
+      clearInterval(snakeInterval);
+      const hi = localStorage.getItem('shameel_snake_hi') || 0;
+      if (snakeScore > hi) {
+        localStorage.setItem('shameel_snake_hi', snakeScore);
+        document.getElementById('snake-hi').innerText = snakeScore;
+        triggerWin("New High Score!", `Snake Score: ${snakeScore}`);
+      } else {
+        alert(`Game Over! Score: ${snakeScore}`);
+      }
+      initSnake();
+    }
   </script>
 </body>
 </html>
