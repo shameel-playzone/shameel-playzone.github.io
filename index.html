@@ -19,13 +19,7 @@
   <style>
     :root {
       --bg: #7c3aed;
-      --card-bg: #ffffff;
-      --accent-blue: #38bdf8;
-      --accent-pink: #f43f5e;
-      --accent-green: #4ade80;
-      --accent-yellow: #fde047;
       --border-dark: #1e1b4b;
-      --shadow-color: #0f172a;
     }
 
     * {
@@ -38,22 +32,20 @@
     }
 
     body {
-      background: #8b5cf6;
       background: radial-gradient(circle at 50% 0%, #a78bfa 0%, #7c3aed 70%, #5b21b6 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 12px 10px 70px 10px;
+      padding: 12px 10px 75px 10px;
       color: #1e293b;
     }
 
     .hidden { display: none !important; }
 
-    /* APP CONTAINER (Mobile shell look) */
+    /* APP CONTAINER */
     .app-shell {
       width: 100%;
       max-width: 410px;
-      background: #38bdf8;
       background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 30%, #f8fafc 60%);
       border: 4px solid var(--border-dark);
       border-radius: 36px;
@@ -110,10 +102,7 @@
     }
     .xp-fill { width: 45%; height: 100%; background: #3b82f6; }
 
-    .currency-group {
-      display: flex;
-      gap: 6px;
-    }
+    .currency-group { display: flex; gap: 6px; }
 
     .cur-pill {
       background: #ffffff;
@@ -141,19 +130,8 @@
       margin-bottom: 14px;
     }
 
-    .hero-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-fox {
-      font-size: 3rem;
-      animation: bounce 2s infinite ease-in-out;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
+    .hero-left { display: flex; align-items: center; gap: 10px; }
+    .hero-fox { font-size: 3rem; }
     .hero-title { font-size: 1.1rem; font-weight: 800; color: #1e1b4b; line-height: 1.1; }
 
     .daily-reward-btn {
@@ -166,13 +144,9 @@
       font-weight: 800;
       box-shadow: 0 4px 0 var(--border-dark);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
     .daily-reward-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--border-dark); }
 
-    /* SECTION TITLE */
     .section-title {
       font-size: 1.05rem;
       font-weight: 800;
@@ -249,7 +223,7 @@
     .b-nav-item.active { color: #0284c7; }
     .b-nav-icon { font-size: 1.3rem; }
 
-    /* STORE / SHOP MODAL */
+    /* MODALS */
     .shop-modal {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -299,7 +273,6 @@
       box-shadow: 0 3px 0 var(--border-dark);
     }
     .buy-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border-dark); }
-    .buy-btn.equipped { background: #94a3b8; }
 
     /* PLAY WRAPPER */
     .play-screen {
@@ -327,7 +300,6 @@
     }
     .pixel-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--border-dark); }
 
-    /* GAME CANVAS & CONTROLS */
     canvas {
       background: #ffffff;
       border: 3.5px solid var(--border-dark);
@@ -361,10 +333,21 @@
 </head>
 <body>
 
-  <!-- APP CONTAINER -->
+  <!-- 🏆 WINNER POPUP MODAL (വിജയിക്കുമ്പോൾ നടുവിൽ വരുന്ന കാർഡ്) -->
+  <div id="winner-modal" class="shop-modal hidden">
+    <div class="shop-box" style="text-align: center; background: #fef08a;">
+      <div style="font-size: 4rem;">🏆</div>
+      <div style="font-size: 1.8rem; font-weight: 900; color: #1e1b4b;" id="win-title">YOU WON!</div>
+      <div style="font-size: 0.95rem; font-weight: 700; color: #475569; margin: 8px 0;" id="win-desc">Kidilanaayi Kalichu!</div>
+      <div class="cur-pill" style="display: inline-flex; margin-bottom: 12px;">+20 🪙 Coins | +15 XP</div>
+      <button class="pixel-btn" style="width: 100%; background: #4ade80; font-size: 1rem; padding: 10px;" onclick="closeWinModal()">Continue ▶</button>
+    </div>
+  </div>
+
+  <!-- APP SHELL -->
   <div class="app-shell">
 
-    <!-- TOP HEADER BAR (LEVEL, COINS, GEMS) -->
+    <!-- TOP HEADER BAR -->
     <div class="top-bar">
       <div class="level-badge-box">
         <div class="avatar-icon" id="user-avatar-disp">🦊</div>
@@ -381,7 +364,6 @@
 
     <!-- MAIN HUB VIEW -->
     <div id="view-hub">
-      <!-- HERO CARTOON BANNER -->
       <div class="hero-banner">
         <div class="hero-left">
           <div class="hero-fox" id="banner-fox">🦊</div>
@@ -393,78 +375,53 @@
         <button class="daily-reward-btn" onclick="claimDailyReward()">🎁 Daily Reward</button>
       </div>
 
-      <!-- FEATURED GAMES GRID -->
       <div class="section-title">
         <span>Featured Games 🎮</span>
-        <span style="font-size:0.75rem; color:#475569;">9 Games</span>
+        <span style="font-size:0.75rem; color:#475569;">Tap to Play</span>
       </div>
 
       <div class="game-grid">
-        <!-- 1. Fruit Snake -->
-        <div class="cartoon-card c-green" onclick="launchGame('snake')">
-          <div class="c-icon">🐍</div>
-          <div class="c-name">Fruit Snake</div>
-          <div class="c-tag">Eat & Grow</div>
-        </div>
-        <!-- 2. Bubble Pop (NEW) -->
+        <!-- 1. Bubble Pop -->
         <div class="cartoon-card c-blue" onclick="launchGame('bubble')">
           <div class="c-icon">🫧</div>
           <div class="c-name">Bubble Pop</div>
           <div class="c-tag">Color Tap</div>
         </div>
-        <!-- 3. Memory Match -->
-        <div class="cartoon-card c-pink" onclick="launchGame('memory')">
-          <div class="c-icon">🧠</div>
-          <div class="c-name">Memory Match</div>
-          <div class="c-tag">Brain vs Bot</div>
+        <!-- 2. Fruit Snake -->
+        <div class="cartoon-card c-green" onclick="launchGame('snake')">
+          <div class="c-icon">🐍</div>
+          <div class="c-name">Fruit Snake</div>
+          <div class="c-tag">Eat & Grow</div>
         </div>
-        <!-- 4. Tic-Tac-Toe -->
-        <div class="cartoon-card c-yellow" onclick="launchGame('ttt')">
-          <div class="c-icon">❌</div>
-          <div class="c-name">Tic-Tac-Toe</div>
-          <div class="c-tag">Smart AI & 2P</div>
-        </div>
-        <!-- 5. Turbo Racer -->
+        <!-- 3. Turbo Racer -->
         <div class="cartoon-card c-purple" onclick="launchGame('car')">
           <div class="c-icon">🏎️</div>
           <div class="c-name">Turbo Racer</div>
           <div class="c-tag">Dodge Speed</div>
         </div>
-        <!-- 6. Flappy Bird -->
+        <!-- 4. Galaxy Strike -->
+        <div class="cartoon-card c-pink" onclick="launchGame('space')">
+          <div class="c-icon">🚀</div>
+          <div class="c-name">Galaxy Strike</div>
+          <div class="c-tag">Laser Blaster</div>
+        </div>
+        <!-- 5. Flappy Bird -->
         <div class="cartoon-card c-orange" onclick="launchGame('flappy')">
           <div class="c-icon">🐦</div>
           <div class="c-name">Flappy Bird</div>
           <div class="c-tag">Tap to Fly</div>
         </div>
-        <!-- 7. Knife Master -->
-        <div class="cartoon-card c-green" onclick="launchGame('knife')">
-          <div class="c-icon">🎯</div>
-          <div class="c-name">Knife Master</div>
-          <div class="c-tag">Spin Target</div>
-        </div>
-        <!-- 8. Galaxy Strike -->
-        <div class="cartoon-card c-blue" onclick="launchGame('space')">
-          <div class="c-icon">🚀</div>
-          <div class="c-name">Galaxy Strike</div>
-          <div class="c-tag">Laser Blaster</div>
-        </div>
-        <!-- 9. RPS Battle -->
-        <div class="cartoon-card c-yellow" onclick="launchGame('rps')">
-          <div class="c-icon">✊</div>
-          <div class="c-name">RPS Battle</div>
-          <div class="c-tag">First to 5</div>
-        </div>
       </div>
     </div>
 
-    <!-- PLAY SCREEN 1: BUBBLE POP (NEW GAME) -->
+    <!-- PLAY SCREEN 1: BUBBLE POP -->
     <div id="screen-bubble" class="play-screen hidden">
       <div class="screen-header">
         <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
         <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Bubble Pop 🫧</span>
         <button class="pixel-btn" onclick="initBubble()">🔄 Reset</button>
       </div>
-      <div class="cur-pill" style="align-self:center;">Score: <span id="bubble-score">0</span></div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="bubble-score">0 / 100</span></div>
       <canvas id="bubbleCanvas" width="320" height="340"></canvas>
     </div>
 
@@ -485,23 +442,7 @@
       </div>
     </div>
 
-    <!-- PLAY SCREEN 3: SPACE STRIKE -->
-    <div id="screen-space" class="play-screen hidden">
-      <div class="screen-header">
-        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
-        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Galaxy Strike 🚀</span>
-        <button class="pixel-btn" onclick="initSpace()">🔄</button>
-      </div>
-      <div class="cur-pill" style="align-self:center;">HP: <span id="space-hp">100%</span> | Score: <span id="space-score">0</span></div>
-      <canvas id="spaceCanvas" width="320" height="300"></canvas>
-      <div class="arcade-controls">
-        <button class="arcade-btn" id="s-left">◀</button>
-        <button class="arcade-btn" style="background:#f43f5e; color:#fff;" id="s-fire">🔥 FIRE</button>
-        <button class="arcade-btn" id="s-right">▶</button>
-      </div>
-    </div>
-
-    <!-- PLAY SCREEN 4: TURBO CAR -->
+    <!-- PLAY SCREEN 3: TURBO RACER -->
     <div id="screen-car" class="play-screen hidden">
       <div class="screen-header">
         <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
@@ -516,6 +457,22 @@
       </div>
     </div>
 
+    <!-- PLAY SCREEN 4: GALAXY STRIKE -->
+    <div id="screen-space" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-weight:800; font-size:1rem; color:#1e1b4b;">Galaxy Strike 🚀</span>
+        <button class="pixel-btn" onclick="initSpace()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center;">Score: <span id="space-score">0</span></div>
+      <canvas id="spaceCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" id="s-left">◀</button>
+        <button class="arcade-btn" style="background:#f43f5e; color:#fff;" id="s-fire">🔥 FIRE</button>
+        <button class="arcade-btn" id="s-right">▶</button>
+      </div>
+    </div>
+
     <!-- PLAY SCREEN 5: FLAPPY BIRD -->
     <div id="screen-flappy" class="play-screen hidden">
       <div class="screen-header">
@@ -526,13 +483,13 @@
       <div class="cur-pill" style="align-self:center;">Score: <span id="flappy-score">0</span></div>
       <canvas id="flappyCanvas" width="320" height="300"></canvas>
       <div class="arcade-controls">
-        <button class="arcade-btn" style="background:#38bdf8; color:#fff;" onclick="flappyJump()">🪽 JUMP / FLAP</button>
+        <button class="arcade-btn" style="background:#38bdf8; color:#fff;" onclick="flappyJump()">🪽 JUMP</button>
       </div>
     </div>
 
   </div>
 
-  <!-- BOTTOM FIXED NAVIGATION BAR -->
+  <!-- BOTTOM BAR -->
   <div class="bottom-bar">
     <button class="b-nav-item active" onclick="backToHub()">
       <span class="b-nav-icon">🏠</span>
@@ -552,7 +509,7 @@
     </button>
   </div>
 
-  <!-- IN-APP STORE (SHOP) MODAL -->
+  <!-- SHOP MODAL -->
   <div id="shop-modal" class="shop-modal hidden">
     <div class="shop-box">
       <div class="shop-header">
@@ -588,7 +545,7 @@
   </div>
 
   <script>
-    /* ================= PROGRESS & WALLET SYSTEM ================= */
+    /* WALLET & LEVEL STORAGE */
     let coins = parseInt(localStorage.getItem('pz_coins')) || 250;
     let gems = parseInt(localStorage.getItem('pz_gems')) || 15;
     let xp = parseInt(localStorage.getItem('pz_xp')) || 45;
@@ -620,7 +577,6 @@
       coins += c;
       xp += x;
       saveWallet();
-      if (window.confetti) confetti();
     }
 
     function claimDailyReward() {
@@ -635,10 +591,10 @@
       xp += 30;
       localStorage.setItem('pz_daily_claim', today);
       saveWallet();
-      alert('🎉 സമ്മാനം ലഭിച്ചു! +150 Coins & +5 Gems!');
+      triggerGameWin("Daily Gift! 🎁", "+150 Coins & +5 Gems!");
     }
 
-    /* ================= SHOP SYSTEM ================= */
+    /* SHOP */
     function openShopModal() { document.getElementById('shop-modal').classList.remove('hidden'); }
     function closeShopModal() { document.getElementById('shop-modal').classList.add('hidden'); }
 
@@ -666,7 +622,7 @@
       closeShopModal();
     }
 
-    /* ================= ROUTING ================= */
+    /* ROUTING */
     function launchGame(id) {
       if (activeLoop) cancelAnimationFrame(activeLoop);
       if (snakeTimer) clearInterval(snakeTimer);
@@ -675,13 +631,7 @@
       document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
 
       const target = document.getElementById(`screen-${id}`);
-      if (target) {
-        target.classList.remove('hidden');
-      } else {
-        alert('ഈ ഗെയിം ഉടൻ പൂർണ്ണമായും ലോഡ് ആകും!');
-        backToHub();
-        return;
-      }
+      if (target) target.classList.remove('hidden');
 
       if (id === 'bubble') initBubble();
       if (id === 'snake') initSnake();
@@ -698,34 +648,62 @@
       updateTopBar();
     }
 
+    /* 🏆 VICTORY MODAL LOGIC */
+    function triggerGameWin(title, desc) {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      document.getElementById('win-title').innerText = title;
+      document.getElementById('win-desc').innerText = desc;
+      document.getElementById('winner-modal').classList.remove('hidden');
+      if (window.confetti) confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+    }
+
+    function closeWinModal() {
+      document.getElementById('winner-modal').classList.add('hidden');
+      backToHub();
+    }
+
     /* ================= GAME 1: BUBBLE POP ================= */
     let bubbles = [], bubbleScore = 0;
+    const targetScore = 100; // 10 ബബിളുകൾ പൊട്ടിയാൽ കളി ജയിക്കും!
+
     function initBubble() {
       const c = document.getElementById('bubbleCanvas');
       const ctx = c.getContext('2d');
       bubbles = [];
       bubbleScore = 0;
-      document.getElementById('bubble-score').innerText = '0';
+      document.getElementById('bubble-score').innerText = '0 / ' + targetScore;
 
       for (let i = 0; i < 6; i++) spawnBubble(c);
 
-      c.onclick = (e) => {
+      const handleTap = (clientX, clientY) => {
         const rect = c.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+        const mx = clientX - rect.left;
+        const my = clientY - rect.top;
 
         for (let i = bubbles.length - 1; i >= 0; i--) {
           let b = bubbles[i];
           let dist = Math.hypot(b.x - mx, b.y - my);
-          if (dist < b.r) {
+          if (dist < b.r + 10) {
             bubbles.splice(i, 1);
             bubbleScore += 10;
-            document.getElementById('bubble-score').innerText = bubbleScore;
-            addReward(5, 5);
+            document.getElementById('bubble-score').innerText = bubbleScore + ' / ' + targetScore;
+
+            if (bubbleScore >= targetScore) {
+              triggerGameWin("Level Cleared! 🫧", "എല്ലാ ബബിളുകളും വിജയകരമായി പൊട്ടിച്ചു!");
+              addReward(20, 15);
+              return;
+            }
+
             spawnBubble(c);
             break;
           }
         }
+      };
+
+      c.onclick = (e) => handleTap(e.clientX, e.clientY);
+      c.ontouchstart = (e) => {
+        e.preventDefault();
+        handleTap(e.touches[0].clientX, e.touches[0].clientY);
       };
 
       function loop() {
@@ -747,7 +725,6 @@
           ctx.strokeStyle = '#0f172a';
           ctx.stroke();
 
-          // Bubble shine
           ctx.fillStyle = '#ffffff';
           ctx.beginPath();
           ctx.arc(b.x - b.r/3, b.y - b.r/3, b.r/4, 0, Math.PI * 2);
@@ -763,9 +740,9 @@
       const colors = ['#f43f5e', '#38bdf8', '#4ade80', '#fbbf24', '#c084fc'];
       bubbles.push({
         x: Math.random() * (c.width - 60) + 30,
-        y: c.height + Math.random() * 80,
-        r: 22 + Math.random() * 12,
-        speed: 1.5 + Math.random() * 2,
+        y: c.height + Math.random() * 60,
+        r: 22 + Math.random() * 10,
+        speed: 1.5 + Math.random() * 1.8,
         color: colors[Math.floor(Math.random() * colors.length)]
       });
     }
@@ -831,75 +808,7 @@
       });
     }
 
-    /* ================= GAME 3: GALAXY STRIKE ================= */
-    let sX = 140, sBullets = [], sEnemies = [], sHp = 100, sScore = 0;
-    let sL = false, sR = false;
-    function initSpace() {
-      const c = document.getElementById('spaceCanvas');
-      const ctx = c.getContext('2d');
-      sX = 140; sBullets = []; sEnemies = []; sHp = 100; sScore = 0;
-      document.getElementById('space-hp').innerText = '100%';
-      document.getElementById('space-score').innerText = '0';
-
-      const bL = document.getElementById('s-left');
-      const bR = document.getElementById('s-right');
-      const bF = document.getElementById('s-fire');
-      bL.ontouchstart = () => sL = true; bL.ontouchend = () => sL = false;
-      bR.ontouchstart = () => sR = true; bR.ontouchend = () => sR = false;
-      bF.ontouchstart = () => sBullets.push({x: sX + 13, y: 260});
-
-      let frame = 0;
-      function loop() {
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, c.width, c.height);
-
-        if (sL && sX > 10) sX -= 5;
-        if (sR && sX < c.width - 40) sX += 5;
-
-        // Player Ship
-        ctx.fillStyle = '#38bdf8';
-        ctx.fillRect(sX, 260, 30, 24);
-
-        // Bullets
-        ctx.fillStyle = '#f43f5e';
-        for (let i = sBullets.length - 1; i >= 0; i--) {
-          let b = sBullets[i];
-          b.y -= 7;
-          ctx.fillRect(b.x, b.y, 4, 10);
-          if (b.y < -10) sBullets.splice(i, 1);
-        }
-
-        // Asteroids
-        if (frame % 45 === 0) sEnemies.push({x: Math.random() * (c.width - 30), y: -20});
-        ctx.fillStyle = '#cbd5e1';
-        for (let i = sEnemies.length - 1; i >= 0; i--) {
-          let e = sEnemies[i];
-          e.y += 3;
-          ctx.beginPath();
-          ctx.arc(e.x + 12, e.y + 12, 12, 0, Math.PI * 2);
-          ctx.fill();
-
-          for (let j = sBullets.length - 1; j >= 0; j--) {
-            let b = sBullets[j];
-            if (b.x > e.x && b.x < e.x + 24 && b.y > e.y && b.y < e.y + 24) {
-              sEnemies.splice(i, 1);
-              sBullets.splice(j, 1);
-              sScore += 10;
-              document.getElementById('space-score').innerText = sScore;
-              addReward(1, 2);
-              break;
-            }
-          }
-          if (e.y > c.height) sEnemies.splice(i, 1);
-        }
-
-        frame++;
-        activeLoop = requestAnimationFrame(loop);
-      }
-      loop();
-    }
-
-    /* ================= GAME 4: TURBO RACER ================= */
+    /* ================= GAME 3: TURBO RACER ================= */
     let carLane = 1, carScore = 0, carObs = [];
     const carLanes = [50, 160, 270];
     function startCar() {
@@ -939,12 +848,76 @@
     }
     function moveCarLane(d) { carLane = Math.max(0, Math.min(2, carLane + d)); }
 
-    /* ================= GAME 5: FLAPPY ================= */
-    let bY = 150, bV = 0, fScore = 0;
+    /* ================= GAME 4: GALAXY STRIKE ================= */
+    let sX = 140, sBullets = [], sEnemies = [], sHp = 100, sScore = 0;
+    let sL = false, sR = false;
+    function initSpace() {
+      const c = document.getElementById('spaceCanvas');
+      const ctx = c.getContext('2d');
+      sX = 140; sBullets = []; sEnemies = []; sHp = 100; sScore = 0;
+      document.getElementById('space-score').innerText = '0';
+
+      const bL = document.getElementById('s-left');
+      const bR = document.getElementById('s-right');
+      const bF = document.getElementById('s-fire');
+      bL.ontouchstart = () => sL = true; bL.ontouchend = () => sL = false;
+      bR.ontouchstart = () => sR = true; bR.ontouchend = () => sR = false;
+      bF.ontouchstart = () => sBullets.push({x: sX + 13, y: 260});
+
+      let frame = 0;
+      function loop() {
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        if (sL && sX > 10) sX -= 5;
+        if (sR && sX < c.width - 40) sX += 5;
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(sX, 260, 30, 24);
+
+        ctx.fillStyle = '#f43f5e';
+        for (let i = sBullets.length - 1; i >= 0; i--) {
+          let b = sBullets[i];
+          b.y -= 7;
+          ctx.fillRect(b.x, b.y, 4, 10);
+          if (b.y < -10) sBullets.splice(i, 1);
+        }
+
+        if (frame % 45 === 0) sEnemies.push({x: Math.random() * (c.width - 30), y: -20});
+        ctx.fillStyle = '#cbd5e1';
+        for (let i = sEnemies.length - 1; i >= 0; i--) {
+          let e = sEnemies[i];
+          e.y += 3;
+          ctx.beginPath();
+          ctx.arc(e.x + 12, e.y + 12, 12, 0, Math.PI * 2);
+          ctx.fill();
+
+          for (let j = sBullets.length - 1; j >= 0; j--) {
+            let b = sBullets[j];
+            if (b.x > e.x && b.x < e.x + 24 && b.y > e.y && b.y < e.y + 24) {
+              sEnemies.splice(i, 1);
+              sBullets.splice(j, 1);
+              sScore += 10;
+              document.getElementById('space-score').innerText = sScore;
+              addReward(1, 2);
+              break;
+            }
+          }
+          if (e.y > c.height) sEnemies.splice(i, 1);
+        }
+
+        frame++;
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+
+    /* ================= GAME 5: FLAPPY BIRD ================= */
+    let bY = 150, bV = 0;
     function initFlappy() {
       const c = document.getElementById('flappyCanvas');
       const ctx = c.getContext('2d');
-      bY = 150; bV = 0; fScore = 0;
+      bY = 150; bV = 0;
       function loop() {
         ctx.fillStyle = '#bae6fd';
         ctx.fillRect(0, 0, c.width, c.height);
@@ -966,7 +939,7 @@
     }
     function flappyJump() { bV = -6; }
 
-    // Init on startup
+    // Init
     updateTopBar();
   </script>
 </body>
