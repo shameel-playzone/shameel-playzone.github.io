@@ -402,6 +402,7 @@
     .b-nav-item.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
     .b-nav-icon { font-size: 1.35rem; }
 
+    /* MODAL */
     .shop-modal {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -421,6 +422,41 @@
       border-radius: 26px;
       padding: 20px 16px;
       box-shadow: 0 0 35px rgba(0, 240, 255, 0.3);
+    }
+
+    /* STORE CARDS */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .shop-item-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1.5px solid var(--border-glow);
+      border-radius: 16px;
+      padding: 10px 6px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .shop-item-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #00f0ff, #0077ff);
+      border: none;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 6px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .shop-item-btn.equipped {
+      background: #64748b;
+      color: #fff;
     }
   </style>
 </head>
@@ -443,6 +479,39 @@
       <div style="font-size: 0.9rem; font-weight: 700; color: #94a3b8; margin: 6px 0 14px 0;" id="res-desc">Adipoli performance!</div>
       <div class="cur-pill" style="display: inline-flex; margin-bottom: 16px; background: rgba(0,240,255,0.15);" id="res-reward">+30 🪙 Coins | +20 XP</div>
       <button class="pixel-btn" id="res-action-btn" style="width: 100%; background: linear-gradient(135deg, #00f0ff, #0077ff); font-size: 0.95rem; padding: 12px; border:none; box-shadow:0 0 15px rgba(0,240,255,0.5);" onclick="handleModalAction()">Next Level ▶</button>
+    </div>
+  </div>
+
+  <!-- 🛍️ REAL WORKING GAME STORE MODAL -->
+  <div id="shop-modal" class="shop-modal hidden">
+    <div class="shop-box">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-family:'Orbitron',sans-serif; font-size:1.2rem; font-weight:900; color:var(--neon-blue);">GAME SHOP 🛒</span>
+        <button class="pixel-btn" onclick="closeShopModal()">✖</button>
+      </div>
+      <div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">കോയിൻസ് നൽകി പുതിയ അവതാരങ്ങൾ അൺലോക്ക് ചെയ്യാം!</div>
+      <div class="shop-grid">
+        <div class="shop-item-card">
+          <div style="font-size:2.2rem;">🦊</div>
+          <div style="font-size:0.8rem; font-weight:800;">Classic Fox</div>
+          <button class="shop-item-btn" id="btn-av-fox" onclick="equipAvatar('🦊')">Use</button>
+        </div>
+        <div class="shop-item-card">
+          <div style="font-size:2.2rem;">🐼</div>
+          <div style="font-size:0.8rem; font-weight:800;">Panda Pro</div>
+          <button class="shop-item-btn" id="btn-av-panda" onclick="buyOrEquipAvatar('🐼', 200)">200 🪙</button>
+        </div>
+        <div class="shop-item-card">
+          <div style="font-size:2.2rem;">🦁</div>
+          <div style="font-size:0.8rem; font-weight:800;">King Lion</div>
+          <button class="shop-item-btn" id="btn-av-lion" onclick="buyOrEquipAvatar('🦁', 400)">400 🪙</button>
+        </div>
+        <div class="shop-item-card">
+          <div style="font-size:2.2rem;">🤖</div>
+          <div style="font-size:0.8rem; font-weight:800;">Cyborg Bot</div>
+          <button class="shop-item-btn" id="btn-av-bot" onclick="buyOrEquipAvatar('🤖', 25, true)">25 💎</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -584,14 +653,14 @@
       <canvas id="targetCanvas" width="320" height="360"></canvas>
     </div>
 
-    <!-- 3. ARCADE: NEON BREAKOUT -->
+    <!-- 3. ARCADE: NEON BREAKOUT (WITH WORKING WIN LOGIC) -->
     <div id="screen-breakout" class="play-screen hidden">
       <div class="screen-header">
         <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
         <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Neon Breakout 🧱</span>
         <button class="pixel-btn" onclick="initBreakout()">🔄</button>
       </div>
-      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="break-score">0</span></div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="break-score">0 / 200</span></div>
       <canvas id="breakoutCanvas" width="320" height="340"></canvas>
       <div class="arcade-controls">
         <button class="arcade-btn" id="b-left">◀ Left</button>
@@ -730,13 +799,13 @@
 
   </div>
 
-  <!-- BOTTOM BAR -->
+  <!-- BOTTOM BAR (NOW WITH WORKING SHOP BUTTON) -->
   <div class="bottom-bar">
     <button class="b-nav-item active" onclick="backToHub()">
       <span class="b-nav-icon">🏠</span>
       <span>Home</span>
     </button>
-    <button class="b-nav-item" onclick="alert('Shop ഉടൻ തുറക്കും!')">
+    <button class="b-nav-item" onclick="openShopModal()">
       <span class="b-nav-icon">🛍️</span>
       <span>Shop</span>
     </button>
@@ -747,7 +816,7 @@
   </div>
 
   <script>
-    /* ================= ⚡ SLOWER SPLASH LOADER ================= */
+    /* ================= ⚡ SPLASH LOADER ================= */
     window.addEventListener('DOMContentLoaded', () => {
       let progress = 0;
       const fill = document.getElementById('splash-fill');
@@ -776,12 +845,16 @@
     let coins = parseInt(localStorage.getItem('pz_coins')) || 250;
     let gems = parseInt(localStorage.getItem('pz_gems')) || 15;
     let xp = parseInt(localStorage.getItem('pz_xp')) || 45;
+    let currentAvatar = localStorage.getItem('pz_avatar') || '🦊';
+    let ownedAvatars = JSON.parse(localStorage.getItem('pz_owned')) || ['🦊'];
     let activeLoop = null;
 
     function saveWallet() {
       localStorage.setItem('pz_coins', coins);
       localStorage.setItem('pz_gems', gems);
       localStorage.setItem('pz_xp', xp);
+      localStorage.setItem('pz_avatar', currentAvatar);
+      localStorage.setItem('pz_owned', JSON.stringify(ownedAvatars));
       updateTopBar();
     }
 
@@ -791,12 +864,91 @@
       const level = Math.floor(xp / 100) + 1;
       document.getElementById('user-level-txt').innerText = `LVL ${level}`;
       document.getElementById('xp-fill-bar').style.width = `${xp % 100}%`;
+      document.getElementById('user-avatar-disp').innerText = currentAvatar;
+      document.getElementById('banner-fox').innerText = currentAvatar;
     }
 
+    /* ================= 🎁 FIXED DAILY REWARD (ONCE PER DAY) ================= */
     function claimDailyReward() {
-      coins += 150; gems += 5; xp += 30;
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const lastClaimed = localStorage.getItem('pz_last_claimed_date');
+
+      if (lastClaimed === today) {
+        showResultModal('ALREADY CLAIMED! ⏳', 'ഇന്നത്തെ ഡെയ്‌ലി റിവാർഡ് നിങ്ങൾ വാങ്ങി കഴിഞ്ഞു! നാളെ വീണ്ടും വരൂ.', 'Come back tomorrow', 'OK', () => {}, true);
+        return;
+      }
+
+      coins += 150;
+      gems += 5;
+      xp += 30;
+      localStorage.setItem('pz_last_claimed_date', today);
       saveWallet();
+
+      if (window.confetti) confetti();
       showResultModal('🎁 Daily Gift!', '150 കോയിനും 5 ജെംസും ലഭിച്ചു!', '+150 🪙 | +5 💎', 'OK', backToHub);
+    }
+
+    /* ================= 🛍️ GAME SHOP LOGIC ================= */
+    function openShopModal() {
+      updateShopUI();
+      document.getElementById('shop-modal').classList.remove('hidden');
+    }
+    function closeShopModal() {
+      document.getElementById('shop-modal').classList.add('hidden');
+    }
+
+    function updateShopUI() {
+      const list = [
+        { id: 'fox', icon: '🦊' },
+        { id: 'panda', icon: '🐼' },
+        { id: 'lion', icon: '🦁' },
+        { id: 'bot', icon: '🤖' }
+      ];
+      list.forEach(item => {
+        const btn = document.getElementById(`btn-av-${item.id}`);
+        if (!btn) return;
+        if (currentAvatar === item.icon) {
+          btn.innerText = 'Equipped';
+          btn.className = 'shop-item-btn equipped';
+        } else if (ownedAvatars.includes(item.icon)) {
+          btn.innerText = 'Use';
+          btn.className = 'shop-item-btn';
+        }
+      });
+    }
+
+    function equipAvatar(icon) {
+      currentAvatar = icon;
+      saveWallet();
+      updateShopUI();
+      closeShopModal();
+    }
+
+    function buyOrEquipAvatar(icon, price, isGem = false) {
+      if (ownedAvatars.includes(icon)) {
+        equipAvatar(icon);
+        return;
+      }
+      if (isGem) {
+        if (gems < price) {
+          alert('മതിയായ ജെംസ് (💎) ഇല്ല!');
+          return;
+        }
+        gems -= price;
+      } else {
+        if (coins < price) {
+          alert('മതിയായ കോയിൻസ് (🪙) ഇല്ല!');
+          return;
+        }
+        coins -= price;
+      }
+      ownedAvatars.push(icon);
+      currentAvatar = icon;
+      saveWallet();
+      updateShopUI();
+      if (window.confetti) confetti();
+      alert(`അഭിനന്ദനങ്ങൾ! ${icon} അൺലോക്ക് ആയി!`);
+      closeShopModal();
     }
 
     /* ================= ROUTING ================= */
@@ -838,11 +990,103 @@
       updateTopBar();
     }
 
-    /* ================= ⚽ NEW GAME 1: PENALTY KICK (FOOTBALL) ================= */
+    /* ================= 🧱 3. NEON BREAKOUT (FIXED WIN CHECK) ================= */
+    let padX = 120, bBallX = 160, bBallY = 250, bDx = 3, bDy = -3, bricks = [], brkScore = 0;
+    let brkLeft = false, brkRight = false;
+
+    function initBreakout() {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
+      const c = document.getElementById('breakoutCanvas');
+      padX = 120; bBallX = 160; bBallY = 250; bDx = 3; bDy = -3; brkScore = 0;
+      document.getElementById('break-score').innerText = '0 / 200';
+
+      bricks = [];
+      const rows = 4, cols = 5, bW = 54, bH = 16, pad = 8, topOff = 30, leftOff = 12;
+      for (let r = 0; r < rows; r++) {
+        for (let col = 0; col < cols; col++) {
+          bricks.push({ x: leftOff + col * (bW + pad), y: topOff + r * (bH + pad), alive: true });
+        }
+      }
+
+      document.getElementById('b-left').ontouchstart = (e) => { e.preventDefault(); brkLeft = true; };
+      document.getElementById('b-left').ontouchend = (e) => { e.preventDefault(); brkLeft = false; };
+      document.getElementById('b-right').ontouchstart = (e) => { e.preventDefault(); brkRight = true; };
+      document.getElementById('b-right').ontouchend = (e) => { e.preventDefault(); brkRight = false; };
+
+      function loop() {
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#060111'; ctx.fillRect(0, 0, c.width, c.height);
+
+        if (brkLeft && padX > 0) padX -= 6;
+        if (brkRight && padX < c.width - 70) padX += 6;
+
+        // Paddle
+        ctx.fillStyle = '#00f0ff';
+        ctx.fillRect(padX, 310, 70, 12);
+
+        // Bricks
+        let aliveCount = 0;
+        bricks.forEach((b) => {
+          if (b.alive) {
+            aliveCount++;
+            ctx.fillStyle = '#ff007f';
+            ctx.fillRect(b.x, b.y, 54, 16);
+
+            // Ball vs Brick collision
+            if (bBallX > b.x && bBallX < b.x + 54 && bBallY > b.y && bBallY < b.y + 16) {
+              bDy = -bDy;
+              b.alive = false;
+              brkScore += 10;
+              document.getElementById('break-score').innerText = `${brkScore} / 200`;
+              coins += 1;
+              saveWallet();
+            }
+          }
+        });
+
+        // 🏆 WINNING CONDITION CHECK (എല്ലാ ഇഷ്ടികകളും പൊട്ടിയാൽ ജയിക്കും)
+        if (aliveCount === 0 || brkScore >= 200) {
+          cancelAnimationFrame(activeLoop);
+          coins += 40;
+          xp += 25;
+          saveWallet();
+          if (window.confetti) confetti();
+          showResultModal('NEON BREAKOUT CLEARED! 🏆', 'എല്ലാ കട്ടകളും തകർത്തു വിജയിച്ചു!', '+40 🪙 Coins | +25 XP', 'Play Again ▶', initBreakout);
+          return;
+        }
+
+        // Ball physics
+        bBallX += bDx; bBallY += bDy;
+        if (bBallX < 6 || bBallX > c.width - 6) bDx = -bDx;
+        if (bBallY < 6) bDy = -bDy;
+
+        // Paddle collision
+        if (bBallY > 300 && bBallY < 318 && bBallX > padX - 4 && bBallX < padX + 74) {
+          bDy = -Math.abs(bDy);
+        }
+
+        // Draw Ball
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath(); ctx.arc(bBallX, bBallY, 6, 0, Math.PI * 2); ctx.fill();
+
+        // Game over check
+        if (bBallY > c.height) {
+          cancelAnimationFrame(activeLoop);
+          showResultModal('GAME OVER! 😢', 'ബോൾ നഷ്ടപ്പെട്ടു!', `Score: ${brkScore}`, 'Try Again 🔄', initBreakout, true);
+          return;
+        }
+
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+
+    /* ================= ⚽ 1. PENALTY KICK ================= */
     let pGoals = 0, pKicks = 5, keeperX = 140, keeperSpeed = 3, ballX = 160, ballY = 300, ballInMotion = false;
     let targetX = 160, targetY = 70;
 
     function initPenalty() {
+      if (activeLoop) cancelAnimationFrame(activeLoop);
       pGoals = 0; pKicks = 5;
       document.getElementById('pen-goals').innerText = '0';
       document.getElementById('pen-kicks').innerText = '5';
@@ -854,19 +1098,17 @@
         const rect = c.getBoundingClientRect();
         targetX = e.clientX - rect.left;
         targetY = e.clientY - rect.top;
-        if (targetY > 160) targetY = 100; // Goal post height
+        if (targetY > 160) targetY = 100;
         ballInMotion = true;
       };
 
       function loop() {
         const ctx = c.getContext('2d');
-        // Pitch background
         ctx.fillStyle = '#064e3b'; ctx.fillRect(0, 0, c.width, c.height);
 
         // Goal Post
         ctx.strokeStyle = '#fff'; ctx.lineWidth = 6;
         ctx.strokeRect(40, 40, 240, 100);
-        // Net pattern
         ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
         for (let i = 40; i <= 280; i += 20) { ctx.beginPath(); ctx.moveTo(i, 40); ctx.lineTo(i, 140); ctx.stroke(); }
         for (let j = 40; j <= 140; j += 20) { ctx.beginPath(); ctx.moveTo(40, j); ctx.lineTo(280, j); ctx.stroke(); }
@@ -874,12 +1116,9 @@
         // Goalkeeper
         keeperX += keeperSpeed;
         if (keeperX > 230 || keeperX < 50) keeperSpeed = -keeperSpeed;
-        ctx.fillStyle = '#fde047';
-        ctx.beginPath(); ctx.arc(keeperX + 20, 110, 14, 0, Math.PI * 2); ctx.fill(); // Head
-        ctx.fillStyle = '#ef4444';
-        ctx.fillRect(keeperX, 124, 40, 20); // Body
+        ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(keeperX + 20, 110, 14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ef4444'; ctx.fillRect(keeperX, 124, 40, 20);
 
-        // Ball movement
         if (ballInMotion) {
           ballX += (targetX - ballX) * 0.15;
           ballY += (targetY - ballY) * 0.15;
@@ -889,7 +1128,6 @@
             pKicks--;
             document.getElementById('pen-kicks').innerText = pKicks;
 
-            // Check Goal vs Saved
             if (targetX >= 40 && targetX <= 280 && targetY >= 40 && targetY <= 140) {
               if (Math.abs(targetX - (keeperX + 20)) < 30) {
                 alert('Saved by Keeper! 🧤');
@@ -914,23 +1152,19 @@
           }
         }
 
-        // Draw Ball
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath(); ctx.arc(ballX, ballY, 12, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#000000';
-        ctx.beginPath(); ctx.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx.fill();
-
+        ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(ballX, ballY, 12, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#000000'; ctx.beginPath(); ctx.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx.fill();
         activeLoop = requestAnimationFrame(loop);
       }
       loop();
     }
     function resetBall() { ballX = 160; ballY = 300; ballInMotion = false; }
 
-    /* ================= 🎯 NEW GAME 2: TARGET SNIPER (SHOOTER) ================= */
+    /* ================= 🎯 2. TARGET SNIPER ================= */
     let sniperScore = 0, sniperTime = 25, sniperInterval = null, targets = [];
-
     function initTargetShooter() {
       if (sniperInterval) clearInterval(sniperInterval);
+      if (activeLoop) cancelAnimationFrame(activeLoop);
       sniperScore = 0; sniperTime = 25; targets = [];
       document.getElementById('sniper-score').innerText = '0 / 60';
       document.getElementById('sniper-time').innerText = '25s';
@@ -988,89 +1222,12 @@
       }
       loop();
     }
-
     function spawnTarget(c) {
       targets.push({
         x: Math.random() * (c.width - 70) + 35,
         y: Math.random() * (c.height - 70) + 35,
         r: 25 + Math.random() * 8
       });
-    }
-
-    /* ================= 🧱 NEW GAME 3: NEON BREAKOUT (ARCADE VIDEO GAME) ================= */
-    let padX = 120, bBallX = 160, bBallY = 250, bDx = 3, bDy = -3, bricks = [], brkScore = 0;
-    let brkLeft = false, brkRight = false;
-
-    function initBreakout() {
-      const c = document.getElementById('breakoutCanvas');
-      padX = 120; bBallX = 160; bBallY = 250; bDx = 3; bDy = -3; brkScore = 0;
-      document.getElementById('break-score').innerText = '0';
-
-      bricks = [];
-      const rows = 4, cols = 5, bW = 54, bH = 16, pad = 8, topOff = 30, leftOff = 12;
-      for (let r = 0; r < rows; r++) {
-        for (let col = 0; col < cols; col++) {
-          bricks.push({ x: leftOff + col * (bW + pad), y: topOff + r * (bH + pad), alive: true });
-        }
-      }
-
-      document.getElementById('b-left').ontouchstart = () => brkLeft = true;
-      document.getElementById('b-left').ontouchend = () => brkLeft = false;
-      document.getElementById('b-right').ontouchstart = () => brkRight = true;
-      document.getElementById('b-right').ontouchend = () => brkRight = false;
-
-      function loop() {
-        const ctx = c.getContext('2d');
-        ctx.fillStyle = '#060111'; ctx.fillRect(0, 0, c.width, c.height);
-
-        if (brkLeft && padX > 0) padX -= 5;
-        if (brkRight && padX < c.width - 70) padX += 5;
-
-        // Paddle
-        ctx.fillStyle = '#00f0ff';
-        ctx.fillRect(padX, 310, 70, 12);
-
-        // Bricks
-        bricks.forEach((b) => {
-          if (b.alive) {
-            ctx.fillStyle = '#ff007f';
-            ctx.fillRect(b.x, b.y, 54, 16);
-
-            // Ball vs Brick collision
-            if (bBallX > b.x && bBallX < b.x + 54 && bBallY > b.y && bBallY < b.y + 16) {
-              bDy = -bDy;
-              b.alive = false;
-              brkScore += 10;
-              document.getElementById('break-score').innerText = brkScore;
-              coins += 1; saveWallet();
-            }
-          }
-        });
-
-        // Ball physics
-        bBallX += bDx; bBallY += bDy;
-        if (bBallX < 6 || bBallX > c.width - 6) bDx = -bDx;
-        if (bBallY < 6) bDy = -bDy;
-
-        // Paddle collision
-        if (bBallY > 300 && bBallY < 315 && bBallX > padX && bBallX < padX + 70) {
-          bDy = -Math.abs(bDy);
-        }
-
-        // Draw Ball
-        ctx.fillStyle = '#fde047';
-        ctx.beginPath(); ctx.arc(bBallX, bBallY, 6, 0, Math.PI * 2); ctx.fill();
-
-        // Game over check
-        if (bBallY > c.height) {
-          alert('Ball Missed!');
-          initBreakout();
-          return;
-        }
-
-        activeLoop = requestAnimationFrame(loop);
-      }
-      loop();
     }
 
     /* ================= 4. BUBBLE POP ================= */
@@ -1146,11 +1303,9 @@
         bubbles.forEach((b) => {
           b.y -= b.speed;
           if (b.y < -30) { b.y = c.height + 20; b.x = Math.random() * (c.width - 40) + 20; }
-          ctx.fillStyle = b.color;
-          ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
           ctx.lineWidth = 2.5; ctx.strokeStyle = '#fff'; ctx.stroke();
-          ctx.fillStyle = 'rgba(255,255,255,0.7)';
-          ctx.beginPath(); ctx.arc(b.x - b.r/3, b.y - b.r/3, b.r/4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(b.x - b.r/3, b.y - b.r/3, b.r/4, 0, Math.PI * 2); ctx.fill();
         });
         activeLoop = requestAnimationFrame(loop);
       }
