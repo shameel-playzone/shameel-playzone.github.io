@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ml">
+<html lang="ml" style="background:#060111;">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7Z24SXFBG"></script>
@@ -37,14 +37,19 @@
       user-select: none;
     }
 
-    body {
-      background: radial-gradient(circle at 50% 10%, #1f104d 0%, #0a051b 75%, #03000a 100%);
+    /* വെള്ള സ്ക്രീൻ പൂർണ്ണമായി ബ്ലോക്ക് ചെയ്യുന്ന ഡാർക്ക് ബേസ് */
+    html, body {
+      background: #060111 !important;
+      color: var(--text-main);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 10%, #1f104d 0%, #0a051b 75%, #03000a 100%) !important;
       display: flex;
       justify-content: center;
       padding: 10px 10px 75px 10px;
-      color: var(--text-main);
-      overflow-x: hidden;
     }
 
     .hidden { display: none !important; }
@@ -54,20 +59,19 @@
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       background: radial-gradient(circle at center, #1b073e 0%, #060111 90%);
-      z-index: 10000;
+      z-index: 999999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
     }
 
-    /* വലിയ ആനിമേറ്റഡ് PLAYZONE ടൈറ്റിൽ */
     .animated-playzone-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.2rem;
+      font-size: 3.3rem;
       font-weight: 900;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       text-align: center;
       background: linear-gradient(135deg, #00f0ff 0%, #ff007f 50%, #fde047 100%);
       -webkit-background-clip: text;
@@ -77,21 +81,16 @@
     }
 
     @keyframes neonPulse {
-      0% {
-        transform: scale(0.95);
+      0%, 100% {
+        transform: scale(0.96);
         filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 0, 127, 0.5));
       }
       50% {
-        transform: scale(1.06);
+        transform: scale(1.05);
         filter: drop-shadow(0 0 35px rgba(0, 240, 255, 1)) drop-shadow(0 0 60px rgba(255, 0, 127, 0.9));
-      }
-      100% {
-        transform: scale(0.95);
-        filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.7)) drop-shadow(0 0 30px rgba(255, 0, 127, 0.5));
       }
     }
 
-    /* 0% to 100% Loading Bar */
     .loading-track {
       width: 260px;
       height: 12px;
@@ -110,7 +109,7 @@
       background: linear-gradient(90deg, #ff007f, #00f0ff);
       border-radius: 20px;
       box-shadow: 0 0 15px #00f0ff;
-      transition: width 0.05s linear;
+      transition: width 0.08s linear;
     }
 
     .loading-percent-txt {
@@ -125,8 +124,8 @@
     /* ================= MAIN APP SHELL ================= */
     .app-shell {
       width: 100%;
-      max-width: 410px;
-      background: rgba(18, 10, 42, 0.75);
+      max-width: 420px;
+      background: rgba(18, 10, 42, 0.78);
       border: 2px solid var(--border-glow);
       border-radius: 32px;
       padding: 14px 12px 20px 12px;
@@ -156,8 +155,7 @@
 
     .avatar-icon {
       font-size: 1.3rem;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 50%;
       display: flex;
@@ -207,7 +205,7 @@
     }
     .hero-left { display: flex; align-items: center; gap: 10px; }
     .hero-fox { font-size: 2.8rem; filter: drop-shadow(0 0 10px #ff007f); }
-    .hero-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 900; color: #fff; line-height: 1.2; }
+    .hero-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 900; color: #fff; line-height: 1.2; }
 
     .daily-reward-btn {
       background: linear-gradient(135deg, #ff007f, #e11d48);
@@ -224,7 +222,7 @@
 
     .section-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: #e2e8f0;
       margin-bottom: 12px;
@@ -234,7 +232,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* PRO GAMING TILES */
+    /* PRO GAMING TILES (9 GAMES) */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -245,7 +243,7 @@
       background: var(--card-bg);
       border: 1.5px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      padding: 16px 10px;
+      padding: 14px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -256,11 +254,11 @@
     }
     .cartoon-card:active { transform: scale(0.96); border-color: var(--neon-blue); }
 
-    .c-icon { font-size: 2.4rem; filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3)); }
-    .c-name { font-size: 0.95rem; font-weight: 800; color: #fff; }
+    .c-icon { font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+    .c-name { font-size: 0.92rem; font-weight: 800; color: #fff; }
     .c-tag { font-size: 0.68rem; font-weight: 700; color: #94a3b8; }
 
-    /* PLAY SCREEN */
+    /* PLAY SCREENS */
     .play-screen {
       display: flex;
       flex-direction: column;
@@ -317,6 +315,66 @@
       width: 100%;
       max-height: 380px;
       box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+    }
+
+    .arcade-controls {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .arcade-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid var(--border-glow);
+      color: #fff;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: 900;
+      border-radius: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .arcade-btn:active { background: var(--neon-blue); color: #000; }
+
+    /* TIC TAC TOE & MEMORY STYLES */
+    .ttt-grid {
+      width: 100%;
+      aspect-ratio: 1/1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .ttt-cell {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid var(--border-glow);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mem-grid {
+      width: 100%;
+      aspect-ratio: 1/1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .mem-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid var(--border-glow);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
     }
 
     /* BOTTOM NAV */
@@ -377,7 +435,7 @@
 </head>
 <body>
 
-  <!-- ================= 🔥 ANIMATED BIG "PLAYZONE" SPLASH SCREEN ================= -->
+  <!-- ================= 🔥 PRO ANIMATED SPLASH SCREEN (SLOW 100%) ================= -->
   <div id="splash-screen">
     <div class="animated-playzone-title">PLAYZONE</div>
     <div class="loading-track">
@@ -415,7 +473,7 @@
       </div>
     </div>
 
-    <!-- MAIN HUB -->
+    <!-- MAIN HUB (ALL 9 GAMES LOADED) -->
     <div id="view-hub">
       <div class="hero-banner">
         <div class="hero-left">
@@ -429,7 +487,7 @@
       </div>
 
       <div class="section-title">
-        <span>FEATURED GAMES</span>
+        <span>ALL 9 GAMES LOADED</span>
         <span style="font-size:0.72rem; color:var(--neon-blue);">⚡ TAP TO PLAY</span>
       </div>
 
@@ -446,38 +504,178 @@
           <div class="c-name">Fruit Snake</div>
           <div class="c-tag">Eat & Grow</div>
         </div>
-        <!-- 3. Turbo Racer -->
-        <div class="cartoon-card" style="border-color: rgba(255,0,127,0.3);" onclick="launchGame('car')">
+        <!-- 3. Tic-Tac-Toe -->
+        <div class="cartoon-card" style="border-color: rgba(253,224,71,0.3);" onclick="launchGame('ttt')">
+          <div class="c-icon">❌</div>
+          <div class="c-name">Tic-Tac-Toe</div>
+          <div class="c-tag">AI & 2 Players</div>
+        </div>
+        <!-- 4. Memory Flip -->
+        <div class="cartoon-card" style="border-color: rgba(255,0,127,0.3);" onclick="launchGame('memory')">
+          <div class="c-icon">🧠</div>
+          <div class="c-name">Memory Flip</div>
+          <div class="c-tag">Brain vs Bot</div>
+        </div>
+        <!-- 5. RPS Battle -->
+        <div class="cartoon-card" style="border-color: rgba(168,85,247,0.3);" onclick="launchGame('rps')">
+          <div class="c-icon">✊</div>
+          <div class="c-name">RPS Battle</div>
+          <div class="c-tag">First to 5 Points</div>
+        </div>
+        <!-- 6. Turbo Racer -->
+        <div class="cartoon-card" style="border-color: rgba(239,68,68,0.3);" onclick="launchGame('car')">
           <div class="c-icon">🏎️</div>
           <div class="c-name">Turbo Racer</div>
           <div class="c-tag">Dodge Speed</div>
         </div>
-        <!-- 4. Galaxy Strike -->
-        <div class="cartoon-card" style="border-color: rgba(253,224,71,0.3);" onclick="launchGame('space')">
+        <!-- 7. Flappy Bird -->
+        <div class="cartoon-card" style="border-color: rgba(249,115,22,0.3);" onclick="launchGame('flappy')">
+          <div class="c-icon">🐦</div>
+          <div class="c-name">Flappy Bird</div>
+          <div class="c-tag">Fly Pipes</div>
+        </div>
+        <!-- 8. Knife Master -->
+        <div class="cartoon-card" style="border-color: rgba(34,197,94,0.3);" onclick="launchGame('knife')">
+          <div class="c-icon">🎯</div>
+          <div class="c-name">Knife Master</div>
+          <div class="c-tag">Spin Target</div>
+        </div>
+        <!-- 9. Galaxy Strike -->
+        <div class="cartoon-card" style="border-color: rgba(56,189,248,0.3);" onclick="launchGame('space')">
           <div class="c-icon">🚀</div>
           <div class="c-name">Galaxy Strike</div>
-          <div class="c-tag">Laser Blaster</div>
+          <div class="c-tag">Laser Shooter</div>
         </div>
       </div>
     </div>
 
-    <!-- PLAY SCREEN: BUBBLE POP -->
+    <!-- 1. BUBBLE POP SCREEN -->
     <div id="screen-bubble" class="play-screen hidden">
       <div class="screen-header">
         <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
         <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;" id="bubble-lvl-title">Bubble Pop - Lvl 1</span>
         <button class="pixel-btn" onclick="initBubbleLevel(currentBubbleLevel)">🔄 Reset</button>
       </div>
-
-      <!-- COMPACT STATS BAR -->
       <div class="bubble-stats-bar">
         <div class="stat-badge" style="color:var(--neon-blue);">🎯 <span id="b-score-disp">0 / 50</span></div>
         <div class="stat-badge" style="color:var(--neon-pink); font-size:0.95rem;">⏱️ <span id="b-timer-disp">30s</span></div>
         <div class="stat-badge" style="color:var(--neon-yellow);">⭐ <span id="b-lvl-disp">Lvl 1</span></div>
       </div>
-
-      <!-- CANVAS -->
       <canvas id="bubbleCanvas" width="320" height="370"></canvas>
+    </div>
+
+    <!-- 2. SNAKE SCREEN -->
+    <div id="screen-snake" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Fruit Snake 🐍</span>
+        <button class="pixel-btn" onclick="initSnake()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="snake-score">0</span></div>
+      <canvas id="snakeCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" onclick="setSnakeDir('LEFT')">◀</button>
+        <button class="arcade-btn" onclick="setSnakeDir('UP')">▲</button>
+        <button class="arcade-btn" onclick="setSnakeDir('DOWN')">▼</button>
+        <button class="arcade-btn" onclick="setSnakeDir('RIGHT')">▶</button>
+      </div>
+    </div>
+
+    <!-- 3. TTT SCREEN -->
+    <div id="screen-ttt" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Tic-Tac-Toe</span>
+        <button class="pixel-btn" onclick="initTtt()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;" id="ttt-status">Turn: Player X</div>
+      <div class="ttt-grid" id="ttt-board"></div>
+    </div>
+
+    <!-- 4. MEMORY SCREEN -->
+    <div id="screen-memory" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Memory Flip</span>
+        <button class="pixel-btn" onclick="initMemory()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;" id="mem-status">Pairs: 0 / 8</div>
+      <div class="mem-grid" id="mem-grid"></div>
+    </div>
+
+    <!-- 5. RPS SCREEN -->
+    <div id="screen-rps" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">RPS Battle</span>
+        <button class="pixel-btn" onclick="resetRps()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:12px;">You: <span id="rps-p">0</span> | AI: <span id="rps-a">0</span></div>
+      <div style="font-size:4rem; margin:20px 0;" id="rps-hands">✊ VS ✊</div>
+      <div class="arcade-controls">
+        <button class="arcade-btn" onclick="playRps('✊')">✊ Rock</button>
+        <button class="arcade-btn" onclick="playRps('✋')">✋ Paper</button>
+        <button class="arcade-btn" onclick="playRps('✌️')">✌️ Scissors</button>
+      </div>
+    </div>
+
+    <!-- 6. TURBO RACER SCREEN -->
+    <div id="screen-car" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Turbo Racer 🏎️</span>
+        <button class="pixel-btn" onclick="startCar()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="car-score">0</span></div>
+      <canvas id="carCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" onclick="moveCarLane(-1)">◀ Left</button>
+        <button class="arcade-btn" onclick="moveCarLane(1)">Right ▶</button>
+      </div>
+    </div>
+
+    <!-- 7. FLAPPY BIRD SCREEN -->
+    <div id="screen-flappy" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Flappy Bird 🐦</span>
+        <button class="pixel-btn" onclick="initFlappy()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="flappy-score">0</span></div>
+      <canvas id="flappyCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" style="background:var(--neon-blue); color:#000;" onclick="flappyJump()">🪽 JUMP</button>
+      </div>
+    </div>
+
+    <!-- 8. KNIFE MASTER SCREEN -->
+    <div id="screen-knife" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Knife Master 🎯</span>
+        <button class="pixel-btn" onclick="initKnife()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Knives: <span id="knife-left">7</span></div>
+      <canvas id="knifeCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" style="background:#ff007f;" onclick="throwKnife()">🗡️ THROW</button>
+      </div>
+    </div>
+
+    <!-- 9. GALAXY STRIKE SCREEN -->
+    <div id="screen-space" class="play-screen hidden">
+      <div class="screen-header">
+        <button class="pixel-btn" onclick="backToHub()">🏠 Home</button>
+        <span style="font-family:'Orbitron',sans-serif; font-weight:800; font-size:0.9rem; color:#fff;">Galaxy Strike 🚀</span>
+        <button class="pixel-btn" onclick="initSpace()">🔄</button>
+      </div>
+      <div class="cur-pill" style="align-self:center; margin-bottom:8px;">Score: <span id="space-score">0</span></div>
+      <canvas id="spaceCanvas" width="320" height="300"></canvas>
+      <div class="arcade-controls">
+        <button class="arcade-btn" id="s-left">◀</button>
+        <button class="arcade-btn" style="background:#ff007f;" id="s-fire">🔥 FIRE</button>
+        <button class="arcade-btn" id="s-right">▶</button>
+      </div>
     </div>
 
   </div>
@@ -488,7 +686,7 @@
       <span class="b-nav-icon">🏠</span>
       <span>Home</span>
     </button>
-    <button class="b-nav-item" onclick="alert('Shop തുറക്കുന്നു!')">
+    <button class="b-nav-item" onclick="alert('Shop ഉടൻ പൂർണ്ണമായും അൺലോക്ക് ആകും!')">
       <span class="b-nav-icon">🛍️</span>
       <span>Shop</span>
     </button>
@@ -499,15 +697,16 @@
   </div>
 
   <script>
-    /* ================= ⚡ PRO SPLASH LOADER (0% TO 100%) ================= */
+    /* ================= ⚡ SLOWER CINEMATIC SPLASH LOADER (2.5 - 3 SECONDS) ================= */
     window.addEventListener('DOMContentLoaded', () => {
       let progress = 0;
       const fill = document.getElementById('splash-fill');
       const txt = document.getElementById('splash-txt');
       const splash = document.getElementById('splash-screen');
 
+      // 100% ആകുന്ന സമയം കൂട്ടി
       const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 8) + 4;
+        progress += Math.floor(Math.random() * 3) + 2; // സമയം കൂട്ടി പതുക്കെ നിറയുന്നു
         if (progress >= 100) {
           progress = 100;
           clearInterval(interval);
@@ -515,16 +714,16 @@
           txt.innerText = '100%';
           setTimeout(() => {
             splash.style.opacity = '0';
-            splash.style.visibility = 'hidden';
-          }, 400);
+            setTimeout(() => splash.style.visibility = 'hidden', 700);
+          }, 450);
         } else {
           fill.style.width = progress + '%';
           txt.innerText = progress + '%';
         }
-      }, 50);
+      }, 55);
     });
 
-    /* ================= WALLET & STORAGE ================= */
+    /* ================= WALLET & LOCALSTORAGE ================= */
     let coins = parseInt(localStorage.getItem('pz_coins')) || 250;
     let gems = parseInt(localStorage.getItem('pz_gems')) || 15;
     let xp = parseInt(localStorage.getItem('pz_xp')) || 45;
@@ -555,6 +754,7 @@
     function launchGame(id) {
       if (activeLoop) cancelAnimationFrame(activeLoop);
       if (bubbleTimerInterval) clearInterval(bubbleTimerInterval);
+      if (snakeTimer) clearInterval(snakeTimer);
 
       document.getElementById('view-hub').classList.add('hidden');
       document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
@@ -563,24 +763,28 @@
       if (target) target.classList.remove('hidden');
 
       if (id === 'bubble') startBubbleGame();
+      if (id === 'snake') initSnake();
+      if (id === 'ttt') initTtt();
+      if (id === 'memory') initMemory();
+      if (id === 'rps') resetRps();
+      if (id === 'car') startCar();
+      if (id === 'flappy') initFlappy();
+      if (id === 'knife') initKnife();
+      if (id === 'space') initSpace();
     }
 
     function backToHub() {
       if (activeLoop) cancelAnimationFrame(activeLoop);
       if (bubbleTimerInterval) clearInterval(bubbleTimerInterval);
+      if (snakeTimer) clearInterval(snakeTimer);
       document.getElementById('result-modal').classList.add('hidden');
       document.querySelectorAll('.play-screen').forEach(s => s.classList.add('hidden'));
       document.getElementById('view-hub').classList.remove('hidden');
       updateTopBar();
     }
 
-    /* ================= BUBBLE POP: INCREASING TIME PER LEVEL ================= */
-    let currentBubbleLevel = 1;
-    let bubbleScore = 0;
-    let bubbleTimeLeft = 30;
-    let bubbleTimerInterval = null;
-    let bubbles = [];
-
+    /* ================= 1. BUBBLE POP: INCREASING TIME PER LEVEL ================= */
+    let currentBubbleLevel = 1, bubbleScore = 0, bubbleTimeLeft = 30, bubbleTimerInterval = null, bubbles = [];
     const levelConfigs = {
       1: { time: 30, target: 50,  speedMul: 1.0, count: 6, title: "Lvl 1: Starter" },
       2: { time: 40, target: 80,  speedMul: 1.2, count: 7, title: "Lvl 2: Speed Pop (+10s)" },
@@ -588,27 +792,16 @@
       4: { time: 65, target: 160, speedMul: 1.7, count: 9, title: "Lvl 4: Expert (+15s)" }
     };
 
-    function startBubbleGame() {
-      currentBubbleLevel = 1;
-      initBubbleLevel(currentBubbleLevel);
-    }
-
+    function startBubbleGame() { currentBubbleLevel = 1; initBubbleLevel(currentBubbleLevel); }
     function initBubbleLevel(lvl) {
       if (activeLoop) cancelAnimationFrame(activeLoop);
       if (bubbleTimerInterval) clearInterval(bubbleTimerInterval);
 
       const cfg = levelConfigs[lvl] || {
-        time: 65 + ((lvl - 4) * 15),
-        target: lvl * 40,
-        speedMul: 1.8 + (lvl * 0.1),
-        count: 9,
-        title: `Lvl ${lvl}`
+        time: 65 + ((lvl - 4) * 15), target: lvl * 40, speedMul: 1.8 + (lvl * 0.1), count: 9, title: `Lvl ${lvl}`
       };
 
-      bubbleScore = 0;
-      bubbleTimeLeft = cfg.time;
-      bubbles = [];
-
+      bubbleScore = 0; bubbleTimeLeft = cfg.time; bubbles = [];
       document.getElementById('bubble-lvl-title').innerText = cfg.title;
       document.getElementById('b-lvl-disp').innerText = `Lvl ${lvl}`;
       document.getElementById('b-score-disp').innerText = `0 / ${cfg.target}`;
@@ -631,10 +824,15 @@
             document.getElementById('b-score-disp').innerText = `${bubbleScore} / ${cfg.target}`;
 
             if (bubbleScore >= cfg.target) {
-              levelWon();
+              clearInterval(bubbleTimerInterval);
+              cancelAnimationFrame(activeLoop);
+              coins += 25 + (currentBubbleLevel * 10); xp += 20; saveWallet();
+              if (window.confetti) confetti();
+              showResultModal(`LEVEL ${currentBubbleLevel} CLEARED! 🏆`, `വിജയകരമായി പൂർത്തിയാക്കി!`, `+${25+(currentBubbleLevel*10)} Coins`, 'Next Level ▶', () => {
+                currentBubbleLevel++; initBubbleLevel(currentBubbleLevel);
+              });
               return;
             }
-
             spawnBubble(c, cfg.speedMul);
             break;
           }
@@ -642,17 +840,14 @@
       };
 
       c.onclick = (e) => handleTap(e.clientX, e.clientY);
-      c.ontouchstart = (e) => {
-        e.preventDefault();
-        handleTap(e.touches[0].clientX, e.touches[0].clientY);
-      };
+      c.ontouchstart = (e) => { e.preventDefault(); handleTap(e.touches[0].clientX, e.touches[0].clientY); };
 
       bubbleTimerInterval = setInterval(() => {
         bubbleTimeLeft--;
         document.getElementById('b-timer-disp').innerText = `${bubbleTimeLeft}s`;
-
         if (bubbleTimeLeft <= 0) {
-          levelFailed();
+          clearInterval(bubbleTimerInterval); cancelAnimationFrame(activeLoop);
+          showResultModal('TIME OVER! ⏰', 'സമയം കഴിഞ്ഞു!', `Score: ${bubbleScore}`, 'Try Again 🔄', () => initBubbleLevel(currentBubbleLevel), true);
         }
       }, 1000);
 
@@ -660,81 +855,216 @@
       function loop() {
         ctx.fillStyle = '#0b061e';
         ctx.fillRect(0, 0, c.width, c.height);
-
         bubbles.forEach((b) => {
           b.y -= b.speed;
-          if (b.y < -30) {
-            b.y = c.height + 20;
-            b.x = Math.random() * (c.width - 40) + 20;
-          }
-
+          if (b.y < -30) { b.y = c.height + 20; b.x = Math.random() * (c.width - 40) + 20; }
           ctx.fillStyle = b.color;
           ctx.beginPath();
           ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
           ctx.fill();
-          ctx.lineWidth = 2.5;
-          ctx.strokeStyle = '#fff';
-          ctx.stroke();
-
+          ctx.lineWidth = 2.5; ctx.strokeStyle = '#fff'; ctx.stroke();
           ctx.fillStyle = 'rgba(255,255,255,0.7)';
           ctx.beginPath();
           ctx.arc(b.x - b.r/3, b.y - b.r/3, b.r/4, 0, Math.PI * 2);
           ctx.fill();
         });
-
         activeLoop = requestAnimationFrame(loop);
       }
       loop();
     }
-
     function spawnBubble(c, speedMul) {
       const colors = ['#ff007f', '#00f0ff', '#10b981', '#fde047', '#a855f7'];
       bubbles.push({
-        x: Math.random() * (c.width - 60) + 30,
-        y: c.height + Math.random() * 50,
-        r: 20 + Math.random() * 10,
-        speed: (1.3 + Math.random() * 1.4) * speedMul,
+        x: Math.random() * (c.width - 60) + 30, y: c.height + Math.random() * 50,
+        r: 20 + Math.random() * 10, speed: (1.3 + Math.random() * 1.4) * speedMul,
         color: colors[Math.floor(Math.random() * colors.length)]
       });
     }
 
-    function levelWon() {
-      clearInterval(bubbleTimerInterval);
-      cancelAnimationFrame(activeLoop);
-      const earnedCoins = 25 + (currentBubbleLevel * 10);
-      const earnedXp = 20;
-      coins += earnedCoins;
-      xp += earnedXp;
-      saveWallet();
-
-      if (window.confetti) confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-
-      showResultModal(
-        `LEVEL ${currentBubbleLevel} CLEARED! 🏆`,
-        `വിജയകരമായി ടാർഗറ്റ് പൂർത്തിയാക്കി!`,
-        `+${earnedCoins} 🪙 Coins | +${earnedXp} XP`,
-        'Next Level ▶',
-        () => {
-          currentBubbleLevel++;
-          initBubbleLevel(currentBubbleLevel);
-        }
-      );
+    /* ================= 2. FRUIT SNAKE ================= */
+    let snake = [], snakeDir = 'RIGHT', snakeNext = 'RIGHT', snakeFood = {x: 5, y: 5}, snakeScore = 0, snakeTimer = null;
+    function initSnake() {
+      if (snakeTimer) clearInterval(snakeTimer);
+      snake = [{x: 6, y: 8}, {x: 5, y: 8}, {x: 4, y: 8}];
+      snakeDir = 'RIGHT'; snakeNext = 'RIGHT'; snakeScore = 0;
+      document.getElementById('snake-score').innerText = '0';
+      snakeFood = { x: Math.floor(Math.random() * 20), y: Math.floor(Math.random() * 18) };
+      snakeTimer = setInterval(updateSnake, 130);
+    }
+    function setSnakeDir(d) {
+      if (d==='UP' && snakeDir!=='DOWN') snakeNext='UP';
+      if (d==='DOWN' && snakeDir!=='UP') snakeNext='DOWN';
+      if (d==='LEFT' && snakeDir!=='RIGHT') snakeNext='LEFT';
+      if (d==='RIGHT' && snakeDir!=='LEFT') snakeNext='RIGHT';
+    }
+    function updateSnake() {
+      snakeDir = snakeNext; let head = {...snake[0]};
+      if (snakeDir==='UP') head.y--; if (snakeDir==='DOWN') head.y++;
+      if (snakeDir==='LEFT') head.x--; if (snakeDir==='RIGHT') head.x++;
+      if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 18) { alert('Snake hit wall!'); initSnake(); return; }
+      snake.unshift(head);
+      if (head.x === snakeFood.x && head.y === snakeFood.y) {
+        snakeScore += 10; document.getElementById('snake-score').innerText = snakeScore;
+        coins += 2; xp += 3; saveWallet();
+        snakeFood = { x: Math.floor(Math.random() * 20), y: Math.floor(Math.random() * 18) };
+      } else { snake.pop(); }
+      const c = document.getElementById('snakeCanvas'); const ctx = c.getContext('2d');
+      ctx.fillStyle = '#060a14'; ctx.fillRect(0, 0, c.width, c.height);
+      ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(snakeFood.x*16+8, snakeFood.y*16+8, 7, 0, Math.PI*2); ctx.fill();
+      snake.forEach((p, i) => { ctx.fillStyle = i === 0 ? '#00f0ff' : '#10b981'; ctx.fillRect(p.x*16+1, p.y*16+1, 14, 14); });
     }
 
-    function levelFailed() {
-      clearInterval(bubbleTimerInterval);
-      cancelAnimationFrame(activeLoop);
+    /* ================= 3. TIC TAC TOE ================= */
+    let tttGrid = Array(9).fill(''), tttTurn = 'X';
+    function initTtt() {
+      const b = document.getElementById('ttt-board'); b.innerHTML = ''; tttGrid = Array(9).fill(''); tttTurn = 'X';
+      document.getElementById('ttt-status').innerText = "Turn: Player X";
+      for (let i = 0; i < 9; i++) {
+        let cell = document.createElement('div'); cell.className = 'ttt-cell';
+        cell.onclick = () => {
+          if (tttGrid[i] !== '') return;
+          tttGrid[i] = tttTurn; cell.innerText = tttTurn; cell.style.color = tttTurn === 'X' ? '#00f0ff' : '#ff007f';
+          const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+          if (wins.some(w => w.every(idx => tttGrid[idx] === tttTurn))) {
+            alert(`Player ${tttTurn} ജയിച്ചു!`); coins += 10; saveWallet(); initTtt(); return;
+          }
+          if (!tttGrid.includes('')) { alert('Draw Match!'); initTtt(); return; }
+          tttTurn = tttTurn === 'X' ? 'O' : 'X';
+          document.getElementById('ttt-status').innerText = `Turn: Player ${tttTurn}`;
+        };
+        b.appendChild(cell);
+      }
+    }
 
-      showResultModal(
-        'TIME OVER! ⏰',
-        `സമയം കഴിഞ്ഞു! ടാർഗറ്റ് തികഞ്ഞില്ല.`,
-        `Score: ${bubbleScore}`,
-        'Try Again 🔄',
-        () => {
-          initBubbleLevel(currentBubbleLevel);
-        },
-        true
-      );
+    /* ================= 4. MEMORY FLIP ================= */
+    const mIcons = ['🍎','🍌','🍇','🍓','🍉','🍒','🥑','🍍'];
+    let mCards = [], mFlipped = [], mPairs = 0;
+    function initMemory() {
+      const g = document.getElementById('mem-grid'); g.innerHTML = '';
+      mCards = [...mIcons, ...mIcons].sort(() => 0.5 - Math.random());
+      mFlipped = []; mPairs = 0;
+      document.getElementById('mem-status').innerText = "Pairs: 0 / 8";
+      mCards.forEach((ic, i) => {
+        let card = document.createElement('div'); card.className = 'mem-card'; card.innerText = '❓';
+        card.onclick = () => {
+          if (mFlipped.length === 2 || card.innerText !== '❓') return;
+          card.innerText = ic; mFlipped.push({ card, ic });
+          if (mFlipped.length === 2) {
+            if (mFlipped[0].ic === mFlipped[1].ic) {
+              mPairs++; document.getElementById('mem-status').innerText = `Pairs: ${mPairs} / 8`;
+              mFlipped = [];
+              if (mPairs === 8) { alert('Brain Master! All pairs found!'); coins += 25; saveWallet(); initMemory(); }
+            } else {
+              setTimeout(() => { mFlipped[0].card.innerText = '❓'; mFlipped[1].card.innerText = '❓'; mFlipped = []; }, 700);
+            }
+          }
+        };
+        g.appendChild(card);
+      });
+    }
+
+    /* ================= 5. RPS BATTLE ================= */
+    let rpP = 0, rpA = 0;
+    function resetRps() { rpP = 0; rpA = 0; document.getElementById('rps-p').innerText = '0'; document.getElementById('rps-a').innerText = '0'; }
+    function playRps(ch) {
+      const o = ['✊','✋','✌️']; const ai = o[Math.floor(Math.random()*3)];
+      document.getElementById('rps-hands').innerText = `${ch} VS ${ai}`;
+      if (ch === ai) return;
+      if ((ch==='✊'&&ai==='✌️') || (ch==='✋'&&ai==='✊') || (ch==='✌️'&&ai==='✋')) {
+        rpP++; document.getElementById('rps-p').innerText = rpP;
+        if (rpP === 5) { alert('You Won RPS Battle!'); coins += 15; saveWallet(); resetRps(); }
+      } else {
+        rpA++; document.getElementById('rps-a').innerText = rpA;
+        if (rpA === 5) { alert('AI ജയിച്ചു!'); resetRps(); }
+      }
+    }
+
+    /* ================= 6. TURBO RACER ================= */
+    let carLane = 1, carScore = 0, carObs = [];
+    function startCar() {
+      const c = document.getElementById('carCanvas'); const ctx = c.getContext('2d');
+      carLane = 1; carScore = 0; carObs = []; let frame = 0;
+      function loop() {
+        ctx.fillStyle = '#060a14'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#00f0ff'; ctx.fillRect([50, 160, 270][carLane] - 16, 240, 32, 50);
+        if (frame % 50 === 0) carObs.push({lane: Math.floor(Math.random() * 3), y: -50});
+        ctx.fillStyle = '#ff007f';
+        for (let i = carObs.length - 1; i >= 0; i--) {
+          let o = carObs[i]; o.y += 5;
+          ctx.fillRect([50, 160, 270][o.lane] - 16, o.y, 32, 45);
+          if (o.lane === carLane && o.y > 200 && o.y < 280) { alert('Crashed!'); startCar(); return; }
+          if (o.y > c.height) { carObs.splice(i, 1); carScore += 10; document.getElementById('car-score').innerText = carScore; }
+        }
+        frame++; activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function moveCarLane(d) { carLane = Math.max(0, Math.min(2, carLane + d)); }
+
+    /* ================= 7. FLAPPY BIRD ================= */
+    let bY = 150, bV = 0, flScore = 0;
+    function initFlappy() {
+      const c = document.getElementById('flappyCanvas'); const ctx = c.getContext('2d');
+      bY = 150; bV = 0; flScore = 0;
+      function loop() {
+        ctx.fillStyle = '#0b061e'; ctx.fillRect(0, 0, c.width, c.height);
+        bV += 0.35; bY += bV;
+        ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(60, bY, 14, 0, Math.PI * 2); ctx.fill();
+        if (bY > c.height || bY < 0) { alert('Hit ground!'); initFlappy(); return; }
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function flappyJump() { bV = -6; }
+
+    /* ================= 8. KNIFE MASTER ================= */
+    let kAngle = 0, targetK = [], kLeft = 7;
+    function initKnife() {
+      const c = document.getElementById('knifeCanvas'); const ctx = c.getContext('2d');
+      kAngle = 0; targetK = [0, 1.6]; kLeft = 7;
+      document.getElementById('knife-left').innerText = kLeft;
+      function loop() {
+        ctx.fillStyle = '#060a14'; ctx.fillRect(0, 0, c.width, c.height);
+        kAngle += 0.03;
+        ctx.save(); ctx.translate(c.width/2, 100); ctx.rotate(kAngle);
+        ctx.fillStyle = '#a855f7'; ctx.beginPath(); ctx.arc(0, 0, 45, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#cbd5e1';
+        targetK.forEach(a => { ctx.save(); ctx.rotate(a); ctx.fillRect(-3, 35, 6, 25); ctx.restore(); });
+        ctx.restore();
+        if (kLeft > 0) { ctx.fillStyle = '#00f0ff'; ctx.fillRect(c.width/2 - 4, 250, 8, 35); }
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
+    }
+    function throwKnife() {
+      if (kLeft <= 0) return;
+      let curr = (Math.PI / 2) - kAngle;
+      for (let a of targetK) {
+        if (Math.abs((a % (Math.PI*2)) - (curr % (Math.PI*2))) < 0.25) { alert('Knives Hit! Game Over!'); initKnife(); return; }
+      }
+      targetK.push(curr); kLeft--; document.getElementById('knife-left').innerText = kLeft;
+      if (kLeft === 0) { alert('Cleared all knives!'); coins += 20; saveWallet(); initKnife(); }
+    }
+
+    /* ================= 9. GALAXY STRIKE ================= */
+    let spX = 140, spB = [], spScore = 0;
+    function initSpace() {
+      const c = document.getElementById('spaceCanvas'); const ctx = c.getContext('2d');
+      spX = 140; spB = []; spScore = 0; document.getElementById('space-score').innerText = '0';
+      document.getElementById('s-left').ontouchstart = () => { if (spX > 10) spX -= 15; };
+      document.getElementById('s-right').ontouchstart = () => { if (spX < c.width - 40) spX += 15; };
+      document.getElementById('s-fire').ontouchstart = () => { spB.push({x: spX + 13, y: 260}); };
+      function loop() {
+        ctx.fillStyle = '#060111'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = '#00f0ff'; ctx.fillRect(spX, 260, 30, 24);
+        ctx.fillStyle = '#ff007f';
+        for (let i = spB.length - 1; i >= 0; i--) {
+          spB[i].y -= 7; ctx.fillRect(spB[i].x, spB[i].y, 4, 10);
+          if (spB[i].y < -10) spB.splice(i, 1);
+        }
+        activeLoop = requestAnimationFrame(loop);
+      }
+      loop();
     }
 
     /* MODAL HELPER */
@@ -747,11 +1077,9 @@
       const btn = document.getElementById('res-action-btn');
       btn.innerText = btnText;
       btn.style.background = isFail ? 'linear-gradient(135deg, #ef4444, #b91c1c)' : 'linear-gradient(135deg, #00f0ff, #0077ff)';
-
       modalActionCallback = callback;
       document.getElementById('result-modal').classList.remove('hidden');
     }
-
     function handleModalAction() {
       document.getElementById('result-modal').classList.add('hidden');
       if (modalActionCallback) modalActionCallback();
